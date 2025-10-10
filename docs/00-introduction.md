@@ -34,3 +34,6 @@ Cette charte est un document vivant. Elle est révisée à chaque changement maj
 Chaque chapitre est divisé en **règles strictes** (à respecter impérativement) et **recommandations de mise en œuvre** (à suivre systématiquement sauf cas très particuliers, documentés).
 
 Des blocs d’exemples, schémas, ou extraits de code viendront illustrer les cas types dans les sections suivantes.
+
+---
+[← Back to Home](../README.md) | [Next → Configuration](configuration.md)
