@@ -1,4 +1,4 @@
-# Apik Guidelines v2
+# Documentation développeur
 
 ## Table des matières
 
