@@ -89,4 +89,4 @@ Our ambition is not to build quickly — it is to build **systems that endure**.
 Every technical choice we make should still make sense a year, or five years, later.
 
 ---
-[← Back to Home](../README.md) | [Next → Platforms Overview](03-platforms.md)
+[← Back to Home](README.md) | [Next → Platforms Overview](03-platforms.md)

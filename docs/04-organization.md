@@ -205,3 +205,4 @@ Divergences must be corrected through a **pull request** and will be reviewed by
 All contributors — internal or external — must adhere to the same structure and validation pipeline.
 
 ---
+[← Back to Home](README.md) | [Next → Workflow](05-workflow.md)

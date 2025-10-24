@@ -91,3 +91,4 @@ and easier troubleshooting.
 Every commit is a breadcrumb for future developers — leave them useful ones.
 
 ---
+[← Back to Home](README.md) | [Next → Changelog](07-changelog.md)

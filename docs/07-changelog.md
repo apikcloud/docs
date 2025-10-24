@@ -46,7 +46,7 @@ Exclude (unless critical):
 
 ## 7.4. Structure per Release
 
-```
+```markdown
 ## [vX.Y.Z] — YYYY-MM-DD
 
 ### Added
@@ -91,7 +91,7 @@ Optional:
 - Use strong, descriptive verbs; avoid vague wording.
 
 **Examples (good)**
-```
+```markdown
 ### Added
 - Merge wizard for draft invoices (account) [#16838]
 
@@ -155,7 +155,7 @@ Example:
 
 ## 7.9. Template Example
 
-```
+```markdown
 # Changelog
 
 All notable changes to this project are documented here.
@@ -192,3 +192,6 @@ The goal: provide a clear, user-focused history of what has changed, improved, o
 - [ ] Migration notes validated.
 - [ ] Changelog committed with the tag.
 - [ ] PM has access for visibility.
+
+---
+[← Back to Home](README.md) | [Next → Migrations](08-migrations.md)

@@ -84,4 +84,4 @@ Quality is not measured by speed of delivery, but by how long the result remains
 Documentation, automation, and disciplined review processes are not optional — they are how we keep technical debt under control and protect our clients’ systems over time.
 
 ---
-[← Back to Home](../README.md) | [Next → Engineering Philosophy](02-philosophy.md)
+[← Back to Home](README.md) | [Next → Engineering Philosophy](02-philosophy.md)

@@ -97,3 +97,5 @@ Methodology adjustments (details in the dedicated Odoo.sh page):
 - **Documentation is mandatory**: `CHANGELOG.md`, `MIGRATIONS.md`, and release approval by the **Technical Referent**.
 
 ---
+
+[← Back to Home](README.md) | [Next → Organization](04-organization.md)
