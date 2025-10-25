@@ -1,5 +1,10 @@
 # The Apik Way
 
+---
+
+<p align="center">
+  <img src="_media/compass.png" alt="Apik Logo" width="500">
+</p>
 
 ## Purpose
 

@@ -50,6 +50,10 @@ public/
 *.~lock*
 *.orig
 
-# # Misc
-# # Ignore aggregated doc if generated automatically
+# Misc
+# Ignore aggregated doc if generated automatically
 # DOCUMENTATION.md
+
+*.svg
+*.ai
+*.eps
