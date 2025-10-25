@@ -1,4 +1,4 @@
-name: Translate Documentation (EN → FR)
+name: Translate
 
 on:
   workflow_dispatch:

@@ -58,7 +58,7 @@ Two main GitHub Actions maintain the documentation:
 
 | Workflow | Description |
 |-----------|--------------|
-| **Translate** | Generates a French version from the English source. |
+| **Translate** | Generates a French version from the English source. (deactivated) |
 | **Aggregate** | Builds a single Markdown file for offline use. |
 
 ---
