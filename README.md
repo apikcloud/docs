@@ -3,7 +3,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/The%20Apik%20Way-%23714B67?style=for-the-badge&logo=odoo&logoColor=white" alt="The Apik Way">
+  <img src="https://raw.githubusercontent.com/apikcloud/docs/main/docs/_media/compass.png" alt="Compass" width="500">
 </p>
 
 <p align="center">
