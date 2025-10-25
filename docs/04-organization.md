@@ -1,12 +1,14 @@
-# 4. Project Organization
+# Project Organization
 
-This document defines how every Odoo project is organized at Apik —
-from repository structure and module layout to **submodules**, **symlinks**, permissions, and update management.
-Its purpose is to ensure **consistency, maintainability, and reproducibility** across all environments.
+<mark> Status: Draft — Pending Review and Approval </mark>
+
+> This document defines how every Odoo project is organized at Apik —
+> from repository structure and module layout to **submodules**, **symlinks**, permissions, and update management.
+> Its purpose is to ensure **consistency, maintainability, and reproducibility** across all environments.
 
 ---
 
-## 4.1. General Principles
+## General Principles
 
 Each client project lives in a **dedicated Git repository** on GitHub.
 The repository contains the project's custom code and a **catalog of third‑party modules as Git submodules**
@@ -18,10 +20,8 @@ We keep a strict separation between:
 
 No code duplication. No vendor code copied into the repo.
 
-### Template Repository
-
 All new projects **must** use the template **[`odoo-repository-template`](https://github.com/apikcloud/odoo-repository-template)**.  
-For existing projects, conformance is enforced by the **Update repository** workflow
+For existing projects, conformance is enforced by the [Update repository](https://github.com/apikcloud/workflows/actions/workflows/update.yml) workflow
 ([`.github/workflows/update.yml`](https://github.com/apikcloud/workflows)).
 
 **Template usage policy**
@@ -31,9 +31,9 @@ For existing projects, conformance is enforced by the **Update repository** work
 
 ---
 
-## 4.2. Structure Overview
+## Structure Overview
 
-### 4.2.1 Main Folders
+### Main Folders
 
 | Path | Purpose |
 |------|--------|
@@ -48,7 +48,7 @@ For existing projects, conformance is enforced by the **Update repository** work
 Apik’s generic modules live in a **separate repository** and are included **as a submodule**
 under `/.third-party/apikcloud/apik-addons` (same rule as other third‑party sources).
 
-### 4.2.2 Required Files (Template Compliance)
+### Required Files (Template Compliance)
 
 The following files are **mandatory** in every project. They come from the
 [`odoo-repository-template`](https://github.com/apikcloud/odoo-repository-template) and must not be removed.
@@ -82,12 +82,12 @@ fonts-dejavu
 
 ---
 
-## 4.3. Submodule Management
+## Submodule Management
 
 All external code (OCA, vendors, **apikcloud/apik-addons**) must be referenced as **Git submodules**
 inside `/.third-party` for traceability and reproducibility.
 
-### 4.3.1 Adding a Submodule (rules & commit policy)
+### Adding a Submodule (rules & commit policy)
 
 **Rules**
 - Place submodules under `/.third-party/<organization>/<repo>`.
@@ -111,7 +111,7 @@ git add .gitmodules .third-party/apikcloud/apik-addons ./apik_generic_module
 git commit -m "chore(submodule): add apikcloud/apik-addons@18.0 (+ symlink)"
 ```
 
-### 4.3.2 Updating Submodules
+### Updating Submodules
 
 **Rules**
 - Update intentionally; avoid uncontrolled drifts.
@@ -129,7 +129,7 @@ git submodule update --remote --merge
 git commit -m "chore(submodules): bump all third-party modules"
 ```
 
-### 4.3.3 Removing Submodules
+### Removing Submodules
 
 **Rules**
 - Deinit first, then remove from index, then commit.
@@ -143,7 +143,7 @@ git rm -f ./l10n_fr_account  # remove linked module at root
 git commit -m "chore(submodule): remove OCA/l10n-france (+ symlink)"
 ```
 
-### 4.3.4 Submodules in Pull Requests (policy & review)
+### Submodules in Pull Requests (policy & review)
 
 **Author requirements**
 - PR title MUST include `submodule` when touching submodules.  
@@ -164,7 +164,7 @@ git commit -m "chore(submodule): remove OCA/l10n-france (+ symlink)"
 
 ---
 
-## 4.4. Module Placement & Activation (Symlinks)
+## Module Placement & Activation (Symlinks)
 
 - **Custom modules** live at the **repository root**.
 - **Third‑party modules** (including **apikcloud/apik-addons**) live under `/.third-party/...` and are **never copied** elsewhere.
@@ -177,13 +177,13 @@ Do **not** vendor‑copy external code. Use the **submodule + symlink** pattern.
 
 ---
 
-## 4.5. Odoo.sh Specific Cases
+## Odoo.sh Specific Cases
 
 Odoo.sh **supports Git submodules in a hidden folder and symbolic links**. The same approach should be used, rather than the interface provided by the platform. This prevents build failures due to requirements present in submodules that are not automatically satisfied.
 
 ---
 
-## 4.6. Repository Compliance
+## Repository Compliance
 
 This configuration may evolve; check the template regularly to ensure compliance.
 
@@ -192,7 +192,7 @@ Divergences must be corrected through a **pull request** and will be reviewed by
 
 ---
 
-## 4.7. Access and Responsibilities
+## Access and Responsibilities
 
 | Role | Responsibility |
 |------|----------------|
@@ -203,6 +203,3 @@ Divergences must be corrected through a **pull request** and will be reviewed by
 | **Project Manager (PM)** | Coordinates functional validation and client communication. |
 
 All contributors — internal or external — must adhere to the same structure and validation pipeline.
-
----
-[← Back to Home](README.md) | [Next → Workflow](05-workflow.md)

@@ -1,13 +1,14 @@
-# XX. Release Management Guidelines
+# Release Management Guidelines
 
-This document defines **when and how we create, validate, and deliver releases** across environments.  
-It complements `WORKFLOW.md`, `CODE_REVIEW.md`, and `MIGRATIONS.md`.
+<mark> Status: Draft — Pending Review and Approval </mark>
 
-Releases are the formal milestones of a project — they ensure traceability, stability, and reproducibility.
+> This document defines **when and how we create, validate, and deliver releases** across environments.  
+> It complements workflow, code review, and migrations.
+> 
+> Releases are the formal milestones of a project — they ensure traceability, stability, and reproducibility.
 
----
 
-## XX.1. Purpose
+## Purpose
 
 The goal of the release process is to:
 - deliver new features and fixes **safely and predictably**,
@@ -16,9 +17,8 @@ The goal of the release process is to:
 - ensure that the **Technical Referent** has validated every release before delivery,
 - allow **controlled inclusion or exclusion** of features requested by the Project Manager.
 
----
 
-## XX.2. Release Strategy
+## Release Strategy
 
 ### Branching Model
 We follow a **trunk-based workflow**:
@@ -35,9 +35,8 @@ We follow a **trunk-based workflow**:
 | **Preproduction** | Tagged release | Validation before client delivery |
 | **Production** | Tagged release (validated in preprod) | Live system |
 
----
 
-## XX.3. Release Frequency
+## Release Frequency
 
 Releases are created:
 - **On demand**, when a Project Manager requests delivery.
@@ -48,9 +47,8 @@ Rules of thumb:
 - Let staging stabilize for at least one validation cycle before tagging.
 - One release per day maximum per project to keep history traceable and reversible.
 
----
 
-## XX.4. Selective or Partial Releases
+## Selective or Partial Releases
 
 Sometimes, a Project Manager may request to:
 - **Exclude specific features** that are not yet functionally validated, or
@@ -79,9 +77,8 @@ Example:
 - Included: Subscription price fix, Sale Order Template permissions
 ```
 
----
 
-## XX.5. Release Creation Process
+## Release Creation Process
 
 ### Step 1 — Prepare
 1. Ensure the `main` branch is up to date and tests pass.
@@ -109,9 +106,8 @@ git tag -a v1.5.1 -m "Release v1.5.1 — selective release"
 git push origin v1.5.1
 ```
 
----
 
-## XX.6. Preproduction and Production Delivery
+## Preproduction and Production Delivery
 
 ### Preproduction
 - Deploy the tagged image to the preproduction environment.
@@ -124,9 +120,8 @@ git push origin v1.5.1
   - **Project Manager** (functional readiness)
 - The same tag must be deployed; no untagged code should ever reach production.
 
----
 
-## XX.7. Rollback Policy
+## Rollback Policy
 
 If a release causes a regression:
 - Rollback to the previous tag:
@@ -138,9 +133,8 @@ If a release causes a regression:
 
 Rollback safety depends on consistent use of backups and `MIGRATIONS.md` documentation.
 
----
 
-## XX.8. Tagging Rules
+## Tagging Rules
 
 | Type | Example | Meaning |
 |------|----------|----------|
@@ -153,9 +147,8 @@ Guidelines:
 - Increment **patch** for fixes or partial deliveries.
 - Increment **major** after coordinated agreement across teams.
 
----
 
-## XX.9. Responsibilities
+## Responsibilities
 
 | Role | Responsibility |
 |------|----------------|
@@ -165,9 +158,8 @@ Guidelines:
 | **Hosting Team** | Deploys preproduction and production environments |
 | **QA (optional)** | Performs functional validation |
 
----
 
-## XX.10. Release Checklist
+## Release Checklist
 
 - [ ] All features merged and reviewed.
 - [ ] Tests pass on staging.
@@ -179,13 +171,10 @@ Guidelines:
 - [ ] Production deployment executed.
 - [ ] Any exclusions documented in the release note.
 
----
 
-## XX.11. Post-Release Actions
+## Post-Release Actions
 
 - Monitor logs and alerts for 48h post-deployment.
 - Communicate the release summary internally.
 - Create follow-up tickets for deferred features.
 - Archive release artifacts and backups.
-
----

@@ -1,11 +1,11 @@
-# Models
+## 4. Models
 
 This document defines **how to design, name, and organize models** in Odoo addons.  
 It complements the pages on **Methods** and **Fields**.
 
 ---
 
-## 1. Model Types (and when to use them)
+### 1. Model Types (and when to use them)
 
 | Type | Base Class | Purpose | Typical Use |
 |------|------------|---------|-------------|
@@ -21,9 +21,9 @@ It complements the pages on **Methods** and **Fields**.
 
 ---
 
-## 2. Naming Conventions
+### 2. Naming Conventions
 
-### 2.1 Technical Model Name (`_name`)
+#### 2.1 Technical Model Name (`_name`)
 
 - Use **namespace prefix** of your addon: `your_addon.model_name`.
 - Use **singular nouns** for entities (`sale.order`, `account.move`, `product.brand`).
@@ -35,13 +35,13 @@ _name = "product.brand"
 _name = "move.chatter.history"
 ```
 
-### 2.2 Python Class Name
+#### 2.2 Python Class Name
 
 - Use **CapWords** (PEP 8): `Contract`, `SalesSubscription`.
 
 ~~When inheriting existing models via `_inherit`, keep the class name meaningful, not necessarily identical to `_name`.~~
 
-### 2.3 Display Name and Ordering
+#### 2.3 Display Name and Ordering
 
 - Set `_rec_name` if the default `name` is not the correct label.
 - Set `_order` for deterministic listing (avoid slow expressions).
@@ -54,9 +54,9 @@ _order = "date_start desc, id desc"
 
 ---
 
-## 3. Inheritance Models
+### 3. Inheritance Models
 
-### 3.1 Classical Inheritance (`_inherit`)
+#### 3.1 Classical Inheritance (`_inherit`)
 
 Extends an existing model (same table).  
 Use to add fields/behavior without changing identity.
@@ -72,7 +72,7 @@ class ResPartner(models.Model):
 - Keep overrides **thin**; delegate logic to helpers.
 - Document functional intent in a short class docstring.
 
-### 3.2 Delegation Inheritance (`_inherits`)
+#### 3.2 Delegation Inheritance (`_inherits`)
 
 Composes another model via foreign key (separate tables).  
 Use when your model **is‑a** + **has‑a** relationship is required.
@@ -89,7 +89,7 @@ class LibraryMember(models.Model):
 - Choose `_inherits` when you need partner fields **and** your own identity/table.
 - Keep FK field names explicit: `<model>_id` (e.g., `partner_id`).
 
-### 3.3 Abstract Models
+#### 3.3 Abstract Models
 
 Provide behavior and constraints without a table.
 
@@ -105,7 +105,7 @@ class Exportable(models.AbstractModel):
 
 ---
 
-## 4. Class Layout (ordering & sections)
+### 4. Class Layout (ordering & sections)
 
 Keep a **consistent block order** inside every model class:
 
@@ -168,7 +168,7 @@ class Contract(models.Model):
 
 ---
 
-## 5. Data Integrity & Constraints
+### 5. Data Integrity & Constraints
 
 - Prefer **SQL constraints** for invariants that must hold at DB level (uniqueness, date logic).  
 - Use `@api.constrains` for Python‑level checks needing record context.  
@@ -177,7 +177,7 @@ class Contract(models.Model):
 
 ---
 
-## 6. Security & Access (high‑level)
+### 6. Security & Access (high‑level)
 
 - Define `ir.model.access.csv` for create/read/write/unlink rules per role.  
 - Use **record rules** for domain‑based access; keep them **as simple as possible**.  
@@ -185,14 +185,14 @@ class Contract(models.Model):
 
 ---
 
-## 7. Internationalization
+### 7. Internationalization
 
 - Use `_(...)` for all user‑visible strings (labels, errors).  
 - Keep field help/tooltips concise and actionable.
 
 ---
 
-## 8. Performance Considerations
+### 8. Performance Considerations
 
 - Avoid per‑record loops in computed fields — batch with `mapped()` or set comprehensions.  
 - Prefetch relations and use `read_group` for aggregates.  
@@ -201,7 +201,7 @@ class Contract(models.Model):
 
 ---
 
-## 9. Do & Don’t
+### 9. Do & Don’t
 
 **Do**
 - Keep model names clear and stable.  

@@ -1,66 +1,50 @@
 # The Apik Way
 
-All engineering documentation for Apik lives in `/docs`. This README is a concise entry point.
+
+## Purpose
+
+This document sets the principles that shape our engineering culture.  
+It translates our collective values into practical expectations for developers, Technical Referents, and the Quality team.
+
+It is not a manifesto.  
+It is a framework — a set of commitments that help us deliver stable, transparent, and ethical systems.
+
+
+## Our Commitments
+
+Each developer commits to:
+
+- producing code that is reliable, readable, and maintainable;
+- adhering to shared rules and established best practices;
+- clearly documenting any complex portion of code;
+- making their work easy to review and understand;
+- considering and applying feedback received, especially during code reviews, with a mindset of continuous improvement;
+- helping teammates whenever possible, fostering a culture of support and knowledge sharing;
+- resisting shortcuts and challenging outdated habits;
+- anticipating potential performance and stability impacts;
+- evolving their practices in line with Python recommendations and Odoo ecosystem developments;
+- reporting identified risks or uncertainties;
+- contributing to the improvement and ongoing update of this manifesto;
+- sharing discoveries, ideas, and insights in a spirit of collective growth;
+- using all available tools — including AI-based ones — responsibly and thoughtfully;
+- maintaining full control over any automatically generated code.
+
+
+## Document Organization
 
 > **Working language:** All code, comments, commit messages, and documentation are written in **English**.
+ 
+<mark>Some parts are stabilized, others are still drafted.</mark>
 
-<p align="left">
-  <a href="https://github.com/apikcloud/docs/actions"><img alt="CI" src="https://img.shields.io/github/actions/workflow/status/apikcloud/docs/ci.yml?label=CI"></a>
-  <a href="./LICENSE"><img alt="License" src="https://img.shields.io/badge/license-MIT-blue.svg"></a>
-  <a href="./docs"><img alt="Docs" src="https://img.shields.io/badge/docs-available-brightgreen"></a>
-</p>
+Each section is divided into:
+- **Strict rules** — mandatory principles to be followed in all circumstances,  
+- **Implementation recommendations** — expected best practices, which can only be bypassed in exceptional and documented cases.
 
----
+Examples, diagrams, and code snippets are included where relevant to illustrate common patterns or expected structures.
 
-## Core Documentation
 
-1. [`Introduction`](docs/01-introduction.md) — overall principles and expectations  
-2. [`Engineering Philosophy`](docs/02-philosophy.md) — values and long‑term commitments  
-3. [`Platforms`](docs/03-platforms.md) — Apik Cloud, On‑Premise, Odoo.sh overview  
-4. [`Project Organization`](docs/04-organization.md) — repo layout, submodules, symlinks, required files  
-5. [`Workflow`](docs/05-workflow.md) — trunk-based development, branches, merges, releases  
-6. [`Commits`](docs/06-commits.md) — Conventional Commits, content rules  
-7. [`Changelog`](docs/07-changelog.md) — Keep a Changelog, ticket references, structure  
-8. [`Migrations`](docs/08-migrations.md) — Procedures, command script, validation & rollback  
+## Partners
 
-Drafts to be finalized:  
-- [`CI/CD`](docs/XX-cicd.md) — CI/CD pipelines, quality gates, release process  
-- [`Code Review`](docs/XX-code-review.md) — Code review process, tools, best practices
-- [`Environment Setup`](docs/XX-environment.md) — Local development environment setup instructions
-- [`Major changes`](docs/XX-major-changes.md) — Handling breaking changes between Odoo versions
-- [`Releases`](docs/XX-releases.md) — Release types, versioning, tagging, notes
----
+All developers — internal or external — are expected to follow Apik’s development charter and coding standards.
 
-## Module Guidelines
-
-Guidance specific to Odoo addons lives under `docs/XX-module/`. Some parts are stabilized, others are still drafted.
-
-1. [`Naming`](docs/XX-module/01-naming.md)  
-2. [`Structure`](docs/XX-module/02-structure.md)  
-3. [`Manifest`](docs/XX-module/03-manifest.md)  
-4. [`Models`](docs/XX-module/04-models.md)  
-5. [`Fields`](docs/XX-module/05-fields.md)  
-6. [`Methods`](docs/XX-module/06-methods.md)  
-
-Examples:  
-- [`Example 1`](docs/XX-module/examples/01-examples.md)  
-- [`Example 2`](docs/XX-module/examples/02-examples.md)
-
-Drafts to be finalized:  
-- [`Assets / JS / OWL`](docs/XX-module/XX-assets-js-owl.md)  
-- [`Checklist`](docs/XX-module/XX-checklist.md)  
-- [`Documentation`](docs/XX-module/XX-documentation.md)  
-- [`References`](docs/XX-module/XX-references.md)  
-- [`Security`](docs/XX-module/XX-security.md)  
-- [`Translations`](docs/XX-module/XX-translations.md)  
-- [`UI / UX`](docs/XX-module/XX-ui-ux.md)  
-- [`Unit tests`](docs/XX-module/XX-unit-tests.md)  
-- [`Views`](docs/XX-module/XX-views.md)
-
----
-
-## Contributing
-
-- This documentation is a **living reference**. Contributions are welcome via **Pull Request**.  
-- Changes are reviewed by the **Quality team** and may involve the **Technical Referent**.  
-- Keep edits **concise, consistent, and in English**. Reference tickets in commit messages when relevant.
+External partners operate under the same rules and undergo the same validation process by the Technical Referent and the Quality team.

@@ -1,11 +1,13 @@
-# 3. Platforms Overview
+# Platforms Overview
 
-This page introduces the **execution platforms** supported at Apik and how our methodology adapts to each.
-It is an entry point only — detailed procedures live in dedicated pages (CI/CD, releases, workflow, odoo.sh specifics).
+<mark> Status: Draft — Pending Review and Approval </mark>
+
+> This page introduces the **execution platforms** supported at Apik and how our methodology adapts to each.
+> It is an entry point only — detailed procedures live in dedicated pages (CI/CD, releases, workflow, odoo.sh specifics).
 
 ---
 
-## 3.1. Supported Platforms (at a glance)
+## Supported Platforms (at a glance)
 
 | Platform | Who operates | How we ship | Where code runs | Image build | Trunk-based notes |
 |---------|---------------|-------------|-----------------|-------------|-------------------|
@@ -15,7 +17,7 @@ It is an entry point only — detailed procedures live in dedicated pages (CI/CD
 
 ---
 
-## 3.2. Image Strategy (Cloud & On‑Premise)
+## Image Strategy (Cloud & On‑Premise)
 
 For **Apik Cloud** and **on‑premise** deployments, we ship a **self‑contained Docker image** per project:
 
@@ -33,21 +35,21 @@ For **Apik Cloud** and **on‑premise** deployments, we ship a **self‑containe
 
 ---
 
-## 3.3. Base Image Selection
+## Base Image Selection
 
 `odoo_version.txt` drives the **base Odoo version** used by CI:
 
 ```
-18.0
+apik/odoo:18.0-<release-date>-<enterprise>
 ```
 
-- This value pins the **base image line** (e.g., `apik/odoo:18.0-<build>`).
+- This value pins the **base image line** (e.g., `apik/odoo:18.0-20251015-enterprise`).
 - Major upgrades are handled like migrations: update `odoo_version.txt`, run validations, and follow `MIGRATIONS.md`.
 - Security updates to the base image are published regularly; projects **inherit** them on rebuild.
 
----
 
-## 3.4. CI/CD Overview (Cloud & On‑Premise)
+
+## CI/CD Overview (Cloud & On‑Premise)
 
 1. **Build**: assemble the client image (install Python requirements, vendor third‑party code via submodules/symlinks).
 2. **Test**: run lint, unit/integration tests, basic Odoo startup with `--stop-after-init`.
@@ -61,9 +63,9 @@ registry.apik.cloud/{client}/{project}:v1.5.0
 registry.apik.cloud/{client}/{project}:sha-{shortsha}
 ```
 
----
 
-## 3.5. Odoo.sh Specifics (high‑level)
+
+## Odoo.sh Specifics (high‑level)
 
 On **Odoo.sh**, we do **not build Docker images**. The platform pulls the repository and builds/runs the code internally.
 
@@ -75,9 +77,9 @@ Methodology adjustments (details in the dedicated Odoo.sh page):
 
 > The engineering principles remain the same (review, changelog, migrations). Only the **delivery mechanism** differs.
 
----
 
-## 3.6. Responsibilities
+
+## Responsibilities
 
 | Role | Cloud / On‑Prem | Odoo.sh |
 |------|------------------|---------|
@@ -87,15 +89,11 @@ Methodology adjustments (details in the dedicated Odoo.sh page):
 | **DevOps / Hosting** | Operates registry, deploys/stabilizes environments | N/A (platform operated by Odoo) |
 | **Project Manager** | Requests release, defines scope, coordinates delivery | Same |
 
----
 
-## 3.7. Policy Summary
+
+## Policy Summary
 
 - **One artifact per release** (Cloud/On‑Premise): the Docker image is the unit of delivery.
 - **`odoo_version.txt` is the source of truth** for the base image line.
 - **Trunk‑based workflow applies everywhere**; on Odoo.sh it is **lightly adapted** but still requires review, changelog, and release discipline.
 - **Documentation is mandatory**: `CHANGELOG.md`, `MIGRATIONS.md`, and release approval by the **Technical Referent**.
-
----
-
-[← Back to Home](README.md) | [Next → Organization](04-organization.md)

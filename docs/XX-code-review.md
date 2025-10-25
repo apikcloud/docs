@@ -1,11 +1,11 @@
-# XX. Code Review Guidelines
+# Code Review Guidelines
 
-All code changes at Apik are subject to **systematic review** before being merged into `main`.  
-The review is a key element of quality assurance, technical coherence, and team learning.
+<mark> Status: Draft — Pending Review and Approval </mark>
 
----
+> All code changes at Apik are subject to **systematic review** before being merged into `main`.  
+> The review is a key element of quality assurance, technical coherence, and team learning.
 
-## XX.1. Purpose
+## Purpose
 
 Code review ensures that every line of code entering production is:
 - **Correct** — functionally aligned with the ticket or feature goal,
@@ -15,9 +15,8 @@ Code review ensures that every line of code entering production is:
 
 It is also a means of **shared ownership**: reviewers understand the code they approve.
 
----
 
-## XX.2. Scope and Exceptions
+##  Scope and Exceptions
 
 ### Mandatory Reviews
 - All **feature branches** (`feat/<ticket>/<desc>`)
@@ -32,9 +31,8 @@ A review can be skipped *only* for:
 In such cases, the Technical Referent must **retro-review** the code after deployment  
 and document the exception in the project’s changelog.
 
----
 
-## XX.3. Roles
+## Roles
 
 | Role | Responsibility |
 |------|----------------|
@@ -45,9 +43,8 @@ and document the exception in the project’s changelog.
 
 A pull request must have at least **one approval** from a Technical Referent or an assigned reviewer before merge.
 
----
 
-## XX.4. Review Process
+## Review Process
 
 ### Step 1 — Prepare the Review
 - Rebase your branch on the latest `main` (`git fetch && git rebase origin/main`).
@@ -80,11 +77,10 @@ Optional tools:
 - If unsure, ask for clarification — don’t block unnecessarily.
 - The author is responsible for addressing feedback and re-requesting review.
 
----
 
-## XX.5. Merge Rules
+## Merge Rules
 
-- **Merges to `main` are done via “Squash & merge”**.
+- **Merges to `main` are done via “Squash & merge” or “Rebase and merge”**.
 - The final commit message must follow the [Conventional Commits](./COMMITS.md) format.
 - No merge commits (`--no-ff` merges are forbidden).
 - Branches must be rebased before merge to ensure linear history.
@@ -93,9 +89,8 @@ Optional tools:
 A merge means:
 > “This feature is ready for staging and may be deployed.”
 
----
 
-## XX.6. Review Quality Criteria
+## Review Quality Criteria
 
 A review is considered complete when:
 - All discussions are resolved.
@@ -105,9 +100,8 @@ A review is considered complete when:
 
 Avoid “rubber-stamping”: every approval must be **an informed decision**.
 
----
 
-## XX.7. Review Etiquette
+## Review Etiquette
 
 - Assume good intent.
 - Praise what’s well done before noting improvements.
@@ -115,9 +109,8 @@ Avoid “rubber-stamping”: every approval must be **an informed decision**.
 - Don’t block indefinitely; escalate to the Technical Referent if needed.
 - Use draft PRs for early feedback — not everything must be final.
 
----
 
-## XX.8. Common Review Findings (to watch for)
+## Common Review Findings (to watch for)
 
 - Missing or incorrect access rights in Odoo models.
 - SQL queries without limits or context filters.
@@ -127,9 +120,8 @@ Avoid “rubber-stamping”: every approval must be **an informed decision**.
 - Lack of `@api.constrains` or `@api.depends` when needed.
 - Hardcoded strings instead of translations.
 
----
 
-## XX.9. Checklist for Reviewers
+## Checklist for Reviewers
 
 - [ ] Code runs without errors locally.
 - [ ] Changes follow naming and structure rules.
@@ -139,5 +131,3 @@ Avoid “rubber-stamping”: every approval must be **an informed decision**.
 - [ ] No unnecessary dependencies added.
 - [ ] Code readability and clarity are acceptable.
 - [ ] Ticket reference included.
-
----

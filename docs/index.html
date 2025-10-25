@@ -8,7 +8,17 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <!-- <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css"> -->
    <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
-   <link rel="stylesheet" media="(prefers-color-scheme: light)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">   
+   <link rel="stylesheet" media="(prefers-color-scheme: light)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">  
+    <!-- Custom theme styles -->
+    <style>
+      :root {
+        --base-font-size: 14px;
+        --theme-color: 	#714B67;
+        --sidebar-width: 24rem;
+        --content-max-width: 75em;
+      }
+      
+    </style>    
 </head>
 <body>
   <div id="app"></div>
@@ -18,11 +28,18 @@
       repo: 'apikcloud/docs',
       auto2top: true,
       logo: '/_media/logo.png',
-      relativePath: false,
-      alias: {
-        '/docs/(.*)': '/$1',
-        '/.*/README.md': '/',
-        },
+      // relativePath: false,
+      loadSidebar: true,
+      subMaxLevel: 3,
+      // maxLevel: 2,
+      // pagination: {
+      //   crossChapter: true,
+      //   crossChapterText: true,
+      // },
+      // alias: {
+      //   '/docs/(.*)': '/$1',
+      //   '/.*/README.md': '/',
+      //   },
     }
   </script>
   <!-- Docsify v4 -->
@@ -31,6 +48,8 @@
   <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
 </body>
 </html>

@@ -1,4 +1,4 @@
-# Structure Pattern
+## 2. Structure Pattern
 
 All addons follow standard Odoo structure with Apik-specific conventions:
 ```

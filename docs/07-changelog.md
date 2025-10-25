@@ -1,23 +1,24 @@
-# 7. Changelog
+# Changelog
+
+<mark> Status: Draft — Pending Review and Approval </mark>
 
 This document defines how we **manually** write and maintain changelogs for Apik projects.
-It complements our `05-workflow.md` and `06-commits.md`. We follow the principles of [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/) who adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and write every entry by hand — no auto-generation.
+It complements our workflow and commits documentations. We follow the principles of [Keep a Changelog 1.1.0](https://keepachangelog.com/en/1.1.0/) who adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html) and write every entry by hand — no auto-generation.
 
----
 
-## 7.1. Purpose & Audience
 
-The changelog explains **what changed between versions** to people who don’t read commits:
+## Purpose & Audience
+
+> The changelog explains **what changed between versions** to people who don’t read commits:
 project managers, QA, support, and customers. It focuses on **impact and behavior**, not implementation details.
 
 Project managers don’t review the changelog before release, but they must have **visibility**:
 - `CHANGELOG.md` is always available in the main branch.
 - Updates are included in release summaries.
-- ~~It’s the reference document to prepare client communications or validations.~~
 
----
 
-## 7.2. Principles
+
+## Principles
 
 - **Human-curated**: clarity over automation.
 - **Versioned**: entries are grouped by **version tag** (`vX.Y.Z`) and date.
@@ -25,9 +26,9 @@ Project managers don’t review the changelog before release, but they must have
 - **Neutral tone**: factual, concise, no marketing.
 - **Stable format**: consistent sections and phrasing.
 
----
 
-## 7.3. Inclusion Criteria
+
+## Inclusion Criteria
 
 Include:
 - New features or visible improvements.
@@ -42,9 +43,9 @@ Exclude (unless critical):
 
 > If a PM, consultant, or client **needs to know**, it belongs here.
 
----
 
-## 7.4. Structure per Release
+
+## Structure per Release
 
 ```markdown
 ## [vX.Y.Z] — YYYY-MM-DD
@@ -78,9 +79,9 @@ Optional:
 - **Odoo Modules Impacted**: `account`, `project`, `mail`, etc.
 - **Known Issues**: short list + workarounds.
 
----
 
-## 7.5. Writing Rules
+
+## Writing Rules
 
 - **One line per item.**
 - **No prefix** ("Added:", "Fixed:") — the section already defines it.
@@ -109,9 +110,8 @@ Optional:
 - Update stuff
 ```
 
----
 
-## 7.6. Relationship with Commits and Tickets
+## Relationship with Commits and Tickets
 
 - **Commits**: technical, atomic, dev-focused.
 - **Changelog**: curated, user-focused summary.
@@ -127,9 +127,8 @@ Example:
 - Improve invoice PDF header (account) [#17021]
 ```
 
----
 
-## 7.7. Team Workflow
+## Team Workflow
 
 1. **During development**: developer adds draft changelog lines in the "Unreleased" section.
 2. **Before tagging**: *Technical Referent* consolidates and formats entries.
@@ -142,18 +141,18 @@ Example:
 - **Reviewer (QA)**: checks accuracy and relevance.
 - **Technical Referent**: final formatting and scope.
 
----
 
-## 7.8. Odoo-Specific Guidance
+
+## Odoo-Specific Guidance
 
 - Mention affected **addons** and **models** (e.g., `account.move`, `mail.thread`).
 - Flag **data model changes** (fields, constraints, scripts).
 - Note **access rights**, **server parameters**, or **env variables** changes.
 - Summarize **migration steps**; detailed procedures go in `MIGRATION.md`.
 
----
 
-## 7.9. Template Example
+
+## Template Example
 
 ```markdown
 # Changelog
@@ -181,9 +180,8 @@ The goal: provide a clear, user-focused history of what has changed, improved, o
 - Update `mgdis_contract` before `mgdis_sales`.
 ```
 
----
 
-## 7.10. Release Checklist
+## Release Checklist
 
 - [ ] Entries grouped by version and date.
 - [ ] Only user-impacting items included.
@@ -192,6 +190,3 @@ The goal: provide a clear, user-focused history of what has changed, improved, o
 - [ ] Migration notes validated.
 - [ ] Changelog committed with the tag.
 - [ ] PM has access for visibility.
-
----
-[← Back to Home](README.md) | [Next → Migrations](08-migrations.md)

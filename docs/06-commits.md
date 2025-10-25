@@ -1,11 +1,12 @@
-# 6. Commit Guidelines
+# Commit Guidelines
 
-Commits are the smallest and most meaningful unit of change.  
-They tell *why* the code exists, not just *what* was changed.
+<mark> Status: Draft — Pending Review and Approval </mark>
 
----
+> Commits are the smallest and most meaningful unit of change.  
+> They tell *why* the code exists, not just *what* was changed.
 
-## 6.1. Message Convention
+
+## Message Convention
 
 We follow the **[Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)** specification to keep messages consistent and automatable.
 
@@ -27,9 +28,9 @@ This introduces a new wizard allowing users to merge multiple draft invoices.
 Closes #1234
 ```
 
----
 
-## 6.2. Types
+
+## Types
 
 | Type | Meaning | Example |
 |------|----------|----------|
@@ -45,9 +46,9 @@ Closes #1234
 | **ci** | CI/CD config or scripts | `ci(github): parallelize test workflow` |
 | **revert** | Revert a previous commit | `revert: fix(account): wrong domain in partner search` |
 
----
 
-## 6.3. Scopes
+
+## Scopes
 
 The **scope** indicates which part of the system is affected — it’s optional but useful when:
 - The project is large or modular (ex: Odoo addons, CI, Docker, infra).
@@ -58,9 +59,9 @@ The **scope** indicates which part of the system is affected — it’s optional
 account, project, mail, base, docker, ci, infra, tests, docs
 ```
 
----
 
-## 6.4. Content Rules
+
+## Content Rules
 
 - One logical change per commit (**atomic commits**).  
 - Keep the first line under **72 characters**.  
@@ -72,9 +73,9 @@ account, project, mail, base, docker, ci, infra, tests, docs
   ```
 - Before merging, **squash or rebase** to keep a clean linear history.
 
----
 
-## 6.5. Tips
+
+## Tips
 
 - Keep the summary short and clear.  
 - Use the body to describe context or motivation if needed.  
@@ -82,13 +83,10 @@ account, project, mail, base, docker, ci, infra, tests, docs
 - Avoid meaningless messages (“update”, “minor change”, “final”).  
 - Consistency is more valuable than perfection.
 
----
 
-## 6.6. Why It Matters
+
+## Why It Matters
 
 Readable history = faster reviews, clearer changelogs,  
 and easier troubleshooting.  
 Every commit is a breadcrumb for future developers — leave them useful ones.
-
----
-[← Back to Home](README.md) | [Next → Changelog](07-changelog.md)

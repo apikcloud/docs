@@ -1,3 +1,4 @@
+## 3. Manifest Guidelines
 
 ### Manifest Structure (`__manifest__.py`)
 Follow this pattern for all Apik addons:

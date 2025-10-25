@@ -1,8 +1,8 @@
 # Environment Setup
 
-This document provides guidelines for setting up the development environment for Apik projects.
+<mark> Status: Draft — Pending Review and Approval </mark>
 
----
+> This document provides guidelines for setting up the development environment for Apik projects.
 
 ## Getting Started (Developers)
 
@@ -44,4 +44,3 @@ docker compose logs -f odoo
 - One PR per feature; code review required; see [`docs/XX-code-review.md`](./docs/XX-code-review.md)
 - Keep changelog human‑written; see [`docs/07-changelog.md`](./docs/07-changelog.md)
 
----

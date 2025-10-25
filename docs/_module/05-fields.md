@@ -1,11 +1,11 @@
-# Fields
+## 5. Fields
 
 This document defines how to **design, name, and configure fields** in Odoo addons.  
 It complements the pages on **Models** and **Methods**.
 
 ---
 
-## 1. Field Types (quick map)
+### 5.1. Field Types (quick map)
 
 | Category | Types | Notes |
 |---------|------|-------|
@@ -17,7 +17,7 @@ It complements the pages on **Models** and **Methods**.
 
 ---
 
-## 2. Naming & Labels
+### 5.2. Naming & Labels
 
 - **Technical name**: `snake_case`, short, descriptive (`amount_total`, `partner_ref`).  
 - **String/label**: concise, user‑facing, **translated** (`string="Amount Total"`).  
@@ -31,9 +31,9 @@ amount_total = fields.Monetary(string="Total", currency_field="currency_id", hel
 
 ---
 
-## 3. Relational Fields
+### 5.3. Relational Fields
 
-### 3.1 Many2one
+#### Many2one
 ```python
 partner_id = fields.Many2one(
     comodel_name="res.partner",
@@ -48,7 +48,7 @@ partner_id = fields.Many2one(
 - Add `index=True` on frequently searched relations.  
 - Use meaningful names: `<model>_id` (e.g., `company_id`, `currency_id`).
 
-### 3.2 One2many
+#### One2many
 ```python
 line_ids = fields.One2many(comodel_name="apik_contract.line", copy=True, inverse_name="contract_id", string="Lines")
 ```
@@ -56,7 +56,7 @@ line_ids = fields.One2many(comodel_name="apik_contract.line", copy=True, inverse
 - `inverse_name` must exist and be indexed if used in domains/aggregations.  
 - Avoid massive onchanges triggered by large O2M; prefer explicit buttons or batches.
 
-### 3.3 Many2many
+#### Many2many
 ```python
 tag_ids = fields.Many2many("apik_contract.tag", string="Tags")
 ```
@@ -66,9 +66,9 @@ tag_ids = fields.Many2many("apik_contract.tag", string="Tags")
 
 ---
 
-## 4. Computed, Inverse, and Related
+### 5.4. Computed, Inverse, and Related
 
-### 4.1 Computed
+#### Computed
 ```python
 amount_total = fields.Monetary(compute="_compute_amount", store=True, currency_field="currency_id")
 
@@ -81,14 +81,14 @@ def _compute_amount(self): ...
 - Prefer **batch computation**; avoid per‑record loops.  
 - Use `compute_sudo=True` only if strictly necessary and documented.
 
-### 4.2 Inverse
+#### Inverse
 Provide an inverse when users can edit a computed field and you need to **persist** that edit.
 ```python
 rate = fields.Float(compute="_compute_rate", inverse="_inverse_rate", store=True)
 def _inverse_rate(self): ...
 ```
 
-### 4.3 Related
+#### Related
 ```python
 company_currency_id = fields.Many2one(related="company_id.currency_id", store=True)
 ```
@@ -98,7 +98,7 @@ company_currency_id = fields.Many2one(related="company_id.currency_id", store=Tr
 
 ---
 
-## 5. Selections & Enums
+### 5.5. Selections & Enums
 
 ```python
 STATE = [
@@ -123,7 +123,7 @@ state = fields.Selection(
 
 ---
 
-## 6. Money, Currency, and Precision
+### 5.6. Money, Currency, and Precision
 
 ```python
 currency_id = fields.Many2one("res.currency", string="Currency", required=True, ondelete="restrict")
@@ -136,7 +136,7 @@ amount_total = fields.Monetary(currency_field="currency_id", string="Total", dig
 
 ---
 
-## 7. Defaults, Readonly, Copy, Tracking
+### 5.7. Defaults, Readonly, Copy, Tracking
 
 - `default=...` for safe defaults (functions allowed).  
 - `readonly=True` for values users must not edit; pair with `states={...}` if needed.  
@@ -145,7 +145,7 @@ amount_total = fields.Monetary(currency_field="currency_id", string="Total", dig
 
 ---
 
-## 8. Indexing & Searchability
+### 5.8. Indexing & Searchability
 
 - Add `index=True` on fields frequently used in domains or joins.  
 - For text search, combine `index=True` on `Char` + a **search** helper if needed.  
@@ -153,7 +153,7 @@ amount_total = fields.Monetary(currency_field="currency_id", string="Total", dig
 
 ---
 
-## 9. Security & Multicompany
+### 5.9. Security & Multicompany
 
 - Do **not** rely on Python to enforce access; define **ACLs** and **record rules**.  
 - For multicompany fields, consider `company_dependent=True` or explicit company FK.  
@@ -161,14 +161,14 @@ amount_total = fields.Monetary(currency_field="currency_id", string="Total", dig
 
 ---
 
-## 10. Internationalization
+### 5.10. Internationalization
 
 - All `string`, `help`, and selection labels must be **translatable**.  
 - Keep messages short and clear; avoid jargon in user‑facing labels.
 
 ---
 
-## 11. Migrations & Stability
+### 5.11. Migrations & Stability
 
 - Renaming a field breaks stable APIs; prefer **new field + migration** over renames.  
 - When deprecating, keep the old field read‑only for a version and provide a data script.  
@@ -176,7 +176,7 @@ amount_total = fields.Monetary(currency_field="currency_id", string="Total", dig
 
 ---
 
-## 12. Do & Don’t
+### 5.12. Do & Don’t
 
 **Do**
 - Use explicit `ondelete` on `Many2one`.  

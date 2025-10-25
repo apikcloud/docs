@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+*.egg
+*.egg-info/
+.env
+.venv
+venv/
+pip-wheel-metadata/
+*.log
+
+# Cache & temporaires
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*.tmp
+*.bak
+*.old
+.cache/
+.mypy_cache/
+.pytest_cache/
+__pycache__/
+
+# Build / output
+dist/
+build/
+*.zip
+*.tar.gz
+*.out
+*.pdf
+
+# Documentation generated files
+/docs/_build/
+/docs/_site/
+/docs/_output/
+/docs/aggregated.md
+/site/
+public/
+
+# IDE / editors
+.vscode/
+.idea/
+*.iml
+
+# OS-specific
+*.~lock*
+*.orig
+
+# # Misc
+# # Ignore aggregated doc if generated automatically
+# DOCUMENTATION.md
