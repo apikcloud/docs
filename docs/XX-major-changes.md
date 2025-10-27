@@ -5,9 +5,6 @@
 > This document summarizes **key technical and functional changes** introduced in major Odoo versions.  
 > It is designed to help developers, integrators, and Technical Referents anticipate migration impacts and adjust their codebase accordingly.
 
-[Official Odoo changelogs](https://www.odoo.com/documentation/19.0/fr/developer/reference/backend/orm/changelog.html#)
-
-
 
 ## General Principles
 
@@ -20,20 +17,25 @@
 
 ## Evolution Summary
 
-| Version | Year | Key Technical Changes | Key Functional Changes |
-|----------|------|-----------------------|-------------------------|
-| **v15 → v16** | 2022 | - ORM performance overhaul<br>- New “models.Command” syntax for relational fields<br>- Removal of legacy API decorators<br>- Mass refactor of list and kanban views<br>- Switch to OWL 2 framework for frontend | - Accounting refactor (no longer a community module)<br>- Improved POS and Inventory<br>- Consolidated settings UI |
-| **v16 → v17** | 2023 | - OWL 2 adoption completed (100% frontend)<br>- New JavaScript module loader (ESM)<br>- RPC and webclient refactored<br>- Removal of jQuery and legacy JS framework<br>- New testing utilities for JS<br>- Split of web modules (web, web_editor, mail, spreadsheet) | - New interface design (modern theme)<br>- Unified search and navigation bar<br>- Improved CRM and sales flow<br>- Better Excel import/export |
-| **v17 → v18** | 2024 | - OWL 3 (hooks, stores, and reactive components)<br>- New asset bundling with `rollup`<br>- Backend actions refactor (async jobs)<br>- Changes to mail/thread models (new chatter API)<br>- Refactored ORM caches and environment handling<br>- Base HTTP routing simplified | - Major UX simplifications<br>- New Kanban view editor<br>- Improved Studio compatibility<br>- Enhanced website & ecommerce flows |
-| **v18 → v19** | 2025 | - Introduction of async ORM methods<br>- Refactor of Odoo’s internal CLI and test runner<br>- Removal of `api.multi` remnants<br>- PostgreSQL 15+ requirement<br>- Stricter manifest validation and metadata structure | - Modernized UI (single-page feel)<br>- Multi-company refinements<br>- Extended data migration tooling |
+| Version | Year | Key Technical Changes | Key Functional Changes | OCA Migration Guide |
+|----------|------|-----------------------|-------------------------|------------------|
+| **19.0** | 2025 | [ORM Changelog](https://www.odoo.com/documentation/19.0/developer/reference/backend/orm/changelog.html#) | [Odoo Release Notes](https://www.odoo.com/fr_FR/odoo-19-release-notes) | [Migration Guide](https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-19.0) |
+| **18.0** | 2024 | [ORM Changelog](https://www.odoo.com/documentation/18.0/developer/reference/backend/orm/changelog.html#) | [Odoo Release Notes](https://www.odoo.com/fr_FR/odoo-18-release-notes) | [Migration Guide](https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-18.0) |
+| **17.0** | 2023 | [ORM Changelog](https://www.odoo.com/documentation/17.0/developer/reference/backend/orm/changelog.html#) | [Odoo Release Notes](https://www.odoo.com/fr_FR/odoo-17-release-notes) | [Migration Guide](https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-17.0) |
+| **16.0** | 2022 | [ORM Changelog](https://www.odoo.com/documentation/16.0/developer/reference/backend/orm/changelog.html#) | [Odoo Release Notes](https://www.odoo.com/fr_FR/odoo-16-release-notes) | [Migration Guide](https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-16.0) |
+| **15.0** | 2021 | -- | [Odoo Release Notes](https://www.odoo.com/fr_FR/odoo-15-release-notes) | [Migration Guide](https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-15.0) |
+| **14.0** | 2020 | -- | [Odoo Release Notes](https://www.odoo.com/fr_FR/odoo-14-release-notes) | [Migration Guide](https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-14.0) |
+| **13.0** | 2019 | -- | [Odoo Release Notes](https://www.odoo.com/fr_FR/odoo-13-release-notes) | [Migration Guide](https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-13.0) |
+| **12.0** | 2018 | -- | [Odoo Release Notes](https://www.odoo.com/fr_FR/odoo-12-release-notes) | [Migration Guide](https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-12.0) |
+| **11.0** | 2017 | -- | [Odoo Release Notes](https://www.odoo.com/fr_FR/odoo-11-release-notes) | [Migration Guide](https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-11.0) |
+| **10.0** | 2016 | -- | [Odoo Release Notes](https://www.odoo.com/fr_FR/odoo-10-release-notes) | [Migration Guide](https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-10.0) |
+
 
 ## 19.0
 
-> [Odoo 19 Release Notes](https://www.odoo.com/fr_FR/odoo-19-release-notes)
-
 ### SQL constraints
 
-Old way:
+**Old way:**
 ```python
 _sql_constraints = [
         (
@@ -45,7 +47,7 @@ _sql_constraints = [
  
 ```
 
-New way:
+**New way:**
 ```python
 _product_uniq = models.Constraint(
         "unique(parent_product_id, product_id)",
