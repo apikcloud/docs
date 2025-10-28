@@ -746,6 +746,8 @@ def _prepare_invoice_vals(self) -> dict:
 
 *Content to be written: groups, access files, rules, exceptions.*
 
+See also: [Security](https://www.odoo.com/documentation/19.0/developer/reference/backend/security.html)
+
 
 ## XX. Translations
 

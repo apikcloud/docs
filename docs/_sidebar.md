@@ -13,6 +13,8 @@
 - [ Module guidelines ](/XX-module.md)
 - [ Unit tests ](/XX-unit-tests.md)
 - [ CI/CD ](XX-cicd.md)
+- [ Community ](XX-community.md)
+- [ Security ](XX-security.md)
 - [ Tools ](XX-tools.md)
 - Odoo
   - [ Major Changes ](XX-major-changes.md)
