@@ -59,7 +59,9 @@ Two main GitHub Actions maintain the documentation:
 | Workflow | Description |
 |-----------|--------------|
 | **Translate** | Generates a French version from the English source. (deactivated) |
-| **Aggregate** | Builds a single Markdown file for offline use. |
+| **Aggregate** | Builds a single Markdown file for offline use. (deactivated) |
+| **pages-build-deployment** | Deploys the documentation to GitHub Pages. |
+
 
 ---
 
@@ -71,7 +73,32 @@ All contributions must go through **Pull Request** review by the **Quality Team*
 **Guidelines:**
 - Keep edits **concise**, **consistent**, and **in English**.  
 - Reference related tickets or discussions in commit messages.  
+- Keep branches short-lived: merge early, merge often.  
+- Each branch should focus on a single, clear topic.  
+- Avoid long-running branches or parallel document versions.
+- Documentation changes are collaborative but should remain traceable and easy to review.
 
+### Branch Naming Convention
+
+The documentation repository follows a **trunk-based development workflow** similar to our Odoo projects, with lightweight and short-lived branches.
+
+#### Main branch
+- **`main`** is the source of truth and represents the published version of the documentation (public or internal).
+
+#### Working branches
+Branches are created for short, focused contributions and merged quickly into `main` using **squash merges**.
+
+Use clear and thematic prefixes instead of ticket-based names:
+
+| Prefix | Purpose | Example |
+|---------|----------|----------|
+| `doc/` | New documentation page or section | `doc/hooks`, `doc/migrations` |
+| `fix/` | Minor fix or correction | `fix/typo`, `fix/links` |
+| `rev/` | Major revision or restructuring | `rev/architecture`, `rev/sections-order` |
+| `draft/` | Work in progress, not yet validated | `draft/quality-charter` |
+
+
+_This convention keeps the documentation process consistent with our trunk-based philosophy while staying lightweight and contributor-friendly._
 
 ### Running Locally
 ```bash
