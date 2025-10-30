@@ -762,3 +762,75 @@ See also: [Security](https://www.odoo.com/documentation/19.0/developer/reference
 ## XX. Views
 
 *Content to be written: structure, view names, widgets, usability.*
+
+
+## XX. Migrations Scripts
+
+*Content to be written: when to use, structure, best practices.*
+
+## XX. Hooks
+
+Hooks are special functions automatically called by Odoo during a module’s lifecycle.  
+They allow executing **custom logic before or after installation/uninstallation**, or at **server load time**.
+
+| Hook name | Arguments | Execution moment | Purpose / Typical use case | Remarks |
+|------------|------------|------------------|-----------------------------|----------|
+| **`pre_init_hook`** | `cr` *(cursor)* | **Before module installation** | Prepare database structures or fix legacy data **before models are created**.<br>Example: rename SQL columns, remove obsolete constraints, create missing sequences. | Runs with no ORM, only SQL. Keep it short and idempotent. |
+| **`post_init_hook`** | `cr, registry` | **Right after installation** | Finalize setup once the ORM and registry are ready.<br>Example: populate computed fields, initialize demo data, register external integrations. | Use only for first-time setup — **not for migrations**. |
+| **`uninstall_hook`** | `cr, registry` | **After uninstallation** | Cleanup operations related to this module.<br>Example: delete orphaned records, unregister webhooks, remove temp data. | Should not alter data from other modules. |
+| **`post_load`** *(undocumented)* | *(none)* | **At server load**, before registry initialization | Initialize **server-wide features** that apply across databases.<br>Example: monkey-patching, logging setup, registering HTTP controllers. | Very early in load sequence — no ORM, no models. Use sparingly. |
+
+---
+
+### How to Declare
+
+In your module’s `__manifest__.py`:
+```python
+{
+    "pre_init_hook": "pre_init",
+    "post_init_hook": "post_init",
+    "uninstall_hook": "uninstall",
+    "post_load": "after_load",  # not officially documented
+}
+```
+
+In your module’s `__init__.py`:
+```python
+def pre_init(cr):
+    # raw SQL operations before models exist
+    pass
+
+def post_init(cr, registry):
+    # ORM-safe initialization right after install
+    pass
+
+def uninstall(cr, registry):
+    # cleanup logic on uninstall
+    pass
+
+def after_load():
+    # executed when the server loads modules
+    pass
+```
+
+---
+
+### Hooks vs. Migration Scripts
+
+Hooks are **lifecycle helpers**, not **version migration tools**.  
+When upgrading a module between versions, Odoo automatically executes Python scripts stored in:
+
+```
+mymodule/
+ └── migrations/
+     └── 18.0.1.0.0/
+         └── post-migration.py
+```
+
+Migration scripts are the right place for:
+- Schema changes (fields, constraints)
+- Data transformations between versions
+- Backfilling or recomputing fields
+- Cleanup of obsolete records
+
+Hooks, by contrast, serve only for **installation/uninstallation setup**, or **global runtime logic**.
