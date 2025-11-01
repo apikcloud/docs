@@ -1,0 +1,43 @@
+name: Translate
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "docs/**.md"
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt --break-system-packages
+
+      - name: Run aggregation script
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}        
+        run: python3 scripts/translate.py
+
+      - name: Commit translations
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if [[ -n "$(git status --porcelain fr/)" ]]; then
+            git add fr/ .translation_cache.json
+            git commit -m "chore(docs): regenerate aggregated documentation"
+            git push
+          else
+            echo "No changes detected in translated documentation"
+          fi          
+
