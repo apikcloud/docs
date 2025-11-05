@@ -40,4 +40,7 @@ Please follow the migration guide according to the target version, for example [
 
 If you plan to migrate a module, please first declare your intention by commenting on the migration issue. This helps avoid duplication of effort.
 
+If no migration repository exists, create a fork in the `apikcloud` organization using the `oca-` prefix,  
+and apply permissions according to the rules currently in force.
+
 <mark>To be completed</mark>
