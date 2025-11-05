@@ -22,6 +22,24 @@ We follow a **trunk-based development** approach:
 - Each branch must be linked to a tracked task for context and traceability.
 - Branches are deleted after merge.
 
+```mermaid
+gitGraph
+    commit id: "Initial commit"
+    branch feat/1/desc
+    checkout feat/1/desc
+    commit
+    commit
+    checkout main
+    merge feat/1/desc 
+    commit
+    branch feat/2/desc
+    checkout feat/2/desc
+    commit id: "feat: desc"
+    checkout main
+    merge feat/2/desc    
+    commit id: "chore(changelog): release v0.1.0" tag: "v0.1.0"
+```
+
 ## Integration Flow
 
 1. **Create branch** from `main`.  

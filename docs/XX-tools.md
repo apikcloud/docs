@@ -2,7 +2,7 @@
 
 ## apikzilla
 
-What is Apikzilla?
+**What is Apikzilla?**
 
 Apikzilla is a **cross-platform command-line tool** (CLI) for **Windows**, **macOS**, and **Linux**, connected to our hosting platform.
 
