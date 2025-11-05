@@ -1,7 +1,7 @@
 - [ Introduction ](README.md)
 - [ Philosophy ](01-philosophy.md)
 - [ Methodology ](02-methodology.md)
-- [ Platforms ](03-platforms.md)
+- [ Hosting Solutions ](03-hosting.md)
 - [ Project Organization ](04-organization.md)
 - [ Development Workflow ](05-workflow.md)
 - [ Commits ](06-commits.md)

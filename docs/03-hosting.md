@@ -1,4 +1,4 @@
-# Platforms Overview
+# Hosting Solutions Overview
 
 <mark> Status: Draft — Pending Review and Approval </mark>
 
@@ -11,7 +11,7 @@
 
 | Platform | Who operates | How we ship | Where code runs | Image build | Trunk-based notes |
 |---------|---------------|-------------|-----------------|-------------|-------------------|
-| **Apik Cloud (managed)** | Apik | Docker image per project | Kubernetes/containers | **Yes** (CI builds client image) | Standard trunk-based |
+| **Apikcloud (managed)** | Apik | Docker image per project | Kubernetes/containers | **Yes** (CI builds client image) | Standard trunk-based |
 | **On‑premise (customer)** | Customer (with Apik support) | Docker image per project, delivered as artifact | Customer’s infra (VM, Docker host, k8s) | **Yes** (same as Cloud) | Standard trunk-based |
 | **Odoo.sh** | Odoo | Git repository only | Odoo.sh platform | **No** (platform builds & runs) | Slight adaptation (detailed elsewhere) |
 
@@ -23,13 +23,14 @@ For **Apik Cloud** and **on‑premise** deployments, we ship a **self‑containe
 
 - The **base Odoo image** is selected by `odoo_version.txt` (major version, e.g. `18.0`).
 - CI builds the **client image** by layering project code and third‑party modules on top of the selected base.
-- The resulting image is **tagged by version** (e.g. `registry.example/apik/{client}-{project}:v1.5.0`) and promoted from staging → preproduction → production.
+- The resulting image is **tagged by version** and promoted from staging → preproduction → production.
 - We keep build logs and image digests for **traceability and rollback**.
 
 **Key benefits**
 - Identical artifact for staging and production (**reproducibility**).
 - Zero dependency on external networks at deploy time (**reliability**).
-- Controlled upgrade path (Python, Node, wkhtmltopdf, etc.) tied to the base image.
+- Clear separation between base Odoo and project code (**maintainability**).
+- Binaries and Python dependencies are included in the image (**stability**).
 
 > The same image build process is used for **on‑premise**. We provide the Docker image (and compose/k8s manifests if needed), the customer deploys it in their environment.
 
@@ -59,8 +60,8 @@ apik/odoo:18.0-<release-date>-<enterprise>
 
 **Image naming (example)**
 ```
-registry.apik.cloud/{client}/{project}:v1.5.0
-registry.apik.cloud/{client}/{project}:sha-{shortsha}
+apik/odoo-{client project}:main
+apik/odoo-{client project}:v1.5.0
 ```
 
 

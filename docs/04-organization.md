@@ -41,8 +41,6 @@ For existing projects, conformance is enforced by the [Update repository](https:
 | `/.third-party` | **Git submodules only** (OCA, vendors, **apikcloud/apik-addons**). |
 | `/.github/workflows` | CI/CD pipelines for build, deployment, tests, and maintenance. |
 | `/.devcontainer` | Development container configuration. |
-| `/scripts` | Utility scripts for CI/CD, deployment, and maintenance. |
-| `/apikcloud` | Deployment configuration and Kubernetes manifests when applicable. |
 
 **Note on `apik-addons`**  
 Apik’s generic modules live in a **separate repository** and are included **as a submodule**
@@ -65,19 +63,23 @@ The following files are **mandatory** in every project. They come from the
 | `.ruff.toml` / `.flake8` / `.pylintrc` | Static analysis configuration | Quality Team | Don’t relax rules without approval |
 | `.gitmodules` | Catalog of third‑party submodules | Developer | Keep aligned with `/.third-party` |
 | `.gitignore` / `.dockerignore` | Ignore rules for Git/Docker builds | Developer | Keep noise and secrets out of images |
+| `migrate.sh` | Migration helper script | Developer | Update when migration process changes |
 
 **Examples**
 
 `odoo_version.txt` (single line):
 ```
-18.0
+apik/odoo:18.0-<release-date>-<enterprise>
 ```
 
-`packages.txt` (one package per line, minimal set):
+`packages.txt` (one package per line):
 ```
-postgresql-client
-wkhtmltopdf
-fonts-dejavu
+xmlsec1
+```
+
+`requirements.txt` (one package per line):
+```
+pysaml2
 ```
 
 ---
