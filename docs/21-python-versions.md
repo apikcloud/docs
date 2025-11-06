@@ -1,7 +1,5 @@
 # Python Versions
 
-<mark> Status: Draft — Pending Review and Approval </mark>
-
 | Odoo | OS | Python | PG client |
 | ---- | --- | ---- | ----- |
 | 10.0 | Debian Jessie | 2.7.9 | 11.5 |
@@ -13,4 +11,4 @@
 | 16.0 | Debian Bullseye | 3.9.2 | 16.3 |
 | 17.0 | Ubuntu Jammy | 2.7.9 | 16.4 |
 | 18.0 | Ubuntu Noble | 3.10.12 | 17 |
-| 19.0 | -- | -- | -- |
+| 19.0 | Ubuntu Noble | 3.12.3 | 18 |

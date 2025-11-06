@@ -1,4 +1,4 @@
-# 8. Migrations Guide
+# Migrations Guide
 
 <mark> Status: Draft — Pending Review and Approval </mark>
 
@@ -7,7 +7,7 @@
 > Migrations are critical transitions — they must be **predictable, reversible, and auditable**.
 
 
-## 1. Purpose & Scope
+## Purpose & Scope
 
 This guide covers:
 - data structure changes between releases,
@@ -19,7 +19,7 @@ but documents the *functional and technical steps* required to ensure a safe tra
 
 
 
-## 2. Principles
+## Principles
 
 - **One migration = one documented process.**
 - **Reproducibility first:** every step must be executable on preproduction before production.
@@ -29,7 +29,7 @@ but documents the *functional and technical steps* required to ensure a safe tra
 
 
 
-## 3. When to Document a Migration
+## When to Document a Migration
 
 A `MIGRATION.md` entry is required when:
 - the **data model** changes (fields, constraints, model rename),
@@ -40,7 +40,7 @@ A `MIGRATION.md` entry is required when:
 - or **functional testing** is required before reactivation.
 
 
-## 4. Structure of a Migration Entry
+## Structure of a Migration Entry
 
 Each migration is grouped by target version:
 
@@ -113,7 +113,7 @@ The migration is considered complete when:
 - The **Technical Referent** validates the release.
 
 
-## 5. Roles
+## Roles
 
 | Role | Responsibility |
 |------|----------------|
@@ -123,7 +123,7 @@ The migration is considered complete when:
 | **Hosting Team** | Executes migrations on staging and production |
 
 
-## 6. Location and Versioning
+## Location and Versioning
 
 - The file `MIGRATION.md` lives at the project root.  
 - Each release with a migration must include its own section.
@@ -137,7 +137,7 @@ See detailed steps in [MIGRATION.md](./MIGRATION.md) for v1.5.0.
 ```
 
 
-## 7. Tips for Odoo Projects
+## Tips for Odoo Projects
 
 - Always test migrations on a **copy of the production database**.
 - Use `--stop-after-init` to perform schema upgrades safely.

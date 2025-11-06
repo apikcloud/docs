@@ -1,5 +1,7 @@
 # Community
 
+<mark> Status: Draft — Pending Review and Approval </mark>
+
 ## What is OCA?
 
 **OCA website**: [https://odoo-community.org/](https://odoo-community.org/)

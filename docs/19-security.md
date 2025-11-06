@@ -1,5 +1,7 @@
 # Security
 
+<mark> Status: Draft — Pending Review and Approval </mark>
+
 ## About Security in Odoo
 
 [Security](https://www.odoo.com/security#part_12)

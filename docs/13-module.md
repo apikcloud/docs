@@ -1,4 +1,4 @@
-# 10. Module Guidelines
+# Module Guidelines
 
 <mark> Status: Draft — Pending Review and Approval </mark>
 
