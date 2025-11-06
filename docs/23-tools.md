@@ -1,6 +1,6 @@
 # Tools
 
-## apikzilla
+## Apikzilla
 
 **What is Apikzilla?**
 
@@ -15,3 +15,14 @@ In short, it serves as the single entry point for managing Odoo backups outside 
 
 - **Source and documentation**: https://github.com/apikcloud/apikzilla-cli
 - **Public releases**: https://github.com/apikcloud/apikzilla/releases
+
+## Odoo Module Migrator
+
+The Odoo Module Migrator is a tool designed to assist in the migration of Odoo modules between different versions. It provides a set of utilities to automate common tasks and ensure a smooth transition.
+
+- **Source and documentation**: https://github.com/OCA/odoo-module-migrator
+
+- **Installation**:
+  ```bash
+  pip install odoo-module-migrator
+  ```

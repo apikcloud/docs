@@ -46,3 +46,7 @@ If no migration repository exists, create a fork in the `apikcloud` organization
 and apply permissions according to the rules currently in force.
 
 <mark>To be completed</mark>
+
+> Package `odoo-module-migrator` is required; please refer to the [Tools](23-tools.md) page.
+> 
+> The scripts mentioned can be found in the [apikcloud/scripts](https://github.com/apikcloud/scripts) repository.
