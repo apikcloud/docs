@@ -38,3 +38,7 @@ The Odoo Module Migrator is a tool designed to assist in the migration of Odoo m
   ```bash
   pip install odoo-module-migrator
   ```
+- **Update**:
+  ```bash
+  python3 -m pip install -U git+https://github.com/OCA/odoo-module-migrator.git --upgrade --break-system-packages
+  ```
