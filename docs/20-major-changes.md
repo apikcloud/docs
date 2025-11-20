@@ -54,3 +54,42 @@ _product_uniq = models.Constraint(
         "Product must be only once on a pack!",
     )
 ```
+
+### Public widgets & Interaction
+
+Public widgets are replaced by Interaction, a new little "framework" similar to OWL.
+
+**Old way:**
+```javascript
+/** @odoo-module **/
+
+import publicWidget from "@web/legacy/js/public/public_widget";
+
+publicWidget.registry.multirangePriceSelector = publicWidget.Widget.extend({
+    selector: '.o_wsale_products_page',
+    events: {
+        'newRangeValue #o_wsale_price_range_option input[type="range"]': '_onPriceRangeSelected',
+    },
+
+    // Functions
+});
+```
+
+**New way:**
+```javascript
+import { Interaction } from '@web/public/interaction';
+import { registry } from '@web/core/registry';
+
+export class PriceRange extends Interaction {
+    static selector = '#o_wsale_price_range_option';
+    dynamicContent = {
+        'input[type="range"]': { 't-on-newRangeValue': this.onPriceRangeSelected },
+    };
+
+    // Functions
+}
+
+registry
+    .category('public.interactions')
+    .add('website_sale.price_range', PriceRange);
+```
