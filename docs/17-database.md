@@ -1,7 +1,5 @@
 # Database Management
 
-<mark> Status: Draft — Pending Review and Approval </mark>
-
 ## What is an Odoo backup?
 An Odoo backup is a copy of the Odoo database and associated filestore that captures the current state of the system. This backup can be used to restore the system to a previous state in case of data loss, corruption, or other issues. Backups are generated in the form of a **zip archive** containing:
 - **`dump.sql`**: A SQL dump of the PostgreSQL database containing all Odoo data

@@ -1,0 +1,55 @@
+% header.tex - Version Finale et Stylisée
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+
+\usepackage{graphicx} % Pour le logo
+\usepackage{xcolor} 
+\usepackage{microtype} 
+\usepackage{fontspec}  
+
+% AÉRATION : Interligne plus large
+\usepackage{setspace}
+\setstretch{1.15} 
+
+% Définition de la couleur grise pour l'entête/pied de page
+\definecolor{HeaderFooterGray}{gray}{0.5} % Gris moyen pour la lisibilité
+
+\fancyhead{}
+\fancyfoot{}
+
+% --- Entêtes ---
+% Entête Gauche : Logo (0.75cm)
+\fancyhead[L]{%
+    \includegraphics[height=0.75cm]{assets/logo.png} 
+}
+% Entête Droit : Texte de la documentation en Gris
+\fancyhead[R]{%
+    \color{HeaderFooterGray}\textbf{Documentation Technique}%
+}
+
+% --- Pieds de Page (en Gris) ---
+\fancyfoot[C]{\color{HeaderFooterGray}\thepage}
+\fancyfoot[R]{\color{HeaderFooterGray}\textit{Apik - 2025}}
+
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% --- Configuration Listings ---
+\usepackage{listings}
+\lstset{
+    basicstyle=\ttfamily\scriptsize,
+    breaklines=true, 
+    breakatwhitespace=true,
+    columns=fixed,
+    numbers=none,
+    tabsize=4,
+    showstringspaces=false,
+    frame=single,           
+    rulecolor=\color{black!0}, 
+    framesep=6pt,
+    fillcolor=\color{black!5},
+    backgroundcolor=\color{black!5},
+    keywordstyle=\color{blue}\bfseries, 
+    commentstyle=\color{gray}\itshape, 
+    stringstyle=\color{red}
+}

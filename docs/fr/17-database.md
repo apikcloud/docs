@@ -1,7 +1,5 @@
 # Gestion des bases de Données
 
-<mark> Status: Draft — Pending Review and Approval </mark>
-
 ## Qu'est-ce qu'une sauvegarde Odoo ?
 Une sauvegarde Odoo est une copie de la base de données Odoo et du filestore associé qui capture l'état actuel du système. Cette sauvegarde peut être utilisée pour restaurer le système à un état antérieur en cas de perte de données, de corruption ou d'autres problèmes. Les sauvegardes sont générées sous la forme d'une **archive zip** contenant :
 - **`dump.sql`** : un dump SQL de la base de données PostgreSQL contenant toutes les données Odoo
