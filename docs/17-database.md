@@ -246,7 +246,7 @@ if __name__ == "__main__":
 
         # Drop the database if it already exists
         if dbname in dbs:
-            odoo.service.db.drop_db(dbname)
+            odoo.service.db.exp_drop(dbname)
 
         # Restore the database from the backup file
         odoo.service.db.restore_db(
