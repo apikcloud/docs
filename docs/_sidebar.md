@@ -24,6 +24,6 @@
   - [ Security ](19-security.md)
 - Odoo
   - [ Major Changes ](20-major-changes.md)
-  - [ Python Versions ](21-python-versions.md)
+  - [ Reference Matrix ](21-reference-matrix.md)
 - [ Community ](22-community.md)
 - [ Tools ](23-tools.md)
