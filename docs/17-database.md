@@ -175,6 +175,8 @@ zip -r <backup_filename>.zip dump.sql filestore
 
 A more complete solution could be implemented via a container dedicated to backups, which would have access to the data volumes of the Odoo and Postgres containers, and which would periodically execute the necessary commands to create, store, and/or send backups to an external service (S3 bucket, ftp, etc).
 
+> See the proof of concept available here: [OdooGuard](https://github.com/apikcloud/odooguard).  
+
 ### Bypassing the standard Odoo format
 
 It is also possible within the framework of a custom backup solution to bypass the standard Odoo format. For example, by choosing to perform dumps in folder format, this format has the advantage of being faster to create and restore. It is also the format used by Odoo during upgrades.
