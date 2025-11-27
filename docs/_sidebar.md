@@ -19,6 +19,7 @@
     - [ Odoo ](/99-examples/02-examples.md)
 - Operations
   - [ Hosting Solutions ](16-hosting.md)
+  - [ Configuration ](15-configuration.md)
   - [ Database Management ](17-database.md)
   - [ Technical Stack ](18-stack.md)
   - [ Security ](19-security.md)
