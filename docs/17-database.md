@@ -147,6 +147,7 @@ The [auto_backup](https://github.com/OCA/server-tools/tree/18.0/auto_backup) mod
 ### From the infrastructure
 
 This approach quickly performs a manual dump of the database and a copy of the filestore, and assembles everything into a zip archive conforming to the standard Odoo format. It requires direct access to the database (via psql or a similar tool) and the file system hosting the filestore.
+
 Perform a SQL dump of the PostgreSQL database:
 
 ```bash

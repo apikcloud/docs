@@ -60,11 +60,9 @@ Les limites mémoires sont exprimées en bytes. Les limites temps sont en second
 
 ## Rôle des limites
 
-**Soft vs hard** : le soft laisse finir proprement la requête, le hard agit en coupe‑circuit pour empêcher un débordement mémoire. Une limite soft trop haute rend le hard inefficace, de même qu'un delta trop faible peut interrompre des requêtes légitimes.
-
-**Recyclage via limit_request** : utile pour les dérives mémoire progressives (fuites, comportements de modules tiers, rapports lourds). Le worker repart propre.
-
-**Limites temps** : elles stoppent les requêtes anormalement longues (génération PDF lourde, import de fichiers massifs, traitements complexes) avant qu'elles ne paralysent les workers, mais doivent être suffisantes pour les opérations légitimes.
+- **Soft vs hard** : le soft laisse finir proprement la requête, le hard agit en coupe‑circuit pour empêcher un débordement mémoire. Une limite soft trop haute rend le hard inefficace, de même qu'un delta trop faible peut interrompre des requêtes légitimes. 
+- **Recyclage via limit_request** : utile pour les dérives mémoire progressives (fuites, comportements de modules tiers, rapports lourds). Le worker repart propre. 
+- **Limites temps** : elles stoppent les requêtes anormalement longues (génération PDF lourde, import de fichiers massifs, traitements complexes) avant qu'elles ne paralysent les workers, mais doivent être suffisantes pour les opérations légitimes. 
 
 ---
 
