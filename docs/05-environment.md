@@ -24,11 +24,16 @@ Reviewer:
 - Python 3.11 (for tooling), `pip`
 - (Optional) VS Code + Dev Containers extension
 
+
+### Startkit
+
+A starterkit repository is available to quickly bootstrap the development environment: https://github.com/apikcloud/starterkit.
+
 ### Clone & bootstrap
 ```bash
 # Clone the project
-git clone git@github.com:apikcloud/client-repo.git
-cd client-repo
+git clone git@github.com:apikcloud/<repo>.git <path>
+cd <path>
 
 # Pull third‑party code
 git submodule update --init --recursive
@@ -38,7 +43,7 @@ pip install -U pre-commit
 pre-commit install
 ```
 
-### Dev container (recommended)
+### Dev container (upcoming)
 Open the folder in VS Code and **Reopen in Container**. Tooling and linters are preconfigured.
 
 ### Run Odoo locally (minimal)
@@ -52,7 +57,7 @@ docker compose logs -f odoo
 > Third‑party addons are included as **submodules** in `/.third-party` and exposed via **symlinks at the repository root**. Anything at the root is visible to Odoo; no need to edit `addons_path`.
 
 ### Commit rules (must‑read)
-- Conventional Commits; see [`docs/06-commits.md`](./docs/06-commits.md)
-- One PR per feature; code review required; see [`docs/XX-code-review.md`](./docs/XX-code-review.md)
-- Keep changelog human‑written; see [`docs/07-changelog.md`](./docs/07-changelog.md)
+- Conventional Commits; see [`docs/09-commits.md`](./docs/09-commits.md)
+- One PR per feature; code review required; see [`docs/12-code-review.md`](./docs/12-code-review.md)
+- Keep changelog human‑written; see [`docs/10-changelog.md`](./docs/10-changelog.md)
 
