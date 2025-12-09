@@ -12,7 +12,7 @@ Reviewer:
 
 # CI/CD
 
-<mark> Status: Draft — Pending Review and Approval </mark>
+<mark> Statut : Brouillon, en attente de révision et d'approbation</mark>
 
 *Contenu à rédiger : pipelines CI/CD, contrôles qualité, processus de mise en production.*
 
