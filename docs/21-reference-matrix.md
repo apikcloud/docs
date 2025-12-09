@@ -1,3 +1,15 @@
+<!--
+© 2025 Apik — All rights reserved.
+Licensed under CC BY-NC-ND 4.0 International.
+https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+File: 21-reference-matrix
+Project: aikcloud/docs
+Last update: 2025-12-08
+Status: Draft
+Reviewer: 
+-->
+
 # Reference Matrix
 
 The following table summarizes the supported Python versions, PostgreSQL tools, and operating systems for each Docker image corresponding to Odoo major versions.

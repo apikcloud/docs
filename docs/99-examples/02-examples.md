@@ -1,3 +1,15 @@
+<!--
+© 2025 Apik — All rights reserved.
+Licensed under CC BY-NC-ND 4.0 International.
+https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+File: 02-examples
+Project: aikcloud/docs
+Last update: 2025-12-08
+Status: Draft
+Reviewer: 
+-->
+
 # Odoo Code Quality Examples (Bad vs Good)
 
 Each example shows a **Bad** and a **Good** pattern with a brief rationale.

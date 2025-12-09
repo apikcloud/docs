@@ -1,3 +1,15 @@
+<!--
+© 2025 Apik — All rights reserved.
+Licensed under CC BY-NC-ND 4.0 International.
+https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+File: 05-environment
+Project: aikcloud/docs
+Last update: 2025-12-08
+Status: Draft
+Reviewer: 
+-->
+
 # Environment Setup
 
 <mark> Status: Draft — Pending Review and Approval </mark>

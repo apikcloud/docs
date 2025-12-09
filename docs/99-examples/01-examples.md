@@ -1,3 +1,15 @@
+<!--
+© 2025 Apik — All rights reserved.
+Licensed under CC BY-NC-ND 4.0 International.
+https://creativecommons.org/licenses/by-nc-nd/4.0/
+
+File: 01-examples
+Project: aikcloud/docs
+Last update: 2025-12-08
+Status: Draft
+Reviewer: 
+-->
+
 # Python Examples
 
 This document lists common coding patterns with **Bad** and **Good** examples.  

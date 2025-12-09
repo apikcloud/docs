@@ -36,6 +36,16 @@
       crossChapter: true,
       crossChapterText: true,
       notFoundPage: true,
+      // coverpage: ['/', '/fr/'],
+      fallbackLanguages: ["fr"],
+      namespaces: [
+        {
+          id: "lang",
+          values: ["uk", "fr"],
+          optional: true,
+          selector: "#lang-selector",
+        }
+      ],
     }
   </script>
   

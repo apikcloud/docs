@@ -11,30 +11,30 @@ Reviewer: royaurelien
 -->
 
 - [ Introduction ](README.md)
-- [ Philosophy ](01-philosophy.md)
-- [ Methodology ](02-methodology.md)
-- Project
-  - [ Organization ](04-organization.md)
-  - [ Environment ](05-environment.md)
-  - [ Releases ](06-releases.md)
+- [ Philosophie ](01-philosophy.md)
+- [ éthodologie ](02-methodology.md)
+- Projet
+  - [ Organisation ](04-organization.md)
+  - [ Environnement ](05-environment.md)
+  - [ Versions ](06-releases.md)
   - [ CI/CD ](07-cicd.md)
-- Development
+- Développement
   - [ Workflow ](08-workflow.md)
   - [ Commits ](09-commits.md)
   - [ Changelog ](10-changelog.md)
   - [ Migrations ](11-migrations.md)
-  - [ Code Review ](12-code-review.md)
-  - [ Module Guidelines ](13-module.md)
-  - [ Unit Tests ](14-unit-tests.md)
-  - Code Examples
+  - [ Revue de code ](12-code-review.md)
+  - [ Module ](13-module.md)
+  - [ Tests unitaires ](14-unit-tests.md)
+  - Exemples de code
     - [ Python ](/99-examples/01-examples.md)
     - [ Odoo ](/99-examples/02-examples.md)
-- Operations
-  - [ Hosting Solutions ](16-hosting.md)
+- Opérations
+  - [ Solutions d'hébergement ](16-hosting.md)
   - [ Configuration ](15-configuration.md)
-  - [ Database Management ](17-database.md)
-  - [ Technical Stack ](18-stack.md)
-  - [ Security ](19-security.md)
+  - [ Gestion de base de données ](17-database.md)
+  - [ Stack technique ](18-stack.md)
+  - [ Sécurité ](19-security.md)
 - Odoo
   - [ Major Changes ](20-major-changes.md)
   - [ Reference Matrix ](21-reference-matrix.md)

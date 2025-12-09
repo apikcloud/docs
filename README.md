@@ -128,4 +128,4 @@ This clearly indicates that the page is **provisional** and subject to review.
 
 ## License
 
-This repository is distributed under the [MIT License](./LICENSE).
+This repository is distributed under the [CC BY-NC-ND 4.0 License](./LICENSE).
