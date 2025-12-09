@@ -28,6 +28,7 @@
     window.$docsify = {
       name: 'The Apik Way',
       repo: 'apikcloud/docs',
+      homepage: 'home.md',
       auto2top: true,
       logo: '/_media/logo.png',
       loadSidebar: true,
@@ -35,8 +36,9 @@
       subMaxLevel: 3,
       crossChapter: true,
       crossChapterText: true,
-      notFoundPage: true,
-      // coverpage: ['/', '/fr/'],
+      notFoundPage: ['/', '/fr/'],
+      relativePath: true,
+      coverpage: ['/', '/fr/'],
       fallbackLanguages: ["fr"],
       namespaces: [
         {

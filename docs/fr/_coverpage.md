@@ -3,7 +3,7 @@
 Licensed under CC BY-NC-ND 4.0 International.
 https://creativecommons.org/licenses/by-nc-nd/4.0/
 
-File: _coverpage
+File: 01-philosophy
 Project: aikcloud/docs
 Last update: 2025-12-08
 Status: Draft
@@ -11,15 +11,11 @@ Reviewer:
 -->
 
 
-![logo](_media/logo.png)
+![logo](../_media/logo.png)
 
-# docsify <small>3.5</small>
+# The Apik Way
 
-> A magical documentation site generator.
+> Documentation technique
 
-- Simple and lightweight
-- No statically built html files
-- Multiple themes
-
-[GitHub](https://github.com/docsifyjs/docsify/)
-[Get Started](#docsify)
+[GitHub](https://github.com/apikcloud/docs)
+[Commencer](/fr/home)

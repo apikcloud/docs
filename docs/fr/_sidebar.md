@@ -10,9 +10,9 @@ Status: Stable
 Reviewer: royaurelien
 -->
 
-- [ Introduction ](README.md)
+- [ Introduction ](home.md)
 - [ Philosophie ](01-philosophy.md)
-- [ éthodologie ](02-methodology.md)
+- [ Méthodologie ](02-methodology.md)
 - Projet
   - [ Organisation ](04-organization.md)
   - [ Environnement ](05-environment.md)

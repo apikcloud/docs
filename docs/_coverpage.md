@@ -13,13 +13,9 @@ Reviewer:
 
 ![logo](_media/logo.png)
 
-# docsify <small>3.5</small>
+# The Apik Way
 
-> A magical documentation site generator.
+> Technical documentation
 
-- Simple and lightweight
-- No statically built html files
-- Multiple themes
-
-[GitHub](https://github.com/docsifyjs/docsify/)
-[Get Started](#docsify)
+[GitHub](https://github.com/apikcloud/docs)
+[Get Started](/home)

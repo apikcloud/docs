@@ -10,7 +10,7 @@ Status: Stable
 Reviewer: royaurelien
 -->
 
-- [ Introduction ](README.md)
+- [ Introduction ](home.md)
 - [ Philosophy ](01-philosophy.md)
 - [ Methodology ](02-methodology.md)
 - Project

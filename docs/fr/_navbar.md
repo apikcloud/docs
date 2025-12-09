@@ -10,6 +10,6 @@ Status: Stable
 Reviewer: royaurelien
 -->
 
-- Translations
+- Traductions:
   - [:uk: English](/)
   - [:fr: Français](/fr/)
