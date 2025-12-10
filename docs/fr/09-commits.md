@@ -12,15 +12,15 @@ Reviewer:
 
 # Directives pour commit
 
-<mark> Status: Draft — Pending Review and Approval </mark>
+<mark> Statut : Projet — En attente de révision et d'approbation </mark>
 
 > Les commits constituent l'unité de changement la plus petite et la plus significative.<br> Ils expliquent *pourquoi* le code existe, et pas seulement *ce qui* a été modifié.
 
-## Message Convention
+## Convention de message
 
-We follow the **[Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)** specification to keep messages consistent and automatable.
+Nous suivons la spécification **[Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)** pour garantir la cohérence et l'automatisation des messages.
 
-### Syntax
+### Syntaxe
 
 ```
 <type>(optional scope): <short summary>
@@ -30,7 +30,7 @@ We follow the **[Conventional Commits 1.0.0](https://www.conventionalcommits.org
 [optional footer(s)]
 ```
 
-**Example**
+**Exemple**
 
 ```
 feat(account): add invoice merge wizard
@@ -41,24 +41,24 @@ Closes #1234
 
 ## Types
 
-Type | Meaning | Example
+Type | Signification | Exemple
 --- | --- | ---
-**feat** | New feature | `feat(mail): support DKIM signature`
-**fix** | Bug fix | `fix(project): avoid crash on archived tasks`
+**feat** | Nouvelle fonctionnalité | `feat(mail): support DKIM signature`
+**fix** | Correction de bug | `fix(project): avoid crash on archived tasks`
 **refactor** | Modification interne du code sans changement de comportement | `refactor(base): simplify partner search domain`
-**docs** | Documentation change | `docs: add deployment workflow diagram`
-**style** | Code style, formatting, missing commas, etc. | `style(account): reformat import wizard`
-**test** | Add or update tests | `test(project): add regression test for task stages`
-**chore** | Maintenance or tooling | `chore(ci): upgrade pre-commit hooks`
+**docs** | Modification de la documentation | `docs: add deployment workflow diagram`
+**style** | Style de code, formatage, virgules manquantes, etc. | `style(account): reformat import wizard`
+**test** | Ajouter ou mettre à jour les tests | `test(project): add regression test for task stages`
+**chore** | Maintenance ou outillage | `chore(ci): upgrade pre-commit hooks`
 **build** | Modifications apportées au système de build, aux dépendances, à Docker, etc. | `build(docker): bump Python base image`
-**perf** | Performance improvement | `perf(account): optimize reconciliation lookup`
-**ci** | CI/CD config or scripts | `ci(github): parallelize test workflow`
-**revert** | Revert a previous commit | `revert: fix(account): wrong domain in partner search`
+**perf** | Amélioration des performances | `perf(account): optimize reconciliation lookup`
+**ci** | Configuration ou scripts CI/CD | `ci(github): parallelize test workflow`
+**revert** | Annuler un commit précédent | `revert: fix(account): wrong domain in partner search`
 **release** | Préparer une nouvelle release | `release: v1.2.0`
 
 ## Champ d'application
 
-The **scope** indicates which part of the system is affected — it’s optional but useful when:
+Le **champ d'application** indique la partie du système concernée ; il est facultatif, mais utile lorsque :
 
 - Le projet est vaste ou modulaire (ex : modules Odoo, CI, Docker, infrastructure).
 - Vous souhaitez filtrer les commits dans les changelogs par domaine.
@@ -69,26 +69,26 @@ The **scope** indicates which part of the system is affected — it’s optional
 account, project, mail, base, docker, ci, infra, tests, docs
 ```
 
-## Content Rules
+## Règles relatives au contenu
 
 - Une modification logique par commit (**commits atomiques**).
-- Keep the first line under **72 characters**.
-- Explain *why* when the reason isn’t obvious.
+- La première ligne ne doit pas dépasser **72 caractères** .
+- Expliquez *pourquoi* lorsque la raison n'est pas évidente.
 - Évitez les messages vagues comme « update », « fix issue », « stuff ».
-- Reference the related ticket if applicable:
+- Veuillez vous référer au ticket correspondant, le cas échéant :
     ```
     feat: add mail alias sync [#1234]
     ```
-- Before merging, **squash or rebase** to keep a clean linear history.
+- Avant la fusion, **effectuez un squash ou un rebase** pour conserver un historique linéaire propre.
 
-## Tips
+## Conseils
 
-- Keep the summary short and clear.
-- Use the body to describe context or motivation if needed.
-- Reference issues or tickets with `Closes #1234` or `[AP-456]`.
+- Rédigez un résumé court et clair.
+- Utilisez le corps du texte pour décrire le contexte ou la motivation, si nécessaire.
+- Référencez les problèmes ou les tickets avec `Closes #1234` ou `[AP-456]` .
 - Évitez les messages sans signification (« update », « minor change », « final »).
 - La constance est plus importante que la perfection.
 
-## Why It Matters
+## Pourquoi c'est important
 
 Un historique lisible = des reviews plus rapides, des changelogs plus clairs et un dépannage plus facile.<br>Chaque commit est un fil conducteur pour les futurs développeurs — faites-en des utiles.
