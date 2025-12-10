@@ -42,8 +42,6 @@ build/
 public/
 
 # IDE / editors
-.vscode/
-.idea/
 *.iml
 
 # OS-specific
