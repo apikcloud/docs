@@ -54,53 +54,64 @@ Please follow the migration guide according to the target version, for example [
 
 #### Preparation
 
->Three files are required (available in the [scripts repository](https://github.com/apikcloud/scripts/tree/main/oca_migration)):
->
->* **env.sh**: Needed to define OCA module migration parameters
->* **create_migrate_rep.sh**: Automate commands before starting migration code >(subfolder creation, git clone, pre-commit, ...)
->* **push_remote.sh**: Automate commands executed after migration code (commit, remote add, push)
 
->Package `odoo-module-migrator` is required; please refer to the [Tools](23-tools.md) page.
+Package `odoo-module-migrator` must be installed (please refer to the [Tools](23-tools.md) page), and you must retrieve the following three files from [scripts repository](https://github.com/apikcloud/scripts/tree/main/oca_migration):
 
-#### Procedure
+
+| File Name               | Description                                                |
+|-------------------------|------------------------------------------------------------|
+| **env.sh** | Needed to define OCA module migration parameters |
+| **create_migrate_rep.sh** | Automate commands before starting migration code (subfolder creation, git clone, pre-commit, ...) |
+| **push_remote.sh** | Automate commands executed after migration code (commit, remote add, push) |
+
+
+
+#### Procedure 
 
 * First declare your intention by commenting on the migration issue. This helps avoid duplication of effort.
-* Create a **local folder** that contains the **3 files** mentionned in the [preparation step](#preparation)
 * Make sure the **OCA repo is forked** in Apik organization, following the convention name **oca-<repo_name>** and apply permissions according to the rules currently in force.
-* Edit env.sh file following these rules:
-    * **src**: origin version, without the .0 (e.g.: **18**)
-    * **dest**: target version, without the .0 (e.g.: **19**)
-    * **repo**: name of the oca repository (e.g.: **brand**)
-    * **module:** technical name of the module to migrate (e.g.: **partner_brand**)
-* Execute the **create_migrate.sh** script
-* Code step :
-    * Language must be set to **en_US**
-    * All **unit tests must be valid** (see [Unit tests](14-unit-tests.md))
-    * Execute **pre-commit** while errors are detected
-    * Update **CONTRIBUTORS** fiel if exsist, else edit maintaines part in the manifest
+* Create a **local folder** that contains the **3 files** mentionned in the [preparation step](#preparation).
 
-    >If a depends module is not yet migrated to the new version, you need to add the following code in the pyproject.toml to allow tests to be running fine
-    >```toml
-    >[project]
-    >name = "odoo-addons-oca-<migrated_module>"
-    >version = "<version>.<date>.0"
-    >dependencies = [
-    >"odoo-addon-<dependency_module_name> @ git+<oca_repo_link>@refs/pull/<pr_number>/head#subdirectory=<dependency_module_name>", ]
-    >
-    >e.g.:
-    >
-    >[project]
-    >name = "odoo-addons-oca-partner_brand"
-    >version = "19.0.20251106.0"
-    >dependencies = [
-    >"odoo-addon-brand @ git+https://github.com/OCA/brand.git@refs/pull/270/head#subdirectory=brand",
-    >]
-* Execute **push_remote.sh** script
-    * **squash** all commits created during the code step. **Keep only the last one**, created by the script
-    * **Force push** (push -f) to the forked repo
+* Edit `env.sh` file following these rules:
+```bash
+src=18 # Origin version, without the .0
+dest=19 # Target version, without the .0
+repo=brand # Name of the OCA repository
+module=partner_brand # Technical name of the module to migrate
+```
+* Execute the **create_migrate.sh** script.
+* Code step :
+    * Language must be set to **en_US**.
+    * All **unit tests must be valid** (see [Unit tests](14-unit-tests.md)).
+    * Execute **pre-commit** while errors are detected.
+    * Update **CONTRIBUTORS** field if exist, else edit maintainers part in the manifest.
+
+If a depends module is not yet migrated to the new version, you need to add the following code in the pyproject.toml to allow tests to be running fine:
+    
+```toml
+[project]
+    name = "odoo-addons-oca-<migrated_module>"
+    version = "<version>.<date>.0"
+    dependencies = [
+    "odoo-addon-<dependency_module_name> @ git+<oca_repo_link>@refs/pull/<pr_number>/head#subdirectory=<dependency_module_name>", ]
+```
+
+*Example* :
+```toml
+[project]
+name = "odoo-addons-oca-partner_brand"
+version = "19.0.20251106.0"
+dependencies = [
+"odoo-addon-brand @ git+https://github.com/OCA/brand.git@refs/pull/270/head#subdirectory=brand",
+    ]
+```
+
+* Execute `push_remote.sh` script
+    * **squash** all commits created during the code step. **Keep only the last one**, created by the script.
+    * **Force push** (push -f) to the forked repo.
 * **Create the pull request** from the apik repository to the OCA repository
-    * The PR **title** must following this rule : `[VERSION][MIG] <module_name>: Migration to <version>` 
-    >```(e.g.:[19.0][MIG] partner_brand: Migration to 19.0)```
-    * If there is **PR dependencies**, indicate the following text in the **description** : `<dependecny_module_name>: [#<PR_number>](<PR_link>)`
-    >```(e.g.: brand: [#270](https://github.com/OCA/brand/pull/270))```
+    * The PR **title** must following this rule : `[VERSION][MIG] <module_name>: Migration to <version>`   
+    *Example*: `[19.0][MIG] partner_brand: Migration to 19.0)`
+    * If there is **PR dependencies**, indicate the following text in the **description** : `<dependecny_module_name>: [#<PR_number>](<PR_link>)`  
+    *Example*: `brand: [#270](https://github.com/OCA/brand/pull/270)`
     
