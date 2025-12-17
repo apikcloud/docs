@@ -85,25 +85,45 @@ module=partner_brand # Technical name of the module to migrate
     * All **unit tests must be valid** (see [Unit tests](14-unit-tests.md)).
     * Execute **pre-commit** while errors are detected.
     * Update **CONTRIBUTORS** field if exist, else edit maintainers part in the manifest.
+* Post code step *(if required)*:
+    * If a **depends module** is **not yet migrated** to the new version, you need to add the following code in the **test-requirements.xml** to allow tests to be running fine on the OCA repository:
 
-If a depends module is not yet migrated to the new version, you need to add the following code in the pyproject.toml to allow tests to be running fine:
-    
-```toml
-[project]
-    name = "odoo-addons-oca-<migrated_module>"
-    version = "<version>.<date>.0"
-    dependencies = [
-    "odoo-addon-<dependency_module_name> @ git+<oca_repo_link>@refs/pull/<pr_number>/head#subdirectory=<dependency_module_name>", ]
+**`<= v14`**
+
+```txt
+odoo<series>-addon-<module_name> @ git+https://github.com/OCA/<repository>.git@refs/pull/<PR_number>/head#subdirectory=setup/<module_name>
 ```
 
 *Example* :
-```toml
-[project]
-name = "odoo-addons-oca-partner_brand"
-version = "19.0.20251106.0"
-dependencies = [
-"odoo-addon-brand @ git+https://github.com/OCA/brand.git@refs/pull/270/head#subdirectory=brand",
-    ]
+
+```txt
+odoo13-addon-survey_sale_generation @ git+https://github.com/OCA/survey.git@refs/pull/65/head#subdirectory=setup/survey_sale_generation
+```
+
+**`v15 & v16`**
+
+
+```txt
+odoo-addon-<module_name> @ git+https://github.com/OCA/<repository>.git@refs/pull/<PR_number>/head#subdirectory=setup/<module_name>
+```
+
+*Example* :
+
+```txt
+odoo-addon-product_packaging_level @ git+https://github.com/OCA/product-attribute.git@refs/pull/1215/head#subdirectory=setup/product_packaging_level
+```
+
+**`\>= v17`**
+
+
+```txt
+odoo-addon-<module_name> @ git+https://github.com/OCA/<repository>.git@refs/pull/<PR_number>/head#subdirectory=<module_name>
+```
+
+*Example* :
+
+```txt
+odoo-addon-product_packaging_level @ git+https://github.com/OCA/product-attribute.git@refs/pull/1215/head#subdirectory=product_packaging_level
 ```
 
 * Execute `push_remote.sh` script
