@@ -1,11 +1,11 @@
 <!--
-© 2025 Apik — All rights reserved.
+© 2026 Apik — All rights reserved.
 Licensed under CC BY-NC-ND 4.0 International.
 https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 12-code-review
-Project: aikcloud/docs
-Last update: 2025-12-08
+Project: apikcloud/docs
+Last update: 2026-01-05
 Status: Draft
 Reviewer: 
 -->
@@ -20,7 +20,7 @@ Reviewer:
 ## Purpose
 
 Code review ensures that every line of code entering production is:
-- **Correct** — functionally aligned with the ticket or feature goal,
+- **Correct** — functionally aligned with the task or feature goal,
 - **Consistent** — following Apik’s internal development charter,
 - **Maintainable** — clear, tested, and logically structured,
 - **Secure** — free from obvious vulnerabilities or unsafe shortcuts.
@@ -31,16 +31,16 @@ It is also a means of **shared ownership**: reviewers understand the code they a
 ##  Scope and Exceptions
 
 ### Mandatory Reviews
-- All **feature branches** (`feat/<ticket>/<desc>`)
-- All **bug fixes** (`fix/<ticket>/<desc>`)
-- Any **refactor or technical improvement** that impacts shared components.
+- All **feature branches** (`feat/<task>/<desc>`)
+- All **bug fixes** (`fix/<task>/<desc>`)
+- Any **refactor or technical improvement** that impacts shared components
 
 ### Exceptions — “Accelerated Code Delivery”
 A review can be skipped *only* for:
-- Urgent production hotfixes that are **risk-assessed** by the Technical Referent.
+- Urgent production hotfixes that are **risk-assessed** by the Technical Referent or a Reviewer if there's no Technical Referent or is unavailable.
 - Integrations of **third-party modules** without internal modifications.
 
-In such cases, the Technical Referent must **retro-review** the code after deployment  
+In such cases, a Reviewer must **retro-review** the code after deployment  
 and document the exception in the project’s changelog.
 
 
@@ -48,12 +48,12 @@ and document the exception in the project’s changelog.
 
 | Role | Responsibility |
 |------|----------------|
-| **Developer (author)** | Opens the PR, provides clear context, responds to feedback |
+| **Developer (author)** | Opens the PR, provides clear context, responds to feedback, merges to main when validated |
 | **Reviewer** | Checks code quality, style, performance, and maintainability |
-| **Technical Referent** | Final approver; validates the merge to `main` |
+| **Technical Referent (optional)** | Has a global vision of the project and can give its opinion if necessary |
 | **QA (optional)** | Tests functional behavior when relevant |
 
-A pull request must have at least **one approval** from a Technical Referent or an assigned reviewer before merge.
+A pull request must have at least **one approval** from an assigned Reviewer before merge.
 
 
 ## Review Process
@@ -61,11 +61,11 @@ A pull request must have at least **one approval** from a Technical Referent or 
 ### Step 1 — Prepare the Review
 - Rebase your branch on the latest `main` (`git fetch && git rebase origin/main`).
 - Ensure all tests pass locally and pre-commit checks succeed.
-- Squash your commits if necessary (see `COMMITS.md`).
+- Squash your commits if necessary (see [`COMMITS.md`](./COMMITS.md)).
 - Open a Pull Request with:
   - a descriptive title (feature or fix),
   - a clear summary of purpose and impact,
-  - reference to the ticket ID (`[#12345]`).
+  - reference to the task ID (`[#12345]`).
 
 ### Step 2 — Conduct the Review
 Reviewers must:
@@ -90,13 +90,40 @@ Optional tools:
 - The author is responsible for addressing feedback and re-requesting review.
 
 
+## Feedback Rules
+
+There are three types of feedback: critical, suggestion and question.
+
+All the feedbacks can be discussed with the Reviewer in case of disagreement or misunderstanding.
+
+### Critical
+
+- Indicated with a :x:.
+- Used for bugs, optimization issues or big troubles with the readability.
+- They **have to** be corrected.
+
+### Suggestion
+
+- Used for small problems of readability, improvements, or suggest an alternative.
+- They are **optional**.
+- If they are ignored, the Developer must explain why, to keep track.
+- Even if the suggestions are validated by the Developer, there must be at least 
+  a comment acknowledging the fact the suggestions are understood and efficiently 
+  used, not only copy-pasted.
+
+### Question
+
+- Used when more info or context is needed to understand and give a suggestion.
+- They **have to be answered** by the Developer.
+
+
 ## Merge Rules
 
 - **Merges to `main` are done via “Squash & merge” or “Rebase and merge”**.
 - The final commit message must follow the [Conventional Commits](./COMMITS.md) format.
 - No merge commits (`--no-ff` merges are forbidden).
 - Branches must be rebased before merge to ensure linear history.
-- The Technical Referent has the **final say** on whether the branch is ready.
+- The Reviewer has the **final say** on whether the branch is ready.
 
 A merge means:
 > “This feature is ready for staging and may be deployed.”
@@ -108,7 +135,7 @@ A review is considered complete when:
 - All discussions are resolved.
 - Code style and conventions are respected.
 - Tests (unit or functional) are in place or justified.
-- The reviewer can explain the purpose of the change.
+- The Reviewer can explain the purpose of the change.
 
 Avoid “rubber-stamping”: every approval must be **an informed decision**.
 
@@ -131,6 +158,7 @@ Avoid “rubber-stamping”: every approval must be **an informed decision**.
 - Missing dependency in `__manifest__.py`.
 - Lack of `@api.constrains` or `@api.depends` when needed.
 - Hardcoded strings instead of translations.
+- Data loss.
 
 
 ## Checklist for Reviewers
@@ -142,4 +170,4 @@ Avoid “rubber-stamping”: every approval must be **an informed decision**.
 - [ ] Tests (if any) cover critical paths.
 - [ ] No unnecessary dependencies added.
 - [ ] Code readability and clarity are acceptable.
-- [ ] Ticket reference included.
+- [ ] Task reference included.
