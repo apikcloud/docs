@@ -48,12 +48,12 @@ and document the exception in the project’s changelog.
 
 | Role | Responsibility |
 |------|----------------|
-| **Developer (author)** | Opens the PR, provides clear context, responds to feedback |
+| **Developer (author)** | Opens the PR, provides clear context, responds to feedback, merges to main when validated |
 | **Reviewer** | Checks code quality, style, performance, and maintainability |
-| **Technical Referent** | Final approver; validates the merge to `main` |
+| **Technical Referent (optional)** | Has a global vision of the project and can give its opinion if necessary |
 | **QA (optional)** | Tests functional behavior when relevant |
 
-A pull request must have at least **one approval** from a Technical Referent or an assigned reviewer before merge.
+A pull request must have at least **one approval** from an assigned reviewer before merge.
 
 
 ## Review Process
@@ -142,4 +142,4 @@ Avoid “rubber-stamping”: every approval must be **an informed decision**.
 - [ ] Tests (if any) cover critical paths.
 - [ ] No unnecessary dependencies added.
 - [ ] Code readability and clarity are acceptable.
-- [ ] Ticket reference included.
+- [ ] Task reference included.
