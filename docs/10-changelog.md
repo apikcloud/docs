@@ -98,21 +98,19 @@ Optional:
 - **One line per item.**
 - **No prefix** ("Added:", "Fixed:") — the section already defines it.
 - Start directly with the action or object changed.
-- Mention affected **module** in parentheses.
-- End with related **ticket ID** in brackets.
 - Keep lines under **120 chars**.
 - Use strong, descriptive verbs; avoid vague wording.
 
 **Examples (good)**
 ```markdown
 ### Added
-- Merge wizard for draft invoices (account) [#16838]
+- Merge wizard for draft invoices
 
 ### Fixed
-- Refreshing price for subscription components (mgdis_sales) [#16838]
+- Refreshing price for subscription components
 
 ### Changed
-- Manage rights on Sale Order Templates (mgdis_security) [#16836]
+- Manage rights on Sale Order Templates
 ```
 
 **Avoid**
@@ -127,17 +125,7 @@ Optional:
 
 - **Commits**: technical, atomic, dev-focused.
 - **Changelog**: curated, user-focused summary.
-- **Tickets**: link the changelog to project tracking tools.
-
-Ticket reference format:
-```
-(description) [#12345]
-```
-
-Example:
-```
-- Improve invoice PDF header (account) [#17021]
-```
+- **Tasks**: the link with the project tracking tool is done via the commit.
 
 
 ## Team Workflow
