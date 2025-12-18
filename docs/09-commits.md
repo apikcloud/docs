@@ -1,11 +1,11 @@
 <!--
-© 2025 Apik — All rights reserved.
+© 2026 Apik — All rights reserved.
 Licensed under CC BY-NC-ND 4.0 International.
 https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 09-commits
-Project: aikcloud/docs
-Last update: 2025-12-08
+Project: apikcloud/docs
+Last update: 2026-01-07
 Status: Draft
 Reviewer: 
 -->
@@ -25,20 +25,17 @@ messages consistent and automatable.
 ### Syntax
 
 ```
-<type>(optional scope): <short summary>
+<type>(optional scope): <short summary> [#task]
 
 [optional body]
-
-[optional footer(s)]
 ```
 
 **Example**
 
 ```
-feat(account): add invoice merge wizard
+feat(account): add invoice merge wizard [#123456]
 
 This introduces a new wizard allowing users to merge multiple draft invoices.
-Closes #1234
 ```
 
 ## Types
@@ -60,10 +57,10 @@ Closes #1234
 
 ## Scopes
 
-The **scope** indicates which part of the system is affected — it’s optional but useful when:
+The **scope** indicates which part of the system is affected — it's optional but highly recommended as it is useful when:
 
 - The project is large or modular (ex: Odoo addons, CI, Docker, infra).
-- You want to filter commits in changelogs by area.
+- You want to filter commits by area.
 
 **Typical scopes**
 
@@ -76,8 +73,9 @@ account, project, mail, base, docker, ci, infra, tests, docs
 - One logical change per commit (**atomic commits**).
 - Keep the first line under **72 characters**.
 - Explain *why* when the reason isn’t obvious.
+- Highlight important technical details when it is needed.
 - Avoid vague messages like “update”, “fix issue”, “stuff”.
-- Reference the related ticket if applicable:
+- Reference the related task if applicable:
   ```
   feat: add mail alias sync [#1234]
   ```
@@ -87,7 +85,7 @@ account, project, mail, base, docker, ci, infra, tests, docs
 
 - Keep the summary short and clear.
 - Use the body to describe context or motivation if needed.
-- Reference issues or tickets with `Closes #1234` or `[AP-456]`.
+- Use the body to highlight technical details that could help other developers.
 - Avoid meaningless messages (“update”, “minor change”, “final”).
 - Consistency is more valuable than perfection.
 

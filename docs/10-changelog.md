@@ -1,11 +1,11 @@
 <!--
-© 2025 Apik — All rights reserved.
+© 2026 Apik — All rights reserved.
 Licensed under CC BY-NC-ND 4.0 International.
 https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 10-changelog
-Project: aikcloud/docs
-Last update: 2025-12-08
+Project: apikcloud/docs
+Last update: 2026-01-07
 Status: Draft
 Reviewer: 
 -->
@@ -48,9 +48,11 @@ Include:
 - Breaking or behavior-changing updates.
 - Migrations, deprecations, removals.
 - Performance or security improvements.
+- High-impact refactors.
 
 Exclude (unless critical):
-- Refactors, linting, code style.
+- Linting, code style.
+- Low-impact refactors. 
 - CI, tooling, build-only or dependency bumps.
 
 > If a PM, consultant, or client **needs to know**, it belongs here.
@@ -71,16 +73,7 @@ Exclude (unless critical):
 ### Fixed
 - …
 
-### Deprecated
-- …
-
 ### Removed
-- …
-
-### Performance
-- …
-
-### Security
 - …
 
 ### Migration Notes
@@ -88,7 +81,6 @@ Exclude (unless critical):
 ```
 
 Optional:
-- **Odoo Modules Impacted**: `account`, `project`, `mail`, etc.
 - **Known Issues**: short list + workarounds.
 
 
@@ -98,46 +90,29 @@ Optional:
 - **One line per item.**
 - **No prefix** ("Added:", "Fixed:") — the section already defines it.
 - Start directly with the action or object changed.
-- Mention affected **module** in parentheses.
-- End with related **ticket ID** in brackets.
 - Keep lines under **120 chars**.
 - Use strong, descriptive verbs; avoid vague wording.
+- No technical terms.
 
 **Examples (good)**
-```markdown
-### Added
-- Merge wizard for draft invoices (account) [#16838]
 
-### Fixed
-- Refreshing price for subscription components (mgdis_sales) [#16838]
-
-### Changed
-- Manage rights on Sale Order Templates (mgdis_security) [#16836]
-```
+[See template example below.](#template-example)
 
 **Avoid**
 ```
 - Added: various fixes
 - Fixed bug
 - Update stuff
+- Change function button_confirm on stock.picking 
 ```
 
 
-## Relationship with Commits and Tickets
+## Relationship with Commits and Tasks
 
 - **Commits**: technical, atomic, dev-focused.
 - **Changelog**: curated, user-focused summary.
-- **Tickets**: link the changelog to project tracking tools.
-
-Ticket reference format:
-```
-(description) [#12345]
-```
-
-Example:
-```
-- Improve invoice PDF header (account) [#17021]
-```
+- **Tasks**: the link with the tasks is done via the commit.
+- **Impacted scope**: optionally indicated in the commit.
 
 
 ## Team Workflow
@@ -157,7 +132,10 @@ Example:
 
 ## Odoo-Specific Guidance
 
-- Mention affected **addons** and **models** (e.g., `account.move`, `mail.thread`).
+- Mention affected **models** by their **human** names (e.g., `purchase order`, `partner`).
+- Do not mention affected **addons**; except for adding, updating or removing 
+  OCA or third-party modules. In the case of an addition, add a quick summary of the 
+  description of the addon to ensure its use is clear.
 - Flag **data model changes** (fields, constraints, scripts).
 - Note **access rights**, **server parameters**, or **env variables** changes.
 - Summarize **migration steps**; detailed procedures go in `MIGRATION.md`.
@@ -179,16 +157,27 @@ The goal: provide a clear, user-focused history of what has changed, improved, o
 ## [v1.5.0] — 2025-10-12
 
 ### Added
-- Vendor bill OCR with manual fallback (account) [#16838]
+
+- Vendor bill OCR with manual fallback.
+- Wizard to merge invoices.
+- OCA module `partner_firstname` to split partners' names in two fields: first name 
+  and last name.
 
 ### Changed
-- Rights management on Sale Order Templates (mgdis_security) [#16836]
-- Sum of initial amounts in contract form view (mgdis_contract) [#16838]
+
+- Rights management on sale order templates.
+- Add the sum of initial amounts in contract form view.
+- Disable the creation of products on the fly in the sale order templates.
 
 ### Fixed
-- Refreshing subscription component price (mgdis_sales) [#16838]
+
+- Block the possibility to change the product on sale orders after creation to avoid
+  issues with components.
+- Update Odoo version from `18.0-20250625-enterprise` to `18.0-20251215-enterprise` to
+  fix a standard bug that duplicates content in the website.
 
 ### Migration Notes
+
 - Update `mgdis_contract` before `mgdis_sales`.
 ```
 
