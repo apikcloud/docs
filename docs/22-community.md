@@ -5,14 +5,12 @@ https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 22-community
 Project: aikcloud/docs
-Last update: 2025-12-08
-Status: Draft
-Reviewer: 
+Last update: 2025-12-23
+Status: Approved
+Reviewer: royaurelien
 -->
 
 # Community
-
-<mark> Status: Draft — Pending Review and Approval </mark>
 
 ## What is OCA?
 
@@ -88,41 +86,41 @@ module=partner_brand # Technical name of the module to migrate
 * Post code step *(if required)*:
     * If a **depends module** is **not yet migrated** to the new version, you need to add the following code in the **test-requirements.xml** to allow tests to be running fine on the OCA repository:
 
-**`<= v14`**
+**<= 14.0**
 
-```txt
+```xml
 odoo<series>-addon-<module_name> @ git+https://github.com/OCA/<repository>.git@refs/pull/<PR_number>/head#subdirectory=setup/<module_name>
 ```
 
-*Example* :
+*Example:*
 
-```txt
+```xml
 odoo13-addon-survey_sale_generation @ git+https://github.com/OCA/survey.git@refs/pull/65/head#subdirectory=setup/survey_sale_generation
 ```
 
-**`v15 & v16`**
+**15.0 & 16.0**
 
 
-```txt
+```xml
 odoo-addon-<module_name> @ git+https://github.com/OCA/<repository>.git@refs/pull/<PR_number>/head#subdirectory=setup/<module_name>
 ```
 
-*Example* :
+*Example:*
 
-```txt
+```xml
 odoo-addon-product_packaging_level @ git+https://github.com/OCA/product-attribute.git@refs/pull/1215/head#subdirectory=setup/product_packaging_level
 ```
 
-**`\>= v17`**
+**>= 17.0**
 
 
-```txt
+```xml
 odoo-addon-<module_name> @ git+https://github.com/OCA/<repository>.git@refs/pull/<PR_number>/head#subdirectory=<module_name>
 ```
 
-*Example* :
+*Example:*
 
-```txt
+```xml
 odoo-addon-product_packaging_level @ git+https://github.com/OCA/product-attribute.git@refs/pull/1215/head#subdirectory=product_packaging_level
 ```
 
