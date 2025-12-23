@@ -33,14 +33,14 @@ It is also a means of **shared ownership**: reviewers understand the code they a
 ### Mandatory Reviews
 - All **feature branches** (`feat/<ticket>/<desc>`)
 - All **bug fixes** (`fix/<ticket>/<desc>`)
-- Any **refactor or technical improvement** that impacts shared components.
+- Any **refactor or technical improvement** that impacts shared components
 
 ### Exceptions — “Accelerated Code Delivery”
 A review can be skipped *only* for:
-- Urgent production hotfixes that are **risk-assessed** by the Technical Referent.
+- Urgent production hotfixes that are **risk-assessed** by a Reviewer.
 - Integrations of **third-party modules** without internal modifications.
 
-In such cases, the Technical Referent must **retro-review** the code after deployment  
+In such cases, a Reviewer must **retro-review** the code after deployment  
 and document the exception in the project’s changelog.
 
 
@@ -90,13 +90,37 @@ Optional tools:
 - The author is responsible for addressing feedback and re-requesting review.
 
 
+## Feedback Rules
+
+There are three types of feedback: critical, suggestion and question.
+
+All the feedbacks can be discussed with the Reviewer in case of disagreement or misunderstanding.
+
+### Critical
+
+- Indicated with a :x:.
+- Used for bugs, optimization issues or big troubles with the readability.
+- They have to be corrected.
+
+### Suggestion
+
+- Used for small problems of readability, improvements, or suggest an alternative.
+- They are optional.
+- If they are ignored, the Developer must explain why, to keep track.
+
+### Question
+
+- Used when more info or context are needed to understand and give a suggestion.
+- They have to be answered by the Developer (even if the Reviewer already validated the PR, to keep track).
+
+
 ## Merge Rules
 
 - **Merges to `main` are done via “Squash & merge” or “Rebase and merge”**.
 - The final commit message must follow the [Conventional Commits](./COMMITS.md) format.
 - No merge commits (`--no-ff` merges are forbidden).
 - Branches must be rebased before merge to ensure linear history.
-- The Technical Referent has the **final say** on whether the branch is ready.
+- The Reviewer has the **final say** on whether the branch is ready.
 
 A merge means:
 > “This feature is ready for staging and may be deployed.”
