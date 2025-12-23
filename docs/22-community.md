@@ -5,14 +5,12 @@ https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 22-community
 Project: aikcloud/docs
-Last update: 2025-12-08
-Status: Draft
-Reviewer: 
+Last update: 2025-12-23
+Status: Approved
+Reviewer: royaurelien
 -->
 
 # Community
-
-<mark> Status: Draft — Pending Review and Approval </mark>
 
 ## What is OCA?
 
@@ -52,13 +50,86 @@ If no PR exists, refer to the next section *How to proceed*.
 
 Please follow the migration guide according to the target version, for example [Migration to version 19.0](https://github.com/OCA/maintainer-tools/wiki/Migration-to-version-19.0#how-to).
 
-If you plan to migrate a module, please first declare your intention by commenting on the migration issue. This helps avoid duplication of effort.
+#### Preparation
 
-If no migration repository exists, create a fork in the `apikcloud` organization using the `oca-` prefix,  
-and apply permissions according to the rules currently in force.
 
-<mark>To be completed</mark>
+Package `odoo-module-migrator` must be installed (please refer to the [Tools](23-tools.md) page), and you must retrieve the following three files from [scripts repository](https://github.com/apikcloud/scripts/tree/main/oca_migration):
 
-> Package `odoo-module-migrator` is required; please refer to the [Tools](23-tools.md) page.
-> 
-> The scripts mentioned can be found in the [apikcloud/scripts](https://github.com/apikcloud/scripts) repository.
+
+| File Name               | Description                                                |
+|-------------------------|------------------------------------------------------------|
+| **env.sh** | Needed to define OCA module migration parameters |
+| **create_migrate_rep.sh** | Automate commands before starting migration code (subfolder creation, git clone, pre-commit, ...) |
+| **push_remote.sh** | Automate commands executed after migration code (commit, remote add, push) |
+
+
+
+#### Procedure 
+
+* First declare your intention by commenting on the migration issue. This helps avoid duplication of effort.
+* Make sure the **OCA repo is forked** in Apik organization, following the convention name **oca-<repo_name>** and apply permissions according to the rules currently in force.
+* Create a **local folder** that contains the **3 files** mentionned in the [preparation step](#preparation).
+
+* Edit `env.sh` file following these rules:
+```bash
+src=18 # Origin version, without the .0
+dest=19 # Target version, without the .0
+repo=brand # Name of the OCA repository
+module=partner_brand # Technical name of the module to migrate
+```
+* Execute the **create_migrate.sh** script.
+* Code step :
+    * Language must be set to **en_US**.
+    * All **unit tests must be valid** (see [Unit tests](14-unit-tests.md)).
+    * Execute **pre-commit** while errors are detected.
+    * Update **CONTRIBUTORS** field if exist, else edit maintainers part in the manifest.
+* Post code step *(if required)*:
+    * If a **depends module** is **not yet migrated** to the new version, you need to add the following code in the **test-requirements.xml** to allow tests to be running fine on the OCA repository:
+
+**<= 14.0**
+
+```xml
+odoo<series>-addon-<module_name> @ git+https://github.com/OCA/<repository>.git@refs/pull/<PR_number>/head#subdirectory=setup/<module_name>
+```
+
+*Example:*
+
+```xml
+odoo13-addon-survey_sale_generation @ git+https://github.com/OCA/survey.git@refs/pull/65/head#subdirectory=setup/survey_sale_generation
+```
+
+**15.0 & 16.0**
+
+
+```xml
+odoo-addon-<module_name> @ git+https://github.com/OCA/<repository>.git@refs/pull/<PR_number>/head#subdirectory=setup/<module_name>
+```
+
+*Example:*
+
+```xml
+odoo-addon-product_packaging_level @ git+https://github.com/OCA/product-attribute.git@refs/pull/1215/head#subdirectory=setup/product_packaging_level
+```
+
+**>= 17.0**
+
+
+```xml
+odoo-addon-<module_name> @ git+https://github.com/OCA/<repository>.git@refs/pull/<PR_number>/head#subdirectory=<module_name>
+```
+
+*Example:*
+
+```xml
+odoo-addon-product_packaging_level @ git+https://github.com/OCA/product-attribute.git@refs/pull/1215/head#subdirectory=product_packaging_level
+```
+
+* Execute `push_remote.sh` script
+    * **squash** all commits created during the code step. **Keep only the last one**, created by the script.
+    * **Force push** (push -f) to the forked repo.
+* **Create the pull request** from the apik repository to the OCA repository
+    * The PR **title** must following this rule : `[VERSION][MIG] <module_name>: Migration to <version>`   
+    *Example*: `[19.0][MIG] partner_brand: Migration to 19.0)`
+    * If there is **PR dependencies**, indicate the following text in the **description** : `<dependecny_module_name>: [#<PR_number>](<PR_link>)`  
+    *Example*: `brand: [#270](https://github.com/OCA/brand/pull/270)`
+    
