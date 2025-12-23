@@ -155,6 +155,7 @@ Avoid “rubber-stamping”: every approval must be **an informed decision**.
 - Missing dependency in `__manifest__.py`.
 - Lack of `@api.constrains` or `@api.depends` when needed.
 - Hardcoded strings instead of translations.
+- Data loss.
 
 
 ## Checklist for Reviewers
