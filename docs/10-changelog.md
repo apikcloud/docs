@@ -50,7 +50,7 @@ Include:
 - Performance or security improvements.
 
 Exclude (unless critical):
-- Refactors, linting, code style.
+- Linting, code style.
 - CI, tooling, build-only or dependency bumps.
 
 > If a PM, consultant, or client **needs to know**, it belongs here.
@@ -88,7 +88,6 @@ Exclude (unless critical):
 ```
 
 Optional:
-- **Odoo Modules Impacted**: `account`, `project`, `mail`, etc.
 - **Known Issues**: short list + workarounds.
 
 
@@ -121,11 +120,12 @@ Optional:
 ```
 
 
-## Relationship with Commits and Tickets
+## Relationship with Commits and Tasks
 
 - **Commits**: technical, atomic, dev-focused.
 - **Changelog**: curated, user-focused summary.
 - **Tasks**: the link with the project tracking tool is done via the commit.
+- **Impacted modules**: optionally indicated in the commit.
 
 
 ## Team Workflow
