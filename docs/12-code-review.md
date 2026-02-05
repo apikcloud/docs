@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 12-code-review
 Project: apikcloud/docs
-Last update: 2026-01-05
+Last update: 2026-02-05
 Status: Draft
 Reviewer: 
 -->
@@ -40,18 +40,19 @@ A review can be skipped *only* for:
 - Urgent production hotfixes that are **risk-assessed** by the Technical Referent or a Reviewer if there's no Technical Referent or is unavailable.
 - Integrations of **third-party modules** without internal modifications.
 
-In such cases, a Reviewer must **retro-review** the code after deployment  
-and document the exception in the project’s changelog.
+In such cases, a Reviewer must **retro-review** the code after deployment and document the exception in the project’s 
+changelog. Also, the code must be merged into `main` and any tags between the fixed one and the `main`, in case there is
+any.
 
 
 ## Roles
 
-| Role | Responsibility |
-|------|----------------|
-| **Developer (author)** | Opens the PR, provides clear context, responds to feedback, merges to main when validated |
-| **Reviewer** | Checks code quality, style, performance, and maintainability |
-| **Technical Referent (optional)** | Has a global vision of the project and can give its opinion if necessary |
-| **QA (optional)** | Tests functional behavior when relevant |
+| Role                              | Responsibility                                                                            |
+|-----------------------------------|-------------------------------------------------------------------------------------------|
+| **Developer (author)**            | Opens the PR, provides clear context, responds to feedback, merges to main when validated |
+| **Reviewer**                      | Checks code quality, style, performance, and maintainability                              |
+| **Technical Referent (optional)** | Has a global vision of the project and can give its opinion if necessary                  |
+| **QA (optional)**                 | Tests functional behavior when relevant                                                   |
 
 A pull request must have at least **one approval** from an assigned Reviewer before merge.
 
@@ -61,14 +62,21 @@ A pull request must have at least **one approval** from an assigned Reviewer bef
 ### Step 1 — Prepare the Review
 - Rebase your branch on the latest `main` (`git fetch && git rebase origin/main`).
 - Ensure all tests pass locally and pre-commit checks succeed.
-- Squash your commits if necessary (see [`COMMITS.md`](./COMMITS.md)).
+- Squash your commits if necessary (see [`COMMITS.md`](./09-commits.md)).
 - Open a Pull Request with:
   - a descriptive title (feature or fix),
+  - optionally the scope of the commit (e.g. "project", "mrp", "website"),
   - a clear summary of purpose and impact,
-  - reference to the task ID (`[#12345]`).
+  - reference to the task ID (for a single task: `[#12345]`, for multiple tasks: `[#12345, #12346]`).
+
+> **Note**: For large development, it is recommended to query the reviewer even if the development is not finished.
+> It allows the reviewer to give feedback on the development and to avoid a large review.
+> 
+> Avoiding large review also avoids bottleneck for all other projects.
 
 ### Step 2 — Conduct the Review
 Reviewers must:
+- Read the task description and PR summary.
 - Read the code, not just the diff — understand intent.
 - Focus on *why* and *how*, not personal style preferences.
 - Check:
@@ -81,11 +89,24 @@ Reviewers must:
 
 Optional tools:
 - `ruff`, `pylint-odoo`, and pre-commit hooks (should pass before review).
+- In case pre-commit hooks are not passing, the developer must tell the reviewer which hooks are failing.
 - Odoo run logs and functional testing in dev/staging.
+
+> **Note**: In case the guidelines are not respected, the code review is instantly rejected.
+> Examples:
+> - A commit with a title "fix" instead of "fix: ..."
+> - No copyright header
+> - No task ID in the commit message
+> - Incorrect module/file name
+> - Pre-commit hooks not passing
+> And so on...
+> 
+> This is done this way to avoid unnecessary discussions and not to spend too much time on the review as the duration
+> allowed for reviewing code is limited.
 
 ### Step 3 — Feedback & Collaboration
 - Keep feedback **constructive and concise**.
-- Prefer **suggestions over imperatives**.
+- Prefer **suggestions to imperatives**.
 - If unsure, ask for clarification — don’t block unnecessarily.
 - The author is responsible for addressing feedback and re-requesting review.
 
@@ -120,7 +141,7 @@ All the feedbacks can be discussed with the Reviewer in case of disagreement or 
 ## Merge Rules
 
 - **Merges to `main` are done via “Squash & merge” or “Rebase and merge”**.
-- The final commit message must follow the [Conventional Commits](./COMMITS.md) format.
+- The final commit message must follow the [Conventional Commits](./09-commits.md) format.
 - No merge commits (`--no-ff` merges are forbidden).
 - Branches must be rebased before merge to ensure linear history.
 - The Reviewer has the **final say** on whether the branch is ready.

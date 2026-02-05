@@ -145,7 +145,7 @@ The migration is considered complete when:
 Example in `CHANGELOG.md`:
 ```markdown
 ### Migration Notes
-See detailed steps in [MIGRATION.md](./MIGRATION.md) for v1.5.0.
+See detailed steps in [MIGRATION.md](./11-migrations.md) for v1.5.0.
 ```
 
 

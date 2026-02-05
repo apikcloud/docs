@@ -41,11 +41,11 @@ We follow a **trunk-based workflow**:
   - Example: `v1.4.0`
 
 ### Environments
-| Environment | Source | Purpose |
-|--------------|---------|----------|
-| **Staging** | `main` branch (auto-deployed) | Internal validation of merged work |
-| **Preproduction** | Tagged release | Validation before client delivery |
-| **Production** | Tagged release (validated in preprod) | Live system |
+| Environment       | Source                                | Purpose                            |
+|-------------------|---------------------------------------|------------------------------------|
+| **Staging**       | `main` branch (auto-deployed)         | Internal validation of merged work |
+| **Preproduction** | Tagged release                        | Validation before client delivery  |
+| **Production**    | Tagged release (validated in preprod) | Live system                        |
 
 
 ## Release Frequency
@@ -148,10 +148,10 @@ Rollback safety depends on consistent use of backups and `MIGRATIONS.md` documen
 
 ## Tagging Rules
 
-| Type | Example | Meaning |
-|------|----------|----------|
-| **Major** | `v2.0.0` | Incompatible or structural change |
-| **Minor** | `v1.5.0` | Backward-compatible new features |
+| Type      | Example  | Meaning                                     |
+|-----------|----------|---------------------------------------------|
+| **Major** | `v2.0.0` | Incompatible or structural change           |
+| **Minor** | `v1.5.0` | Backward-compatible new features            |
 | **Patch** | `v1.5.1` | Fix or partial release (subset of features) |
 
 Guidelines:
@@ -162,13 +162,13 @@ Guidelines:
 
 ## Responsibilities
 
-| Role | Responsibility |
-|------|----------------|
-| **Developer** | Updates changelog and migrations during development |
-| **Technical Referent** | Validates code, builds the release, creates and pushes tags |
+| Role                     | Responsibility                                                        |
+|--------------------------|-----------------------------------------------------------------------|
+| **Developer**            | Updates changelog and migrations during development                   |
+| **Technical Referent**   | Validates code, builds the release, creates and pushes tags           |
 | **Project Manager (CP)** | Requests release, defines included/excluded scope, validates delivery |
-| **Hosting Team** | Deploys preproduction and production environments |
-| **QA (optional)** | Performs functional validation |
+| **Hosting Team**         | Deploys preproduction and production environments                     |
+| **QA (optional)**        | Performs functional validation                                        |
 
 
 ## Release Checklist
@@ -189,4 +189,4 @@ Guidelines:
 - Monitor logs and alerts for 48h post-deployment.
 - Communicate the release summary internally.
 - Create follow-up tickets for deferred features.
-- Archive release artifacts and backups.
+- Archive release artefact and backups.

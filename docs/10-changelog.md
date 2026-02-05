@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 10-changelog
 Project: apikcloud/docs
-Last update: 2026-01-07
+Last update: 2026-02-05
 Status: Draft
 Reviewer: 
 -->
@@ -83,7 +83,7 @@ Exclude (unless critical):
 Optional:
 - **Known Issues**: short list + workarounds.
 
-
+> **Note**: Once the CHANGELOG has one entry the template part of the file should be removed.
 
 ## Writing Rules
 

@@ -86,9 +86,9 @@ gitGraph
 
 ## Summary
 
-| Environment | Source | Purpose |
-|--------------|---------|----------|
-| `main` | staging | Continuous integration branch |
-| `feat/*` | from `main` | Feature or fix branch |
-| `tag (vX.Y.Z)` | from `main` | Preprod / production release |
-| `hotfix/*` | from `tag` | Urgent fix on production |
+| Environment    | Source      | Purpose                       |
+|----------------|-------------|-------------------------------|
+| `main`         | staging     | Continuous integration branch |
+| `feat/*`       | from `main` | Feature or fix branch         |
+| `tag (vX.Y.Z)` | from `main` | Preprod / production release  |
+| `hotfix/*`     | from `tag`  | Urgent fix on production      |

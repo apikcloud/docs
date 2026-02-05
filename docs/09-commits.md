@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 09-commits
 Project: apikcloud/docs
-Last update: 2026-01-07
+Last update: 2026-02-05
 Status: Draft
 Reviewer: 
 -->
@@ -38,34 +38,42 @@ feat(account): add invoice merge wizard [#123456]
 This introduces a new wizard allowing users to merge multiple draft invoices.
 ```
 
+A commit does not have uppercase, no dot (.) at the end, and no trailing whitespace. Plus, the task identifier should
+be written between brackets and preceded by a hash (#).  
+Any commit not following this convention will be rejected.
+
 ## Types
 
-| Type         | Meaning                                             | Example                                                |
-|--------------|-----------------------------------------------------|--------------------------------------------------------|
-| **feat**     | New feature                                         | `feat(mail): support DKIM signature`                   |
-| **fix**      | Bug fix                                             | `fix(project): avoid crash on archived tasks`          |
-| **refactor** | Internal code change without changing behavior      | `refactor(base): simplify partner search domain`       |
-| **docs**     | Documentation change                                | `docs: add deployment workflow diagram`                |
-| **style**    | Code style, formatting, missing commas, etc.        | `style(account): reformat import wizard`               |
-| **test**     | Add or update tests                                 | `test(project): add regression test for task stages`   |
-| **chore**    | Maintenance or tooling                              | `chore(ci): upgrade pre-commit hooks`                  |
-| **build**    | Changes to build system, dependencies, Docker, etc. | `build(docker): bump Python base image`                |
-| **perf**     | Performance improvement                             | `perf(account): optimize reconciliation lookup`        |
-| **ci**       | CI/CD config or scripts                             | `ci(github): parallelize test workflow`                |
-| **revert**   | Revert a previous commit                            | `revert: fix(account): wrong domain in partner search` |
-| **release**  | Prepare for a new release                           | `release: v1.2.0`                                      |
+The main types you should use are listed below. As developer, you'll mostly use the following: `feat`, `fix`, `release`.
+
+| Type         | Meaning                                             | Example                                                         |
+|--------------|-----------------------------------------------------|-----------------------------------------------------------------|
+| **feat**     | New feature                                         | `feat(mail): support DKIM signature [#12345]`                   |
+| **fix**      | Bug fix                                             | `fix(project): avoid crash on archived tasks [#12345]`          |
+| **release**  | Prepare for a new release                           | `release: v1.2.0 [#12345]`                                      |
+| **style**    | Code style, formatting, missing commas, etc.        | `style(account): reformat import wizard [#12345]`               |
+| **revert**   | Revert a previous commit                            | `revert: fix(account): wrong domain in partner search [#12345]` |
+| **test**     | Add or update tests                                 | `test(project): add regression test for task stages [#12345]`   |
+| **refactor** | Internal code change without changing behavior      | `refactor(base): simplify partner search domain [#12345]`       |
+| **docs**     | Documentation change                                | `docs: add deployment workflow diagram [#12345]`                |
+| **chore**    | Maintenance or tooling                              | `chore(ci): upgrade pre-commit hooks [#12345]`                  |
+| **ci**       | CI/CD config or scripts                             | `ci(github): parallelize test workflow [#12345]`                |
+| **perf**     | Performance improvement                             | `perf(account): optimize reconciliation lookup [#12345]`        |
+| **build**    | Changes to build system, dependencies, Docker, etc. | `build(docker): bump Python base image [#12345]`                |
 
 ## Scopes
 
-The **scope** indicates which part of the system is affected — it's optional but highly recommended as it is useful when:
+The **scope** indicates which part of the system is affected — it's **optional** but highly recommended as it is useful when:
 
 - The project is large or modular (ex: Odoo addons, CI, Docker, infra).
 - You want to filter commits by area.
 
+> **Note**: In case you don't know what scope to use, prefer **not** to use one.
+
 **Typical scopes**
 
 ```
-account, project, mail, base, docker, ci, infra, tests, docs
+account, project, mail, mrp, helpdesk, crm, ci, infra, docker, tests, docs
 ```
 
 ## Content Rules
@@ -77,7 +85,7 @@ account, project, mail, base, docker, ci, infra, tests, docs
 - Avoid vague messages like “update”, “fix issue”, “stuff”.
 - Reference the related task if applicable:
   ```
-  feat: add mail alias sync [#1234]
+  feat: add mail alias sync [#12345]
   ```
 - Before merging, **squash or rebase** to keep a clean linear history.
 

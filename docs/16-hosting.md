@@ -21,11 +21,11 @@ Reviewer:
 
 ## Supported Platforms (at a glance)
 
-| Platform | Who operates | How we ship | Where code runs | Image build | Trunk-based notes |
-|---------|---------------|-------------|-----------------|-------------|-------------------|
-| **Apikcloud (managed)** | Apik | Docker image per project | Kubernetes/containers | **Yes** (CI builds client image) | Standard trunk-based |
-| **On‑premise (customer)** | Customer (with Apik support) | Docker image per project, delivered as artifact | Customer’s infra (VM, Docker host, k8s) | **Yes** (same as Cloud) | Standard trunk-based |
-| **Odoo.sh** | Odoo | Git repository only | Odoo.sh platform | **No** (platform builds & runs) | Slight adaptation (detailed elsewhere) |
+| Platform                  | Who operates                 | How we ship                                     | Where code runs                         | Image build                      | Trunk-based notes                      |
+|---------------------------|------------------------------|-------------------------------------------------|-----------------------------------------|----------------------------------|----------------------------------------|
+| **Apikcloud (managed)**   | Apik                         | Docker image per project                        | Kubernetes/containers                   | **Yes** (CI builds client image) | Standard trunk-based                   |
+| **On‑premise (customer)** | Customer (with Apik support) | Docker image per project, delivered as artifact | Customer’s infra (VM, Docker host, k8s) | **Yes** (same as Cloud)          | Standard trunk-based                   |
+| **Odoo.sh**               | Odoo                         | Git repository only                             | Odoo.sh platform                        | **No** (platform builds & runs)  | Slight adaptation (detailed elsewhere) |
 
 ---
 
@@ -94,13 +94,13 @@ Methodology adjustments (details in the dedicated Odoo.sh page):
 
 ## Responsibilities
 
-| Role | Cloud / On‑Prem | Odoo.sh |
-|------|------------------|---------|
-| **Developer** | Builds run locally, fixes CI, maintains submodules/symlinks | Same; ensure Odoo.sh build passes |
-| **Technical Referent** | Validates image readiness; approves release promotion | Validates branch readiness; approves platform promotion |
-| **Quality Team** | Ensures template compliance, tests, and standards | Same |
-| **DevOps / Hosting** | Operates registry, deploys/stabilizes environments | N/A (platform operated by Odoo) |
-| **Project Manager** | Requests release, defines scope, coordinates delivery | Same |
+| Role                   | Cloud / On‑Prem                                             | Odoo.sh                                                 |
+|------------------------|-------------------------------------------------------------|---------------------------------------------------------|
+| **Developer**          | Builds run locally, fixes CI, maintains submodules/symlinks | Same; ensure Odoo.sh build passes                       |
+| **Technical Referent** | Validates image readiness; approves release promotion       | Validates branch readiness; approves platform promotion |
+| **Quality Team**       | Ensures template compliance, tests, and standards           | Same                                                    |
+| **DevOps / Hosting**   | Operates registry, deploys/stabilizes environments          | N/A (platform operated by Odoo)                         |
+| **Project Manager**    | Requests release, defines scope, coordinates delivery       | Same                                                    |
 
 
 
