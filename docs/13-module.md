@@ -109,11 +109,11 @@ It complements the pages on **Methods** and **Fields**.
 
 ### 1. Model Types (and when to use them)
 
-| Type | Base Class | Purpose | Typical Use |
-|------|------------|---------|-------------|
-| **Persistent** | `models.Model` | Stored business data | Partners, orders, invoices |
-| **Transient** | `models.TransientModel` | Ephemeral wizards; auto‑cleaned | Assistants, import/export dialogs |
-| **Abstract** | `models.AbstractModel` | Share behavior via inheritance (no table) | Mixins, reusable behaviors, e.g. `mail.thread`, `mail.activity.mixin`, `portal.mixin` |
+| Type           | Base Class              | Purpose                                   | Typical Use                                                                           |
+|----------------|-------------------------|-------------------------------------------|---------------------------------------------------------------------------------------|
+| **Persistent** | `models.Model`          | Stored business data                      | Partners, orders, invoices                                                            |
+| **Transient**  | `models.TransientModel` | Ephemeral wizards; auto‑cleaned           | Assistants, import/export dialogs                                                     |
+| **Abstract**   | `models.AbstractModel`  | Share behavior via inheritance (no table) | Mixins, reusable behaviors, e.g. `mail.thread`, `mail.activity.mixin`, `portal.mixin` |
 
 
 **Rules**
@@ -327,13 +327,13 @@ It complements the pages on **Models** and **Methods**.
 
 ### 5.1. Field Types (quick map)
 
-| Category | Types | Notes |
-|---------|------|-------|
-| **Basic** | `Char`, `Text`, `Html`, `Boolean`, `Integer`, `Float`, `Date`, `Datetime`, `Binary` | Prefer `Char(index=True)` for searchable short strings |
-| **Money & Numbers** | `Monetary`, `Float`, `Integer` | `Monetary` requires `currency_field` |
-| **Relational** | `Many2one`, `One2many`, `Many2many` | Always set `comodel_name`; define `ondelete` for `Many2one` |
-| **Selection** | `Selection` | Keep choices stable; use constants |
-| **Specialized** | `Json`, `Reference` | Use sparingly; document the schema clearly |
+| Category            | Types                                                                               | Notes                                                       |
+|---------------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| **Basic**           | `Char`, `Text`, `Html`, `Boolean`, `Integer`, `Float`, `Date`, `Datetime`, `Binary` | Prefer `Char(index=True)` for searchable short strings      |
+| **Money & Numbers** | `Monetary`, `Float`, `Integer`                                                      | `Monetary` requires `currency_field`                        |
+| **Relational**      | `Many2one`, `One2many`, `Many2many`                                                 | Always set `comodel_name`; define `ondelete` for `Many2one` |
+| **Selection**       | `Selection`                                                                         | Keep choices stable; use constants                          |
+| **Specialized**     | `Json`, `Reference`                                                                 | Use sparingly; document the schema clearly                  |
 
 ---
 

@@ -57,7 +57,6 @@ docker compose logs -f odoo
 > Third‑party addons are included as **submodules** in `/.third-party` and exposed via **symlinks at the repository root**. Anything at the root is visible to Odoo; no need to edit `addons_path`.
 
 ### Commit rules (must‑read)
-- Conventional Commits; see [`docs/09-commits.md`](./docs/09-commits.md)
-- One PR per feature; code review required; see [`docs/12-code-review.md`](./docs/12-code-review.md)
-- Keep changelog human‑written; see [`docs/10-changelog.md`](./docs/10-changelog.md)
-
+- Conventional Commits; see [`Commits`](./09-commits.md)
+- One PR per feature; code review required; see [`Code Review`](./12-code-review.md)
+- Keep changelog human‑written; see [`Changelog`](./10-changelog.md)

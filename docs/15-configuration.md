@@ -60,8 +60,8 @@ Memory limits are expressed in bytes. Time limits are in seconds.
 ## Role of limits
 
 - **Soft vs hard** : the soft limit allows the request to finish cleanly, while the hard limit acts as a circuit breaker to prevent memory overflow. A soft limit set too high makes the hard limit ineffective, just as a too small delta can interrupt legitimate requests.
-- **Recycling via limit_request** : useful for progressive memory leaks (leaks, third-party module behaviors, heavy reports). The worker restarts cleanly.  
-- **Time limits** : they stop abnormally long requests (heavy PDF generation, massive file imports, complex processing) before they paralyze the workers, but must be sufficient for legitimate operations.
+- **Recycling via limit_request** : useful for progressive memory leaks (leaks, third-party module behaviours, heavy reports). The worker restarts cleanly.  
+- **Time limits** : they stop abnormally long requests (heavy PDF generation, massive file imports, complex processing) before they paralyse the workers, but must be sufficient for legitimate operations.
 ---
 
 ## Configuration examples
@@ -119,4 +119,4 @@ max_cron_threads = 2
 
 ## Conclusion
 
-Odoo configuration relies on a balance: available resources, volume, user behaviors, and installed modules. Start with a simple configuration, then refine with monitoring. This progressive approach ensures robustness and stability over time.
+Odoo configuration relies on a balance: available resources, volume, user behaviours, and installed modules. Start with a simple configuration, then refine with monitoring. This progressive approach ensures robustness and stability over time.
