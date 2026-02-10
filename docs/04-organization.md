@@ -118,24 +118,42 @@ git submodule update --init (--jobs 4)
 
 **Rules**
 - Place submodules under `.third-party/<owner>/<repository>`.
-- Target the **correct Odoo branch** (e.g. `18.0`, `19.0`).  
+- Name the submodule according to the following rule: `<owner>/<repository>`
+- Target the **correct Odoo branch** (e.g. `18.0`, `19.0`).
+- Always use the **SSH scheme**.
 - **Pin to a commit** (no floating HEAD) to guarantee deterministic builds.
 - Create **symlinks at repository root** to expose only the modules required by the project.
-- Commit `.gitmodules`, the submodule path, and the symlinks **together**.
 
 **Examples**
-```bash
-# OCA example
-git submodule add --name OCA/account-financial-reporting -b 18.0 git@github.com:OCA/account-financial-reporting.git .third-party/OCA/account-financial-reporting
-ln -s .third-party/OCA/account-financial-reporting/some_module ./some_module
-git add .gitmodules .third-party/OCA/account-financial-reporting ./some_module
-git commit -m "chore(submodule): add OCA/account-financial-reporting@18.0 (+ symlink)"
 
-# Apik generic modules (apik-addons) — treated like any third party
+*OCA example*
+```bash
+# Add a submodule
+git submodule add --name OCA/account-financial-reporting -b 18.0 git@github.com:OCA/account-financial-reporting.git .third-party/OCA/account-financial-reporting
+
+# Add your first module
+ln -s .third-party/OCA/account-financial-reporting/some_module ./some_module
+```
+*Apik generic modules, treated like any third party*
+```bash
+# Add the repository
 git submodule add --name apikcloud/apik-addons -b 18.0 git@github.com:apikcloud/apik-addons.git .third-party/apikcloud/apik-addons
+
+# Then, add your first module
 ln -s .third-party/apikcloud/apik-addons/apik_generic_module ./apik_generic_module
-git add .gitmodules .third-party/apikcloud/apik-addons ./apik_generic_module
-git commit -m "chore(submodule): add apikcloud/apik-addons@18.0 (+ symlink)"
+```
+The best practice is to make a dedicated (technical) commit when adding the submodule and the first symlink(s).
+Modifying requirements, updating the README, or editing the changelog can be done in another commit.
+
+The commit message can be supplemented with a description in its long version:
+
+```bash
+git commit -m "chore(submodules): add submodule <submodule name>
+- url: <url>
+- branch: <branch>
+- path: <path>
+- created symlinks: <symlinks>
+"
 ```
 
 ### Using Pull Requests as Submodule Sources
