@@ -1,11 +1,11 @@
 <!--
-© 2025 Apik — All rights reserved.
+© 2026 Apik — All rights reserved.
 Licensed under CC BY-NC-ND 4.0 International.
 https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 02-examples
 Project: aikcloud/docs
-Last update: 2025-12-08
+Last update: 2026-02-24
 Status: Draft
 Reviewer: 
 -->
@@ -13,7 +13,6 @@ Reviewer:
 # Odoo Code Quality Examples (Bad vs Good)
 
 Each example shows a **Bad** and a **Good** pattern with a brief rationale.
-
 
 
 ## 1. ORM: avoid raw SQL when ORM suffices
@@ -26,7 +25,6 @@ self.env.cr.execute("UPDATE sale_order SET state='done' WHERE id=%s", (order.id,
 order.write({"state": "done"})
 ```
 **Why:** ORM handles metadata, audits, computed fields, and access rules. Raw SQL bypasses them. [Ref: Coding Guidelines, ORM API]
-
 
 
 ## 2. Computed fields: declare dependencies and store when needed
@@ -49,7 +47,6 @@ def _compute_total(self):
 **Why:** `@api.depends` ensures correct recompute; `store=True` if used in search/sort. [Ref: ORM API]
 
 
-
 ## 3. Fields naming in compute methods: use `record` or `records`, not `sales`, `partners`, etc.
  **Don't**
 ```python
@@ -65,6 +62,7 @@ def _compute_total(self):
 ```
 **Why:** Generic names avoid confusion in reused code. [Ref: Coding Guidelines]
 
+
 ## 3. Security: don’t use `sudo()` casually
  **Don't**
 ```python
@@ -77,7 +75,6 @@ records = self.search([("partner_id", "=", partner.id)])
 secure_records = self.sudo().browse(safe_ids)
 ```
 **Why:** `sudo()` bypasses ACLs/record rules; restrict it to minimal scope. [Ref: Security]
-
 
 
 ## 4. Constraints: use `_check_*` or SQL constraints over `onchange` for data integrity
@@ -98,7 +95,6 @@ def _check_qty(self):
         raise ValidationError("Quantity must be non-negative.")
 ```
 **Why:** Onchange is UI-only; constraints protect data server-side. [Ref: ORM API]
-
 
 
 ## 5. Views: use XML inheritance (`xpath`) rather than copy-pasting entire views
@@ -124,7 +120,6 @@ def _check_qty(self):
 **Why:** Inheritance is robust to upstream changes and reduces churn. [Ref: Views / View records]
 
 
-
 ## 6. External IDs & data files: stable `xml_id`, `noupdate`, and references
  **Don't**
 ```xml
@@ -145,11 +140,17 @@ def _check_qty(self):
 ## 7. Context and defaults: avoid globals, use lambdas with env
  **Don't**
 ```python
-default_company_id = fields.Many2one("res.company", default=self.env.company.id)
+default_company_id = fields.Many2one(
+    comodel_name="res.company", 
+    default=self.env.company.id,
+)
 ```
  **Do**
 ```python
-company_id = fields.Many2one("res.company", default=lambda self: self.env.company.id)
+company_id = fields.Many2one(
+    comodel_name="res.company", 
+    default=lambda self: self.env.company.id,
+)
 ```
 **Why:** Defaults must be callables to get the *current* env and user/company. [Ref: ORM API]
 
@@ -163,6 +164,7 @@ if rec.amount_total == 0.0:
  **Do**
 ```python
 from odoo.tools.float_utils import float_is_zero
+
 if float_is_zero(rec.amount_total, precision_rounding=rec.currency_id.rounding):
     ...
 ```
@@ -182,7 +184,6 @@ paid = self.search([("state", "=", "paid")])
 **Why:** Domains push work to the database; better performance and less memory. [Ref: ORM API]
 
 
-
 ## 10. Translations: use `_()` and avoid string concatenation
  **Don't**
 ```python
@@ -194,7 +195,6 @@ from odoo import _
 raise UserError(_("Order %s is invalid") % self.name)
 ```
 **Why:** Mark strings for i18n; avoid concatenation to keep messages translatable. [Ref: Coding Guidelines]
-
 
 
 ## 11. API decorators: match the method’s calling convention
@@ -212,7 +212,6 @@ def create(self, vals):
 **Why:** Decorators (`@api.model`, `@api.depends`, etc.) declare expectations and enable framework features. [Ref: ORM API]
 
 
-
 ## 12. Access rules over custom code
  **Don't**
 ```python
@@ -226,3 +225,43 @@ def _can_see(self):
 # security/ir.model.access.csv + record rules on the model
 ```
 **Why:** Use ACLs and record rules for data access; keeps security declarative and reviewable. [Ref: Security]
+
+
+## 13. Use `filtered` method for main loops
+ **Don't**
+```python
+def process(self):
+   for record in self:
+        if record.state == "draft":
+            record.name = f"New {record.id}"
+```
+ **Do**
+```python
+def process(self):
+   for record in self.filtered(lambda r: r.state == "draft"):
+      record.name = f"New {record.id}"
+```
+ 
+**Why:** `filtered()` improves readability and avoids nested conditions. [Ref: ORM API]
+
+
+## 14. Do not use nested `filtered` loops
+ **Don't**
+```python
+def process(self):
+   for record in self:
+        for posted in self.filtered(lambda r: r.state == "posted"):
+            posted.action()
+```
+
+ **Do**
+```python
+def process(self):
+   for record in self:
+        posted = [r for r in self if r.state == "posted"]
+        for p in posted:
+            p.action()
+```
+
+**Why:** Nested `filtered` creates performance issues, as each `filtered` creates a new recordset (Object), it is way 
+more efficient to use a list comprehension. [Ref: ORM API]
