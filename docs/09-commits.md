@@ -42,6 +42,14 @@ A commit does not have uppercase, no dot (.) at the end, and no trailing whitesp
 be written between brackets and preceded by a hash (#).  
 Any commit not following this convention will be rejected.
 
+The only exception is when you use acronyms or code names, which should be written in uppercase. For example:
+
+```
+chore(submodules) fix submodules URLs
+
+feat: add new UI for the project dashboard [#123456]
+```
+
 ## Types
 
 The main types you should use are listed below. As developer, you'll mostly use the following: `feat`, `fix`, `release`.
