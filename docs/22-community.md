@@ -1,10 +1,10 @@
 <!--
-© 2025 Apik — All rights reserved.
+© 2026 Apik — All rights reserved.
 Licensed under CC BY-NC-ND 4.0 International.
 https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 22-community
-Project: aikcloud/docs
+Project: apikcloud/docs
 Last update: 2025-12-23
 Status: Approved
 Reviewer: royaurelien
@@ -132,4 +132,3 @@ odoo-addon-product_packaging_level @ git+https://github.com/OCA/product-attribut
     *Example*: `[19.0][MIG] partner_brand: Migration to 19.0)`
     * If there is **PR dependencies**, indicate the following text in the **description** : `<dependecny_module_name>: [#<PR_number>](<PR_link>)`  
     *Example*: `brand: [#270](https://github.com/OCA/brand/pull/270)`
-    
