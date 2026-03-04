@@ -144,7 +144,7 @@ raise UserError("Order " + self.name + " is invalid")
 # For Odoo < 19.0
 from odoo import _
 
-raise UserError(_("Order %(name) is invalid", name=self.name))
+raise UserError(_("Order %(name)s is invalid", name=self.name))
 
 # For Odoo >= 19.0
 raise UserError(self.env._("Order %(name)s is invalid", name=self.name))
@@ -158,7 +158,7 @@ Mark strings for i18n; avoid concatenation to keep messages translatable. [Ref: 
 **Don't**
 
 ```python
-def create(vals):
+def create(vals_list):
     ...
 ```
 
@@ -166,8 +166,8 @@ def create(vals):
 
 ```python
 @api.model_create_multi
-def create(self, vals):
-    return super().create(vals)
+def create(self, vals_list):
+    return super().create(vals_list)
 ```
 
 **Why:**  

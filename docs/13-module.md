@@ -1,4 +1,4 @@
-from pyinotify import compatibility_mode<!--
+<!--
 © 2026 Apik — All rights reserved.
 Licensed under CC BY-NC-ND 4.0 International.
 https://creativecommons.org/licenses/by-nc-nd/4.0/
@@ -252,6 +252,12 @@ class ResContract(models.Model):
     amount_total = fields.Monetary(
         currency_field="currency_id",
     )
+    contract_type = fields.Selection(
+        selection=[
+            ("fixed", "Fixed"),
+            ("variable", "Variable")
+        ],
+    )
     currency_id = fields.Many2one(
         comodel_name="res.currency",
         required=True,
@@ -299,6 +305,7 @@ class ResContract(models.Model):
             record.amount_total = sum(record.line_ids.mapped("amount"))
 
     # Onchange
+    @api.onchange("contract_type")
     def _onchange_contract_type(self):
         self.partner_id = False
 
@@ -306,10 +313,10 @@ class ResContract(models.Model):
     # CRUD methods
     # ------------
     @api.model_create_multi
-    def create(self, vals):
-        res = super().create(vals)
-        res._log_state_change(vals)
-        return res
+    def create(self, vals_list):
+        records = super().create(vals_list)
+        records._log_state_change(vals_list)
+        return records
 
     def write(self, vals):
         res = super().write(vals)
@@ -427,7 +434,79 @@ amount_total = fields.Monetary(
 
 ---
 
-### 5.3. Relational Fields
+### 5.3. Attribute order
+
+Depending on the field type, all attributes are not always relevant.
+
+Two rules are mandatory:
+
+- `string` is always the last attribute as it is optional and present on all fields.
+- `help` is always the second last attribute (or last if `string` is not set).
+
+Arguments must follow the order below to guarantee readability and consistency in Python files.
+Some arguments are specific to certain field types and are marked with a 📌 symbol.
+
+> ⚠️ Unless a rule specify the order, it should be alphabetical.
+
+#### One2many, Many2many and Many2one
+
+Specific One2many, Many2many and Many2one attributes order should be:
+
+1. `comodel_name` must always be the first argument.
+2. `inverse_name` (One2many fields only).
+3. `related` (relational field only).
+
+##### Example
+
+```python
+relational_field_id = fields.One2many(
+    comodel_name="res.partner",
+    inverse_name="partner_id",  # Only for One2many
+    copy=True,
+    domain=[("active", "=", True)],
+    groups="base.group_user",
+    help="This is a relational field",
+```
+
+#### Selection
+
+Selection fields should have `selection` as the first argument or `selection_add` if it's an extension of an existing 
+field.
+
+##### Example
+
+```python
+selection_field = fields.Selection(
+    selection=[
+        ("option1", "Option 1"),
+        ("option2", "Option 2"),
+    ],
+)
+
+inherited_selection_field = fields.Selection(
+    selection_add=[
+        ("option3", "Option 3"),
+    ],
+)
+```
+
+#### Monetary
+
+For `Moneratary` fields, the attribute `currency_field`, if needed, should be written as the first argument.
+
+##### Example
+
+```python
+monetary_field = fields.Monetary(
+    currency_field="currency_id",
+    compute="_compute_monetary_field",
+    copy=True,
+)
+```
+
+---
+
+### 5.4. Relational Fields
 
 #### Many2one
 
@@ -452,8 +531,8 @@ partner_id = fields.Many2one(
 ```python
 line_ids = fields.One2many(
     comodel_name="apik_contract.line",
-    copy=True,
     inverse_name="contract_id",
+    copy=True,
     string="Lines",
 )
 ```
@@ -479,7 +558,7 @@ tag_ids = fields.Many2many(
 
 ---
 
-### 5.4. Computed, Inverse, and Related
+### 5.5. Computed, Inverse, and Related
 
 #### Computed
 
@@ -535,7 +614,7 @@ company_currency_id = fields.Many2one(
 
 ---
 
-### 5.5. Selections & Enums
+### 5.6. Selections & Enums
 
 ```python
 STATE = [
@@ -562,14 +641,13 @@ state = fields.Selection(
 
 ---
 
-### 5.6. Money, Currency, and Precision
+### 5.7. Money, Currency, and Precision
 
 ```python
 currency_id = fields.Many2one(
     comodel_name="res.currency",
     ondelete="restrict",
     required=True,
-    string="Currency",
 )
 amount_total = fields.Monetary(
     currency_field="currency_id",
@@ -580,13 +658,13 @@ amount_total = fields.Monetary(
 
 **Rules**
 
-- Always provide `currency_field` for `Monetary`.
+- Always provide `currency_field` for `Monetary`, only if the currency field is not named `currency_id`.
 - Use **named precisions** (`digits="Product Price"`) where business rules require it.
 - Avoid storing both **unit price** and **total** without justification; derive when possible.
 
 ---
 
-### 5.7. Defaults, Readonly, Copy, Tracking
+### 5.8. Defaults, Readonly, Copy, Tracking
 
 - `default=...` for safe defaults (functions allowed).
 - `readonly=True` for values users must not edit; pair with `states={...}` if needed.
@@ -595,7 +673,7 @@ amount_total = fields.Monetary(
 
 ---
 
-### 5.8. Indexing & Searchability
+### 5.9. Indexing & Searchability
 
 - Add `index=True` on fields frequently used in domains or joins.
 - For text search, combine `index=True` on `Char` + a **search** helper if needed.
@@ -603,7 +681,7 @@ amount_total = fields.Monetary(
 
 ---
 
-### 5.9. Security & Multicompany
+### 5.10. Security & Multicompany
 
 - Do **not** rely on Python to enforce access; define **ACLs** and **record rules**.
 - For multicompany fields, consider `company_dependent=True` or explicit company FK.
@@ -611,14 +689,14 @@ amount_total = fields.Monetary(
 
 ---
 
-### 5.10. Internationalization
+### 5.11. Internationalization
 
 - All `string`, `help`, and selection labels must be **translatable**.
 - Keep messages short and clear; avoid jargon in user‑facing labels.
 
 ---
 
-### 5.11. Migrations & Stability
+### 5.12. Migrations & Stability
 
 - Renaming a field breaks stable APIs; prefer **new field + migration** over renames.
 - When deprecating, keep the old field read‑only for a version and provide a data script.
@@ -626,7 +704,7 @@ amount_total = fields.Monetary(
 
 ---
 
-### 5.12. Do & Don’t
+### 5.13. Do & Don’t
 
 **Do**
 
@@ -661,7 +739,6 @@ class PartnerContract(models.Model):
         comodel_name="res.currency",
         ondelete="restrict",
         required=True,
-        string="Currency",
     )
     line_ids = fields.One2many(
         comodel_name="partner.contract.line",
@@ -794,17 +871,18 @@ Odoo provides several decorators to clarify method scope.
 
 #### Prefixes by Purpose
 
-| Prefix      | Meaning                              | Example                                |
-|-------------|--------------------------------------|----------------------------------------|
-| `action_`   | Triggered by user or button          | `action_validate`, `action_send_email` |
-| `_compute_` | Field computation                    | `_compute_amount_total`                |
-| `_inverse_` | Inverse of computed field            | `_inverse_amount_total`                |
-| `_check_`   | Internal validation                  | `_check_dates_coherence`               |
-| `_prepare_` | Returns a dict or data structure     | `_prepare_invoice_vals`                |
-| `_get_`     | Fetches or resolves something        | `_get_partner_data`                    |
-| `_set_`     | Assigns something                    | `_set_state_draft`                     |
-| `_sync_`    | Synchronization with external system | `_sync_customer_data`                  |
-| `_run_`     | Executed by scheduler or batch       | `_run_invoice_auto_post`               |
+| Prefix       | Meaning                              | Example                                |
+|--------------|--------------------------------------|----------------------------------------|
+| `action_`    | Triggered by user or button          | `action_validate`, `action_send_email` |
+| `_compute_`  | Field computation                    | `_compute_amount_total`                |
+| `_onchange_` | Form onchange logic                  | `_onchange_partner_id`                 |
+| `_inverse_`  | Inverse of computed field            | `_inverse_amount_total`                |
+| `_check_`    | Internal validation                  | `_check_dates_coherence`               |
+| `_prepare_`  | Returns a dict or data structure     | `_prepare_invoice_vals`                |
+| `_get_`      | Fetches or resolves something        | `_get_partner_data`                    |
+| `_set_`      | Assigns something                    | `_set_state_draft`                     |
+| `_run_`      | Executed by scheduler or batch       | `_run_invoice_auto_post`               |
+| `_sync_`     | Synchronization with external system | `_sync_customer_data`                  |
 
 #### Naming Rules
 
@@ -819,45 +897,66 @@ Odoo provides several decorators to clarify method scope.
 
 Follow a predictable, consistent order in every model:
 
-1. **Default** (`_default_...` methods)
-2. **Compute / inverse / constrain methods**
-3. **Onchange methods**
-4. **Private helpers** (`_prepare_`, `_get_`, `_check_`, `_run_`)
-5. **API / integration utilities**
-6. **Autovacuum / cron tasks**
+1. **Meta** (`_name`, `_inherit`, `_description`)
+2. **Default** (`_default_...` methods)
+3. **Fields** (`name`, `state`, `partner_id`, etc.)
+4. **SQL constraints** (`_sql_constraints`)
+5. **Constrain methods / Compute / Inverse / Onchange**
+6. **CRUD** (`create`, `write`, `unlink`, etc.)
 7. **Public business methods** (`action_...`)
-8. **ORM** (`create`, `write`, `unlink`, etc.)
+8. **Private helpers** (`_prepare_`, `_get_`, `_check_`, `_run_`)
+9. **API / integration utilities**
+10. **Autovacuum / cron tasks**
 
 **Example**
 
 ```python
 class SaleOrder(models.Model):
+    # 1) Meta
     _name = "sale.order"
 
-    ## 1. Defaults
+    # 2) Defaults
+
     @api.model
     def _default_partner_id(self): ...
 
+    # 3) Fields
     ...
     fields
-    declaration...
+    ...
 
-    ## 2. Computed fields
+    # 4) SQL constraints
+    ...
+    constraints
+    ...
+
+    # 5) Methods
+    # Constraints
+    @api.constrains("price_total")
+    def _constrains_price_total(self): ...
+
+    # Depends
     @api.depends("order_line.price_total")
     def _compute_amount_total(self): ...
 
-    ## 3. Onchange
+    # Onchange
     @api.onchange("partner_id")
     def _onchange_partner_id(self): ...
 
-    ## 4. Helpers
-    def _prepare_invoice_vals(self): ...
+    # 6) CRUD methods
+    def write(self, vals): ...
 
-    ## 4. Public business methods
+    # 7) Public methods
     def action_confirm(self): ...
 
-    ## 5. ORM
-    def write(self, vals): ...    
+    # 8) Private methods
+    def _prepare_invoice_vals(self): ...
+
+    # 9) API methods
+    def _sync_related_invoice(self): ...
+
+    # 10) Cron tasks
+    def cron_sync_invoices(self): ...
 ```
 
 ---
