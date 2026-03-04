@@ -1,10 +1,10 @@
 <!--
-© 2025 Apik — All rights reserved.
+© 2026 Apik — All rights reserved.
 Licensed under CC BY-NC-ND 4.0 International.
 https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 23-tools
-Project: aikcloud/docs
+Project: apikcloud/docs
 Last update: 2025-12-08
 Status: Draft
 Reviewer: 
@@ -47,4 +47,3 @@ The Odoo Module Migrator is a tool designed to assist in the migration of Odoo m
   odoo-module-migrate -d <module_directory> -m <module_names> -s <source_version> -t <target_version>
   ```
   > Use `--no-commit` to prevent changes from being automatically committed.
-  
