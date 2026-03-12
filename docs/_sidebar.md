@@ -1,10 +1,10 @@
 <!--
-© 2025 Apik — All rights reserved.
+© 2026 Apik — All rights reserved.
 Licensed under CC BY-NC-ND 4.0 International.
 https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: _sidebar
-Project: aikcloud/docs
+Project: apikcloud/docs
 Last update: 2025-12-08
 Status: Stable
 Reviewer: royaurelien
@@ -27,8 +27,8 @@ Reviewer: royaurelien
   - [ Module Guidelines ](13-module.md)
   - [ Unit Tests ](14-unit-tests.md)
   - Code Examples
-    - [ Python ](/99-examples/01-examples.md)
-    - [ Odoo ](/99-examples/02-examples.md)
+    - [ Python ](/99-examples/01-python-examples.md)
+    - [ Odoo ](/99-examples/02-odoo-examples.md)
 - Operations
   - [ Hosting Solutions ](16-hosting.md)
   - [ Configuration ](15-configuration.md)
