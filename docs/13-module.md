@@ -104,10 +104,18 @@ Follow this pattern for `__manifest__.py` in all Apik addons:
 - The `assets` field must include all required JavaScript files.
 - The `installable`, `auto_install`, `application`, and `license` fields must be set as shown in the example.
 
-
 - **License**: All addons use `LGPL-3` license
 
-## 4. Models
+## 4. Versioning
+
+After each edition in a module, the version in the manifest must be updated. This is done for this two main following reasons:
+
+- Ease of recognition of the version of the module in the list of installed modules.
+- Ensure modules are automatically updated when developing for Odoo Sh projects.
+
+When updating a module, follow the SemVer convention as mentioned. It is the same way as in the CHANGELOG.
+
+## 5. Models
 
 This document defines **how to design, name, and organize models** in Odoo addons.  
 It complements the pages on **Methods** and **Fields**.
@@ -396,7 +404,7 @@ class ResContract(models.Model):
 
 ---
 
-## 5. Fields
+## 6. Fields
 
 This document defines how to **design, name, and configure fields** in Odoo addons.  
 It complements the pages on **Models** and **Methods**.
@@ -471,7 +479,7 @@ relational_field_id = fields.One2many(
 
 #### Selection
 
-Selection fields should have `selection` as the first argument or `selection_add` if it's an extension of an existing 
+Selection fields should have `selection` as the first argument or `selection_add` if it's an extension of an existing
 field.
 
 ##### Example
@@ -776,7 +784,7 @@ class PartnerContract(models.Model):
             record.amount_total = sum(record.line_ids.mapped("amount"))
 ```
 
-## 6. Methods
+## 7. Methods
 
 This document defines **how to design, name, and order methods** in Odoo modules.  
 It applies to both business logic and framework-level code.

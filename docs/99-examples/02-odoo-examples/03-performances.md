@@ -3,7 +3,7 @@
 Licensed under CC BY-NC-ND 4.0 International.
 https://creativecommons.org/licenses/by-nc-nd/4.0/
 
-File: 99-examples/01-odoo-examples/03-performances
+File: 99-examples/02-odoo-examples/03-performances
 Project: apikcloud/docs
 Last update: 2026-03-02
 Status: Draft

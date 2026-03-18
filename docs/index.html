@@ -1,82 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>The Apik Way</title>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-  <meta name="description" content="Description">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="_media/apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="_media/favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="_media/favicon-16x16.png">
-  <link rel="manifest" href="_media/site.webmanifest">
-  <link rel="stylesheet" media="(prefers-color-scheme: dark)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
-  <link rel="stylesheet" media="(prefers-color-scheme: light)" href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">  
+    <meta charset="UTF-8">
+    <title>The Apik Way</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"/>
+    <meta name="description" content="Description">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+    <link rel="apple-touch-icon" sizes="180x180" href="_media/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="_media/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="_media/favicon-16x16.png">
+    <link rel="manifest" href="_media/site.webmanifest">
+    <link rel="stylesheet" media="(prefers-color-scheme: dark)"
+          href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple-dark.css">
+    <link rel="stylesheet" media="(prefers-color-scheme: light)"
+          href="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/css/theme-simple.css">
     <!-- Custom theme styles -->
     <style>
-      :root {
-        --base-font-size: 14px;
-        --theme-color: 	#714B67;
-        --sidebar-width: 34rem;
-        --content-max-width: 75em;
-      }
-    </style>    
+        :root {
+            --base-font-size: 14px;
+            --theme-color: #714B67;
+            --sidebar-width: 34rem;
+            --content-max-width: 75em;
+        }
+
+        .sidebar-nav li.active > a {
+            color: #42b983 !important;
+            font-weight: bold;
+            border-left: 3px solid #42b983;
+        }
+    </style>
 </head>
 <body>
-  <div id="app"></div>
-  <script>
+<div id="app"></div>
+<script>
     window.$docsify = {
-      name: 'The Apik Way',
-      repo: 'apikcloud/docs',
-      homepage: 'home.md',
-      auto2top: true,
-      logo: '/_media/logo.png',
-      loadSidebar: true,
-      loadNavbar: true,
-      subMaxLevel: 3,
-      crossChapter: true,
-      crossChapterText: true,
-      notFoundPage: ['/', '/fr/'],
-      relativePath: true,
-      coverpage: ['/', '/fr/'],
-      fallbackLanguages: ["fr"],
-      namespaces: [
-        {
-          id: "lang",
-          values: ["uk", "fr"],
-          optional: true,
-          selector: "#lang-selector",
-        }
-      ],
+        name: 'The Apik Way',
+        repo: 'apikcloud/docs',
+        homepage: 'home.md',
+        auto2top: true,
+        logo: '/_media/logo.png',
+        loadSidebar: true,
+        loadNavbar: true,
+        subMaxLevel: 3,
+        crossChapter: true,
+        crossChapterText: true,
+        notFoundPage: ['/', '/fr/'],
+        relativePath: true,
+        coverpage: ['/', '/fr/'],
+        fallbackLanguages: ["fr"],
+        namespaces: [
+            {
+                id: "lang",
+                values: ["uk", "fr"],
+                optional: true,
+                selector: "#lang-selector",
+            }
+        ],
     }
-  </script>
-  
-  <!-- Mermaid support -->
-  <script type="module">
-      import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+</script>
 
-      let theme = "base";
-      if (window.matchMedia("(prefers-color-scheme: dark)").matches) {        
-          theme = "dark";
-      }
+<!-- Mermaid support -->
+<script type="module">
+    import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
 
-      mermaid.initialize({
-          startOnLoad: true,
-          theme: theme
-      });
-      window.mermaid = mermaid;
-  </script>
-    
-  <!-- Docsify v4 -->
-  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-ini.min.js"></script>
-  <script src="//unpkg.com/docsify-mermaid@2.0.1/dist/docsify-mermaid.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
-  <script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
+    let theme = "base";
+    if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        theme = "dark";
+    }
+
+    mermaid.initialize({
+        startOnLoad: true,
+        theme: theme
+    });
+    window.mermaid = mermaid;
+</script>
+
+<!-- Docsify v4 -->
+<script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify-copy-code/dist/docsify-copy-code.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/docsify-themeable@0/dist/js/docsify-themeable.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-ini.min.js"></script>
+<script src="//unpkg.com/docsify-mermaid@2.0.1/dist/docsify-mermaid.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
+<script src="//cdn.jsdelivr.net/npm/docsify-pagination/dist/docsify-pagination.min.js"></script>
 </body>
 </html>
