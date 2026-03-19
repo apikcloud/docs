@@ -84,7 +84,7 @@ module=partner_brand # Technical name of the module to migrate
     * Execute **pre-commit** while errors are detected.
     * Update **CONTRIBUTORS** field if exist, else edit maintainers part in the manifest.
 * Post code step *(if required)*:
-    * If a **depends module** is **not yet migrated** to the new version, you need to add the following code in the **test-requirements.xml** to allow tests to be running fine on the OCA repository:
+    * If a **depends module** is **not yet migrated** to the new version, you need to add the following code in the **test-requirements.txt** to allow tests to be running fine on the OCA repository:
 
 **<= 14.0**
 
