@@ -100,11 +100,13 @@ Follow this pattern for `__manifest__.py` in all Apik addons:
 - The `maintainers` field must include the GitHub usernames of all maintainers.
 - The `website` field must point to the official Apik website.
 - The `depends` field must list all required modules, including `base`.
-- The `data` field must include all necessary XML files, ordered alphabetically.
-- The `assets` field must include all required JavaScript files.
+- The `data` field must include all necessary XML files, ordered alphabetically per section.
+- The `assets` field must include all required JavaScript files and stylesheets, ordered alphabetically.
 - The `installable`, `auto_install`, `application`, and `license` fields must be set as shown in the example.
 
 - **License**: All addons use `LGPL-3` license
+
+> **Note**: When the alphabetical order is not possible, ensure to add a comment at the end of the line to explain why.
 
 ## 4. Versioning
 
@@ -156,9 +158,6 @@ _name = "move.chatter.history"
 #### 2.2 Python Class Name
 
 - Use **CapWords** (PEP 8): `Contract`, `SalesSubscription`.
-
-~~When inheriting existing models via `_inherit`, keep the class name meaningful, not necessarily identical
-to `_name`.~~
 
 #### 2.3 Display Name and Ordering
 
@@ -451,9 +450,6 @@ Two rules are mandatory:
 - `string` is always the last attribute as it is optional and present on all fields.
 - `help` is always the second last attribute (or last if `string` is not set).
 
-Arguments must follow the order below to guarantee readability and consistency in Python files.
-Some arguments are specific to certain field types and are marked with a 📌 symbol.
-
 > ⚠️ Unless a rule specify the order, it should be alphabetical.
 
 #### One2many, Many2many and Many2one
@@ -474,6 +470,7 @@ relational_field_id = fields.One2many(
     domain=[("active", "=", True)],
     groups="base.group_user",
     help="This is a relational field",
+    string="Field name",
 )
 ```
 
@@ -702,7 +699,7 @@ amount_total = fields.Monetary(
 ### 5.11. Internationalization
 
 - All `string`, `help`, and selection labels must be **translatable**.
-- Keep messages short and clear; avoid jargon in user‑facing labels.
+- Keep messages short and clear; avoid jargon in user‑facing labels (mainly in the `help` attribute).
 
 ---
 
@@ -710,7 +707,7 @@ amount_total = fields.Monetary(
 
 - Renaming a field breaks stable APIs; prefer **new field + migration** over renames.
 - When deprecating, keep the old field read‑only for a version and provide a data script.
-- Document all changes in `MIGRATIONS.md` and reference them in the changelog.
+- Document all changes in `MIGRATIONS.md` and reference them in the `CHANGELOG.md`.
 
 ---
 
@@ -869,7 +866,7 @@ Odoo provides several decorators to clarify method scope.
 | `@api.model`              | No recordset required         | setup helpers, `create_from_ui` |
 | `@api.model_create_multi` | Accepts multiple vals at once | `create`                        |
 | `@api.depends`            | Compute fields dependencies   | `_compute_total`                |
-| `@api.onchange`           | Form onchange logic           | `_onchange_partner_id`          |
+| `@api.onchange`           | Frontend automatic update     | `_onchange_partner_id`          |
 | `@api.constrains`         | Validation constraints        | `_check_amount_positive`        |
 | `@api.autovacuum`         | Periodic cleanup tasks        | `_gc_old_records`               |
 
@@ -885,7 +882,7 @@ Odoo provides several decorators to clarify method scope.
 |--------------|--------------------------------------|----------------------------------------|
 | `action_`    | Triggered by user or button          | `action_validate`, `action_send_email` |
 | `_compute_`  | Field computation                    | `_compute_amount_total`                |
-| `_onchange_` | Form onchange logic                  | `_onchange_partner_id`                 |
+| `_onchange_` | Frontend automatic update            | `_onchange_partner_id`                 |
 | `_inverse_`  | Inverse of computed field            | `_inverse_amount_total`                |
 | `_check_`    | Internal validation                  | `_check_dates_coherence`               |
 | `_prepare_`  | Returns a dict or data structure     | `_prepare_invoice_vals`                |
