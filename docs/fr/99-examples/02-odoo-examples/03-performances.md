@@ -100,4 +100,4 @@ def process(self):
 
 Le graphique ci-dessous compare les différentes méthodes de filtrage dans Odoo. **Il n'inclut pas** l'utilisation de filtres à l'intérieur des boucles, qu'il convient d'éviter et de remplacer par des `if` si possible telles que les listes en compréhensions.
 
-![filtering_comparison.png](../../_media/img/filtering_comparison.png)![filtering_comparison.png](../_media/img/filtering_comparison.png)
+![filtering_comparison.png](../../../_media/img/filtering_comparison.png)

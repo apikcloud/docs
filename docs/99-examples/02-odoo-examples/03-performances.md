@@ -109,4 +109,4 @@ dynamic.
 Below is a graph comparing the different filtering methods in Odoo. The graph **does not** include the usage of filtered
 inside loops, which is to avoid and if possible be replaced by `if` statements like list comprehensions.
 
-![filtering_comparison.png](../../_media/img/filtering_comparison.png)![filtering_comparison.png](../_media/img/filtering_comparison.png)
+![filtering_comparison.png](../../_media/img/filtering_comparison.png)
