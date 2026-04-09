@@ -28,7 +28,7 @@ self.env.cr.execute("UPDATE sale_order SET state='done' WHERE id=%s", order.id)
 order.write({"state": "done"})
 ```
 
-**Pourquoi:**<br> L'ORM gère les métadonnées, les audits, les champs calculés et les règles d'accès. Le SQL brut les ignore. [Réf. : Recommandations de codage, API ORM]
+**Pourquoi :**<br> L'ORM gère les métadonnées, les audits, les champs calculés et les règles d'accès. Le SQL brut les ignore. [Réf. : Recommandations de codage, API ORM]
 
 ## 2. Nommage des champs dans les méthodes de calcul : utilisez `record` ou `records`, et non `sales`, `partners`, etc.
 
@@ -48,7 +48,7 @@ def _compute_total(self):
         record.total = sum(line.price_total for line in record.line_ids)
 ```
 
-**Pourquoi:**<br> Les noms génériques permettent d'éviter toute confusion dans le code réutilisé. [Réf. : Recommandations de codage]
+**Pourquoi :**<br> Les noms génériques permettent d'éviter toute confusion dans le code réutilisé. [Réf. : Recommandations de codage]
 
 ## 3. Champs calculés : déclarez les dépendances et stockez-les si nécessaire
 
@@ -80,7 +80,7 @@ def _compute_total(self):
         record.total = sum(record.line_ids.mapped("price_total"))
 ```
 
-**Pourquoi:**<br> `@api.depends` garantit un recalcul correct ; `store=True` si utilisé dans la recherche/le tri. [Réf. : API ORM]
+**Pourquoi :**<br> `@api.depends` garantit un recalcul correct ; `store=True` si utilisé dans la recherche/le tri. [Réf. : API ORM]
 
 ## 4. Contexte et valeurs par défaut : évitez les variables globales, utilisez des lambdas avec des variables d’environnement
 
@@ -102,7 +102,7 @@ company_id = fields.Many2one(
 )
 ```
 
-**Pourquoi:**<br> Les valeurs par défaut doivent être des fonctions appelables pour obtenir l'environnement *actuel* et l'utilisateur/l'entreprise. [Réf. : API ORM]
+**Pourquoi :**<br> Les valeurs par défaut doivent être des fonctions appelables pour obtenir l'environnement *actuel* et l'utilisateur/l'entreprise. [Réf. : API ORM]
 
 ## 5. Précision des comparaisons monétaires/de taux de change flottants : utiliser des fonctions auxiliaires
 
@@ -122,7 +122,7 @@ if float_is_zero(record.amount_total, precision_rounding=record.currency_id.roun
     ...
 ```
 
-**Pourquoi:**<br> Respectez la précision des devises ; évitez l’égalité des nombres à virgule flottante. [Réf. : API ORM / outils]
+**Pourquoi :**<br> Respectez la précision des devises ; évitez l’égalité des nombres à virgule flottante. [Réf. : API ORM / outils]
 
 ## 6. Traductions : utilisez `_()` et évitez la concaténation de chaînes
 
@@ -144,7 +144,7 @@ raise UserError(_("Order %(name)s is invalid", name=self.name))
 raise UserError(self.env._("Order %(name)s is invalid", name=self.name))
 ```
 
-**Pourquoi:**<br> Utilisez le balisage i18n pour les chaînes de caractères ; évitez la concaténation afin de garantir la traduisibilité des messages. [Réf. : Recommandations de codage]
+**Pourquoi :**<br> Utilisez le balisage i18n pour les chaînes de caractères ; évitez la concaténation afin de garantir la traduisibilité des messages. [Réf. : Recommandations de codage]
 
 ## 7. Décorateurs d'API : respectez la convention d'appel de la méthode
 
@@ -163,4 +163,4 @@ def create(self, vals_list):
     return super().create(vals_list)
 ```
 
-**Pourquoi:**<br> Les décorateurs (`@api.model`, `@api.depends`, etc.) définissent les attentes et activent les fonctionnalités du framework. [Réf. : API ORM]
+**Pourquoi :**<br> Les décorateurs (`@api.model`, `@api.depends`, etc.) définissent les attentes et activent les fonctionnalités du framework. [Réf. : API ORM]

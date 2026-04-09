@@ -29,7 +29,7 @@ paid_orders = orders.filtered(lambda o: o.state == "paid")
 paid_orders = self.search([("state", "=", "paid")])
 ```
 
-**Pourquoi:**<br> Les domaines délèguent les tâches à la base de données ; meilleures performances et moins de mémoire.
+**Pourquoi :**<br> Les domaines délèguent les tâches à la base de données ; meilleures performances et moins de mémoire.
 
 ## 2. Utilisez la méthode `filtered` pour les boucles principales
 
@@ -50,7 +50,7 @@ def process(self):
         record.name = f"New {record.id}"
 ```
 
-**Pourquoi:**<br> `filtered()` améliore la lisibilité et évite les conditions imbriquées.
+**Pourquoi :**<br> `filtered()` améliore la lisibilité et évite les conditions imbriquées.
 
 ## 3. Évitez les boucles contenant `filtered`
 
@@ -78,7 +78,7 @@ def process(self):
             cancelled_invoice.singleton_cancel_action()
 ```
 
-**Pourquoi:**<br> L'imbrication de `filtered` engendre des problèmes de performance, car chaque `filtered` crée un nouvel ensemble d'enregistrements (`model.Models`). Il est bien plus efficace d'utiliser une liste en compréhension. Si vous devez utiliser un ensemble d'enregistrements (pour les méthodes non singleton), utilisez `filtered` et évitez de les exécuter dans une boucle.
+**Pourquoi :**<br> L'imbrication de `filtered` engendre des problèmes de performance, car chaque `filtered` crée un nouvel ensemble d'enregistrements (`model.Models`). Il est bien plus efficace d'utiliser une liste en compréhension. Si vous devez utiliser un ensemble d'enregistrements (pour les méthodes non singleton), utilisez `filtered` et évitez de les exécuter dans une boucle.
 
 ## 4. Évitez d'utiliser `filtered_domain` si possible
 
@@ -96,7 +96,7 @@ def process(self):
     posted_invoices = self.filtered(lambda r: r.state == "posted")
 ```
 
-**Pourquoi:**<br> Le `filtered_domain` est la méthode de filtrage la plus lente. Consultez le graphique ci-dessous pour une comparaison des différentes méthodes de filtrage. `filtered_domain` ne doit être utilisé que lorsqu'il s'agit d'un domaine passé en argument et qu'il est dynamique.
+**Pourquoi :**<br> Le `filtered_domain` est la méthode de filtrage la plus lente. Consultez le graphique ci-dessous pour une comparaison des différentes méthodes de filtrage. `filtered_domain` ne doit être utilisé que lorsqu'il s'agit d'un domaine passé en argument et qu'il est dynamique.
 
 Le graphique ci-dessous compare les différentes méthodes de filtrage dans Odoo. **Il n'inclut pas** l'utilisation de filtres à l'intérieur des boucles, qu'il convient d'éviter et de remplacer par des `if` si possible telles que les listes en compréhensions.
 
