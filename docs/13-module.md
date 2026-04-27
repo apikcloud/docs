@@ -110,7 +110,8 @@ Follow this pattern for `__manifest__.py` in all Apik addons:
 
 ## 4. Versioning
 
-After each edition in a module, the version in the manifest must be updated. This is done for this two main following reasons:
+After each edition in a module, the version in the manifest must be updated. This is done for this two main following
+reasons:
 
 - Ease of recognition of the version of the module in the list of installed modules.
 - Ensure modules are automatically updated when developing for Odoo Sh projects.
@@ -996,6 +997,138 @@ def _prepare_invoice_vals(self) -> dict:
 - Don’t put user interaction (`UserError`, `raise`) inside technical helpers.
 
 ---
+
+## 7. Tracking changes and features (for generic modules)
+
+To make our modules easier to read and understand, a README file must be added to each of our cross-functional
+modules.  
+This README must be structured as follows (and in this order):
+
+- **Features**: To outline the functionalities provided by the module.
+- **Usage**: How the module works and how to configure it.
+- **Security** (optional): Any specific rules to follow or information to secure.
+- **Dependencies** (optional): The list of modules required for proper operation. This includes the source (repository) and the version (or commit if necessary).
+- **Disclaimer** (optional): Liability disclaimer.
+- **Changelog**: The lifecycle and evolution of the module.
+- **License**: Always LGPL 3.0.
+
+### 7.1. Template
+
+```text
+# NAME OF THE MODULE
+
+## Features
+
+List of features.
+  
+## Usage
+
+Module configuration.
+
+## Security (optional)
+
+Security content.
+
+## Dependencies (optional)
+
+| Source                      | Modules     | Version | 
+|-----------------------------|-------------|---------|
+| https://github.com/ORG/REPO | module_name | 19.0    |
+
+## Disclaimer (optional)
+
+Disclaimer content.
+
+## Changelog
+
+### [v1.0.0] - 2026-04-09
+
+#### Added
+
+- Initial release.
+
+## License
+
+LGPL-3.0 [(see GNU LGPL-3.0)](https://www.gnu.org/licenses/lgpl-3.0.html)
+```
+
+## 7.2. Example
+
+```text
+# Apik Banking Transfer Interface  
+  
+## Features  
+  
+This module is designed to automate the fetching of banking file and add them in Odoo.  
+It works this way:
+
+- A file to put on a FTP or SFTP server.
+- A cron is automatically executed on the Odoo side.
+  - This cron, read the file and add it's content in Odoo.
+  - Once it is in Odoo, the file is stored and can be processed.
+- A cron is executed to process the stored files:
+  - It open every file in the draft state.
+  - For each file it executes a bank reconciliation.
+- Another cron runs on the Odoo side to push payment orders to the server, to be proceeded by the bank.
+  
+## Usage
+
+To use this module, you have to configure Odoo and fulfil the FTP/SFTP server information.
+
+1. Go to the Accounting module.
+2. Access the Configuration tab.
+3. Go to Parameters banking interface.
+4. Create a new one and fulfil the following elements:
+   - Protocol name (Eg.: "BNP transfer")
+   - Connection type (SFTP by default)
+   - FTP/SFTP address (IP or DNS if any)
+   - Port (the port to use to read the files)
+   - Account (login to use to connect the FTP/SFTP server)
+   - Password (password matching the login)
+1. Configure the wanted bank actions.
+2. You can choose the type of transfer (from bank to partner or from partner to bank).
+3. Choose the journals to use.
+4. Configure the format of the ebics file and if files must be archived after process.
+
+## Security (optional)
+
+Encrypted Connection: It is highly recommended to use the SFTP protocol to ensure data encryption during transfer.
+
+Access Rights: Ensure the FTP/SFTP user account has restricted permissions only to necessary folders for these banking operations.
+
+## Dependencies (optional)
+  
+| Source                                       | Modules                                                              | Version |    
+|----------------------------------------------|----------------------------------------------------------------------|---------|   
+| https://github.com/Noviat/account_ebics      | account_ebics, account_ebics_batch                                   | 17.0    |  
+| https://github.com/OCA/account-reconcile     | account_statement_base                                               | 17.0    |  
+| https://github.com/OCA/bank-payment          | account_payment_mode, account_payment_order, account_payment_partner | 17.0    |  
+| https://github.com/OCA/bank-statement-import | account_statement_import_base, account_statement_import_file         | 17.0    |  
+  
+## Disclaimer
+
+This module automates financial transactions. It is strongly advised to test the workflow in a Staging/UAT environment with test files before enabling crons in a production environment.  
+
+The authors are not responsible for bank fees incurred due to misconfigured payment orders.
+
+## Changelog
+
+### [v1.1.0] - 2026-02-25
+
+#### Changed  
+
+- Rework the FTP connection to ensure proper handling of raised errors.  
+
+### [v1.0.0] - 2026-02-03
+
+#### Added
+
+- Initial release.
+
+## License
+
+LGPL-3.0 [(see GNU LGPL-3.0)](https://www.gnu.org/licenses/lgpl-3.0.html)
+```
 
 ## XX. Assets, OWL and JavaScript
 

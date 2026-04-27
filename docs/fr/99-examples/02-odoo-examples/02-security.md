@@ -30,7 +30,7 @@ records = self.search([("partner_id", "=", partner.id)])
 secure_records = self.sudo().browse(safe_ids)
 ```
 
-**Pourquoi:**<br> `sudo()` contourne les ACL/règles d'enregistrement ; limitez son utilisation à une portée minimale.
+**Pourquoi :**<br> `sudo()` contourne les ACL/règles d'enregistrement ; limitez son utilisation à une portée minimale.
 
 ## 2. Contraintes : utilisez `_check_*` ou des contraintes SQL plutôt que `onchange` pour garantir l’intégrité des données
 
@@ -59,7 +59,7 @@ def _constrains_qty(self):
         raise ValidationError("Quantity must be positive.")
 ```
 
-**Pourquoi:**<br> Onchange est uniquement accessible via l'interface utilisateur ; les contraintes protègent les données côté serveur.
+**Pourquoi :**<br> Onchange est uniquement accessible via l'interface utilisateur ; les contraintes protègent les données côté serveur.
 
 ## 3. Règles d'accès plutôt que du code personnalisé
 
@@ -78,4 +78,4 @@ def _is_visible(self):
 # security/ir.model.access.csv + record rules on the model
 ```
 
-**Pourquoi:**<br> Utilisez les ACL et consignez les règles d'accès aux données ; cela permet de rendre la sécurité déclarative et vérifiable.
+**Pourquoi :**<br> Utilisez les ACL et consignez les règles d'accès aux données ; cela permet de rendre la sécurité déclarative et vérifiable.

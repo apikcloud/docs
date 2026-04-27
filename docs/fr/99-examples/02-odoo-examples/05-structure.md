@@ -28,7 +28,7 @@ from odoo import models, fields, api
 from odoo import api, fields, models
 ```
 
-**Pourquoi:**<br> Nous suivons la convention isort, qui est la convention par défaut pour Python.
+**Pourquoi :**<br> Nous suivons la convention isort, qui est la convention par défaut pour Python.
 
 ## 2. Trier les champs Odoo par ordre alphabétique
 
@@ -60,4 +60,4 @@ partner_id = fields.Many2one(
 )
 ```
 
-**Pourquoi:**<br> Le tri alphabétique des champs facilite la recherche d'un champ spécifique dans le code et évite les champs en double.
+**Pourquoi :**<br> Le tri alphabétique des champs facilite la recherche d'un champ spécifique dans le code et évite les champs en double.

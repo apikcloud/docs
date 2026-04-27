@@ -41,7 +41,7 @@ Chaque point montre un exemple **Mauvais** et **Bon**, accompagnés d'une brève
 </record>
 ```
 
-**Pourquoi:**<br> L'héritage est robuste face aux modifications en amont et réduit le taux de renouvellement. [Réf. : Vues / Consulter les enregistrements]
+**Pourquoi :**<br> L'héritage est robuste face aux modifications en amont et réduit le taux de renouvellement. [Réf. : Vues / Consulter les enregistrements]
 
 ## 2. Identifiants externes et fichiers de données : stable `xml_id`, `noupdate` et références
 
@@ -65,4 +65,4 @@ Chaque point montre un exemple **Mauvais** et **Bon**, accompagnés d'une brève
 </odoo>
 ```
 
-**Pourquoi:**<br> L'utilisation `xml_id` stable et `noupdate="1"` empêche les mises à jour accidentelles lors d'une réinstallation ; elle rend les références avec `env.ref()` fiables. [Réf. : Documentation pour les développeurs]
+**Pourquoi :**<br> L'utilisation `xml_id` stable et `noupdate="1"` empêche les mises à jour accidentelles lors d'une réinstallation ; elle rend les références avec `env.ref()` fiables. [Réf. : Documentation pour les développeurs]
