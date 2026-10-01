@@ -50,7 +50,7 @@ addon_name/
     └── src/js/           # JavaScript modules using @odoo-module
     └── src/scss/         # Stylesheets
 ├── views/                # XML view definitions
-├── wizards/              # Transient models for wizards
+├── wizard/              # Transient models for wizards
 ```
 
 ## 3. Manifest Guidelines
@@ -135,7 +135,7 @@ It complements the pages on **Methods** and **Fields**.
 
 ---
 
-### 1. Model Types (and when to use them)
+### 5.1. Model Types (and when to use them)
 
 | Type           | Base Class              | Purpose                                   | Typical Use                                                                           |
 | -------------- | ----------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------- |
@@ -151,9 +151,9 @@ It complements the pages on **Methods** and **Fields**.
 
 ---
 
-### 2. Naming Conventions
+### 5.2. Naming Conventions
 
-#### 2.1 Technical Model Name (`_name`)
+#### 5.2.1 Technical Model Name (`_name`)
 
 - Use **namespace prefix** of your addon: `your_addon.model_name`.
 - Use **singular nouns** for entities (`sale.order`, `account.move`, `product.brand`).
@@ -166,11 +166,11 @@ _name = "product.brand"
 _name = "move.chatter.history"
 ```
 
-#### 2.2 Python Class Name
+#### 5.2.2 Python Class Name
 
 - Use **CapWords** (PEP 8): `Contract`, `SalesSubscription`.
 
-#### 2.3 Display Name and Ordering
+#### 5.2.3 Display Name and Ordering
 
 - Set `_rec_name` if the default `name` is not the correct label.
 - Set `_order` for deterministic listing (avoid slow expressions).
@@ -184,9 +184,9 @@ _order = "date_start desc, id desc"
 
 ---
 
-### 3. Inheritance Models
+### 5.3. Inheritance Models
 
-#### 3.1 Classical Inheritance (`_inherit`)
+#### 5.3.1 Classical Inheritance (`_inherit`)
 
 Extends an existing model (same table).  
 Use to add fields/behaviour without changing identity.
@@ -205,7 +205,7 @@ class ResPartner(models.Model):
 - Keep overrides **thin**; delegate logic to helpers.
 - Document functional intent in a short class docstring.
 
-#### 3.2 Delegation Inheritance (`_inherits`)
+#### 5.3.2 Delegation Inheritance (`_inherits`)
 
 Composes another model via foreign key (separate tables).  
 Use when your model **is‑a** + **has‑a** relationship is required.
@@ -227,7 +227,7 @@ class LibraryMember(models.Model):
 - Choose `_inherits` when you need partner fields **and** your own identity/table.
 - Keep FK field names explicit: `<model>_id` (e.g., `partner_id`).
 
-#### 3.3 Abstract Models
+#### 5.3.3 Abstract Models
 
 Provide behaviour and constraints without a table.
 
@@ -244,14 +244,14 @@ class ExportHelper(models.AbstractModel):
 
 ---
 
-### 4. Class Layout (ordering & sections)
+### 5.4. Class Layout (ordering & sections)
 
 Keep a **consistent block order** inside every model class:
 
 1. **Meta**: `_name`, `_inherit`/`_inherits`, `_description`,  `_rec_name`, `_order`
 2. **Defaults**: default values for fields
 3. **Fields**: alphabetical order
-4. **SQL constraints**: `_sql_constraints`
+4. **SQL constraints**: `_sql_constraints` or `models.Constraint`
 5. **Methods**: all methods, see **Methods** for details
 
 Separate method groups with the section banner comments shown below.
@@ -302,10 +302,14 @@ class ResContract(models.Model):
     )
 
     # 4) SQL constraints
-    _sql_constraints = [
-        ("date_range_ok", "CHECK(date_end IS NULL OR date_end >= date_start)", "End date must be after start date."),
-        ("name_unique_partner", "unique(name, partner_id)", "Contract name must be unique per partner."),
-    ]
+    _check_date_range = models.Constraint(
+        "CHECK(date_end IS NULL OR date_end >= date_start)",
+        "End date must be after start date.",
+    )
+    _name_partner_unique = models.Constraint(
+        "UNIQUE(name, partner_id)",
+        "Contract name must be unique per partner.",
+    )
 
     # 5) Methods
     # -------------------
@@ -365,7 +369,7 @@ class ResContract(models.Model):
 
 ---
 
-### 5. Data Integrity & Constraints
+### 5.5. Data Integrity & Constraints
 
 - Prefer **SQL constraints** for invariants that must hold at DB level (uniqueness, date logic).
 - Use `@api.constrains` for Python‑level checks needing record context.
@@ -374,7 +378,7 @@ class ResContract(models.Model):
 
 ---
 
-### 6. Security & Access (high‑level)
+### 5.6. Security & Access (high‑level)
 
 - Define `ir.model.access.csv` for create/read/write/unlink rules per role.
 - Use **record rules** for domain‑based access; keep them **as simple as possible**.
@@ -383,14 +387,14 @@ class ResContract(models.Model):
 
 ---
 
-### 7. Internationalization
+### 5.7. Internationalization
 
 - Use `_(...)` for all user‑visible strings (labels, errors).
 - Keep field help/tooltips concise and actionable.
 
 ---
 
-### 8. Performance Considerations
+### 5.8. Performance Considerations
 
 - Avoid per‑record loops in computed fields — batch with `mapped()` or set comprehensions.
 - Prefetch relations and use `read_group` for aggregates.
@@ -401,7 +405,7 @@ class ResContract(models.Model):
 
 ---
 
-### 9. Do & Don’t
+### 5.9. Do & Don’t
 
 **Do**
 
@@ -426,7 +430,7 @@ It complements the pages on **Models** and **Methods**.
 
 ---
 
-### 5.1. Field Types (quick map)
+### 6.1. Field Types (quick map)
 
 | Category            | Types                                                                               | Notes                                                       |
 | ------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------- |
@@ -438,7 +442,7 @@ It complements the pages on **Models** and **Methods**.
 
 ---
 
-### 5.2. Naming & Labels
+### 6.2. Naming & Labels
 
 - **Technical name**: `snake_case`, short, descriptive (`amount_total`, `partner_ref`).
 - **Relational suffixes**: `Many2one` fields always end with `_id`; `One2many` and `Many2many` fields always end
@@ -460,7 +464,7 @@ amount_total = fields.Monetary(
 
 ---
 
-### 5.3. Attribute order
+### 6.3. Attribute order
 
 Depending on the field type, all attributes are not always relevant.
 
@@ -485,7 +489,10 @@ Specific One2many, Many2many and Many2one attributes order should be:
 
 1. `comodel_name` must always be the first argument.
 2. `inverse_name` (One2many fields only).
-3. `related` (relational field only).
+3. `relation` (Many2many fields only.)
+4. `column1` (Many2many fields only.)
+5. `column2` (Many2many fields only.)
+6. `related` (relational field only).
 
 ##### Example
 
@@ -497,6 +504,18 @@ relational_field_id = fields.One2many(
     domain=[("active", "=", True)],
     groups="base.group_user",
     help="This is a relational field",
+    string="Field name",
+)
+
+another_relational_field_ids = fields.Many2many(
+    comodel_name="res.partner",
+    relation="object_partner_rel",  # Only for Many2many
+    column1="object_id",  # Only for Many2many
+    column2="partner_id",  # Only for Many2many
+    copy=True,
+    domain=[("active", "=", True)],
+    groups="base.group_user",
+    help="This is another relational field",
     string="Field name",
 )
 ```
@@ -540,7 +559,7 @@ monetary_field = fields.Monetary(
 
 ---
 
-### 5.4. Relational Fields
+### 6.4. Relational Fields
 
 #### Many2one
 
@@ -592,7 +611,7 @@ tag_ids = fields.Many2many(
 
 ---
 
-### 5.5. Computed, Inverse, and Related
+### 6.5. Computed, Inverse, and Related
 
 #### Computed
 
@@ -648,7 +667,7 @@ company_currency_id = fields.Many2one(
 
 ---
 
-### 5.6. Selections & Enums
+### 6.6. Selections & Enums
 
 ```python
 STATE = [
@@ -675,7 +694,7 @@ state = fields.Selection(
 
 ---
 
-### 5.7. Money, Currency, and Precision
+### 6.7. Money, Currency, and Precision
 
 ```python
 currency_id = fields.Many2one(
@@ -699,7 +718,7 @@ amount_total = fields.Monetary(
 
 ---
 
-### 5.8. Defaults, Readonly, Copy, Tracking
+### 6.8. Defaults, Readonly, Copy, Tracking
 
 - `default=...` for safe defaults (functions allowed).
 - `readonly=True` for values users must not edit; pair with `states={...}` if needed.
@@ -708,7 +727,7 @@ amount_total = fields.Monetary(
 
 ---
 
-### 5.9. Indexing & Searchability
+### 6.9. Indexing & Searchability
 
 - Add `index=True` on fields frequently used in domains or joins.
 - For text search, combine `index=True` on `Char` + a **search** helper if needed.
@@ -716,7 +735,7 @@ amount_total = fields.Monetary(
 
 ---
 
-### 5.10. Security & Multicompany
+### 6.10. Security & Multicompany
 
 - Do **not** rely on Python to enforce access; define **ACLs** and **record rules**.
 - For multicompany fields, consider `company_dependent=True` or explicit company FK.
@@ -724,14 +743,14 @@ amount_total = fields.Monetary(
 
 ---
 
-### 5.11. Internationalization
+### 6.11. Internationalization
 
 - All `string`, `help`, and selection labels must be **translatable**.
 - Keep messages short and clear; avoid jargon in user‑facing labels (mainly in the `help` attribute).
 
 ---
 
-### 5.12. Migrations & Stability
+### 6.12. Migrations & Stability
 
 - Renaming a field breaks stable APIs; prefer **new field + migration** over renames.
 - When deprecating, keep the old field read‑only for a version and provide a data script.
@@ -739,7 +758,7 @@ amount_total = fields.Monetary(
 
 ---
 
-### 5.13. Do & Don’t
+### 6.13. Do & Don’t
 
 **Do**
 
@@ -816,7 +835,7 @@ It applies to both business logic and framework-level code.
 
 ---
 
-### 6.1. Method Types in Odoo
+### 7.1. Method Types in Odoo
 
 #### Business Methods
 
@@ -889,20 +908,21 @@ def _compute_due_date(self):
 
 Odoo provides several decorators to clarify method scope.
 
-| Decorator                 | Usage                         | Example                         |
-| ------------------------- | ----------------------------- | ------------------------------- |
-| `@api.model`              | No recordset required         | setup helpers, `create_from_ui` |
-| `@api.model_create_multi` | Accepts multiple vals at once | `create`                        |
-| `@api.depends`            | Compute fields dependencies   | `_compute_total`                |
-| `@api.onchange`           | Frontend automatic update     | `_onchange_partner_id`          |
-| `@api.constrains`         | Validation constraints        | `_constrains_amount`            |
-| `@api.autovacuum`         | Periodic cleanup tasks        | `_gc_old_records`               |
+| Decorator                 | Usage                                    | Example                         |
+|---------------------------|------------------------------------------|---------------------------------|
+| `@api.model`              | No recordset required                    | setup helpers, `create_from_ui` |
+| `@api.model_create_multi` | Accepts multiple vals at once            | `create`                        |
+| `@api.depends`            | Compute fields dependencies              | `_compute_total`                |
+| `@api.onchange`           | Frontend automatic update                | `_onchange_partner_id`          |
+| `@api.constrains`         | Validation constraints                   | `_check_amount_positive`        |
+| `@api.autovacuum`         | Periodic cleanup tasks                   | `_gc_old_records`               |
+| `@api.ondelete`           | Block deletion, except when uninstalling | `_unlink_except_active`         |
 
 **Rule of thumb:** use the decorator that best represents the logical **scope**, not the easiest to code with.
 
 ---
 
-### 6.2. Method Naming Conventions
+### 7.2. Method Naming Conventions
 
 #### Prefixes by Purpose
 
@@ -931,14 +951,14 @@ Odoo provides several decorators to clarify method scope.
 
 ---
 
-### 6.3. Method Ordering in Classes
+### 7.3. Method Ordering in Classes
 
 Follow a predictable, consistent order in every model:
 
 1. **Meta** (`_name`, `_inherit`, `_description`)
 2. **Default** (`_default_...` methods)
 3. **Fields** (`name`, `state`, `partner_id`, etc.)
-4. **SQL constraints** (`_sql_constraints`)
+4. **SQL constraints** (`_sql_constraints` or `models.Constraint`)
 5. **Constrain methods / Compute / Inverse / Onchange**
 6. **CRUD** (`create`, `write`, `unlink`, etc.)
 7. **Public business methods** (`action_...`)
@@ -999,7 +1019,7 @@ class SaleOrder(models.Model):
 
 ---
 
-### 6.4. Documentation and Typing
+### 7.4. Documentation and Typing
 
 - Always include a **docstring** on every method, explaining what it does and why it is done that way.
 - Use **type hints** when readability benefits (optional, but encouraged).
@@ -1018,7 +1038,7 @@ def _prepare_invoice_vals(self) -> dict:
 
 ---
 
-### 6.5. What Not to Do
+### 7.5. What Not to Do
 
 - Don’t name methods ambiguously (`do_stuff`, `process_data`).
 - Don’t hide side effects behind helper names (`_prepare_` should never write).
@@ -1027,7 +1047,7 @@ def _prepare_invoice_vals(self) -> dict:
 
 ---
 
-## 7. Tracking changes and features (for generic modules)
+## 8. Tracking changes and features (for generic modules)
 
 To make our modules easier to read and understand, a README file must be added to each of our cross-functional
 modules.  
@@ -1036,12 +1056,13 @@ This README must be structured as follows (and in this order):
 - **Features**: To outline the functionalities provided by the module.
 - **Usage**: How the module works and how to configure it.
 - **Security** (optional): Any specific rules to follow or information to secure.
-- **Dependencies** (optional): The list of modules required for proper operation. This includes the source (repository) and the version (or commit if necessary).
+- **Dependencies** (optional): The list of modules required for proper operation. This includes the source (repository)
+  and the version (or commit if necessary).
 - **Disclaimer** (optional): Liability disclaimer.
 - **Changelog**: The lifecycle and evolution of the module.
 - **License**: Always LGPL 3.0.
 
-### 7.1. Template
+### 8.1. Template
 
 ```text
 # NAME OF THE MODULE
@@ -1081,7 +1102,7 @@ Disclaimer content.
 LGPL-3.0 [(see GNU LGPL-3.0)](https://www.gnu.org/licenses/lgpl-3.0.html)
 ```
 
-## 7.2. Example
+### 8.2. Example
 
 ```text
 # Apik Banking Transfer Interface  
@@ -1159,9 +1180,248 @@ The authors are not responsible for bank fees incurred due to misconfigured paym
 LGPL-3.0 [(see GNU LGPL-3.0)](https://www.gnu.org/licenses/lgpl-3.0.html)
 ```
 
-## XX. Assets, OWL and JavaScript
+## 9. Assets, OWL and JavaScript
 
-*Content to be written: static structure, OWL 2.0, JS, accessibility.*
+### 9.1. Structure
+
+```
+static/
+├── description           # Module details: logo, description...
+    └── icon.png
+├── src/
+    └── lib/              # JS libraries
+    └── img/              # Images used by the module
+    └── interactions/     # Interactions (front): widgets, form...
+    └── snippets/         # Snippets (front)
+    └── components/       # Components (back): widgets, client actions, field types...
+    └── views/            # View types (back)
+    └── js/               # Other JS
+    └── xml/              # Other XML
+    └── scss/             # Other SCSS: reports...
+    └── css/              # Other CSS: reports...
+```
+
+### 9.2. Rules
+
+#### JavaScript
+
+- Always start the file with **/\*\* @odoo-module \*\*/**.
+- One file per Component or Interaction.
+- Every Component and Interaction must have a clearly defined responsibility.
+- Use aliases for imports.
+
+**Do**
+
+```javascript
+/** @odoo-module **/
+// Copyright 2026 apik (https://apik.cloud).
+// License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+
+import {DynamicSnippet} from "@website/snippets/s_dynamic_snippet/dynamic_snippet";
+
+export class AgeVerificationPopup extends Popup {
+    // Some stuff...
+}
+```
+
+**Don't**
+
+```javascript
+// Copyright 2026 apik (https://apik.cloud).
+// License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+
+import {DynamicSnippet} from "../../../../../snippets/s_dynamic_snippet/dynamic_snippet";
+
+export class Form extends Interaction {
+    // Some stuff...
+}
+
+export class another_form_and_a_popup extends DynamicSnippet {
+    // Some stuff...
+}
+```
+
+#### CSS / SCSS
+
+- One file per feature.
+
+**Do**
+
+```
+static/
+├── src/
+    └── scss/
+        └── delivery_report.scss
+        └── invoice_report.scss
+        └── sale_report.scss
+```
+
+**Don't**
+
+```
+static/
+├── src/
+    └── scss/
+        └── report.scss
+```
+
+- Do not use !important everywhere, use it only when it is genuinely necessary.
+- Use Bootstrap as much as possible, and CSS / SCSS only as a last resort.
+- Avoid using too many style attributes in XML, use a CSS / SCSS file instead.
+- Dark styles go in dedicated bundles and must not be mixed with light styles.
+
+### 9.3. Naming Conventions
+
+#### JavaScript class
+
+- Use **PascalCase**.
+- Use **singular nouns**.
+- Keep it **short and descriptive** (under ~40 chars).
+
+**Examples**
+
+```javascript
+class RegisterToaster extends Interaction {
+    // Some stuff...
+}
+
+class MrpTimerField extends Component {
+    // Some stuff...
+}
+```
+
+#### XML template
+
+- Use the module name as prefix, then CamelCase.
+
+**Example**
+
+```xml
+
+<t t-name="web_timeline.TimelineRenderer">
+    <!-- Template... -->
+</t>
+```
+
+### 9.3. OWL
+
+- Group the files of a same Component or Interaction in a same folder.
+
+**Example**
+
+```
+static/
+├── src/
+    └── components/
+        └── section_and_note_fields_backend/
+            └── section_and_note_fields_backend.js
+            └── section_and_note_fields_backend.scss
+            └── section_and_note_fields_backend.xml
+```
+
+- Never use the constructor, use setup instead.
+
+```javascript
+class DepartmentChart extends Component {
+    // Template, props...
+
+    setup() {
+        super.setup();
+
+        // Some stuff...
+    }
+}
+```
+
+- Avoid manipulating the DOM directly, use **useState** (OWL v2) or **proxy** / **signal** / **computed** (OWL v3)
+  instead (only for reactive values). If the DOM has to be manipulated anyway, avoid using jQuery.
+
+**Examples**
+
+```javascript
+class AComponent extends Component {
+    // Template, useProps...
+
+    setup() {
+        super.setup();
+
+        // v2
+        this.state = useState({
+            hideHeader: false,
+            firstName: "John",
+            lastName: "Doe",
+        });
+
+        // v3
+        this.state = proxy({
+            firstName: "John",
+            lastName: "Doe",
+            age: 20,
+        });  // For multiple values.
+        this.hideHeader = signal(false);  // For an isolated value.
+        this.showAge = signal(true);  // For an isolated value.
+        this.person = computed(() => {
+            if (this.showAge()) {
+                return `${this.state.firstName}, ${this.state.lastName}, ${this.state.age} years old`;
+            } else {
+                return `${this.state.firstName}, ${this.state.lastName}`;
+            }
+        });  // For a value computed from others.
+    }
+
+}
+```
+
+```xml
+
+<t t-name="the_module.AComponent">
+    <div id="header" t-att-class="{ 'd-none': this.hideHeader() }">
+        <span t-out="this.person()"/>
+    </div>
+</t>
+```
+
+- Give preference to async/await over then.
+
+**Do**
+
+```javascript
+class AComponent extends Component {
+    // Some stuff...
+
+    async loadOrders() {
+        try {
+            const user = await getUser();
+            const orders = await getOrders(user.id);
+
+            this.state.orders = orders;
+        } catch (error) {
+            this.handleError(error);
+        }
+    }
+}
+```
+
+**Don't**
+
+```javascript
+class AComponent extends Component {
+    // Some stuff...
+
+    loadOrders() {
+        getUser()
+            .then((user) => {
+                return getOrders(user.id);
+            })
+            .then((orders) => {
+                this.state.orders = orders;
+            })
+            .catch((error) => {
+                this.handleError(error);
+            });
+    }
+}
+```
 
 ## XX. Module Checklist
 
