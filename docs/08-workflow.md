@@ -49,7 +49,7 @@ gitGraph
     commit id: "feat: desc"
     checkout main
     merge feat/2/desc    
-    commit id: "chore(changelog): release v0.1.0" tag: "v0.1.0"
+    commit id: "chore: release v0.1.0" tag: "v0.1.0"
 ```
 
 ## Integration Flow
@@ -87,7 +87,7 @@ gitGraph
 ## Summary
 
 | Environment    | Source      | Purpose                       |
-|----------------|-------------|-------------------------------|
+| -------------- | ----------- | ----------------------------- |
 | `main`         | staging     | Continuous integration branch |
 | `feat/*`       | from `main` | Feature or fix branch         |
 | `tag (vX.Y.Z)` | from `main` | Preprod / production release  |

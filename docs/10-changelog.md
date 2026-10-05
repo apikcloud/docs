@@ -138,7 +138,7 @@ Optional:
   description of the addon to ensure its use is clear.
 - Flag **data model changes** (fields, constraints, scripts).
 - Note **access rights**, **server parameters**, or **env variables** changes.
-- Summarize **migration steps**; detailed procedures go in `MIGRATION.md`.
+- Summarize **migration steps**; detailed procedures go in `MIGRATIONS.md`.
 
 
 

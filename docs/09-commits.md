@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 09-commits
 Project: apikcloud/docs
-Last update: 2026-02-05
+Last update: 2026-10-05
 Status: Draft
 Reviewer: 
 -->
@@ -14,18 +14,16 @@ Reviewer:
 
 <mark> Status: Draft — Pending Review and Approval </mark>
 
-> Commits are the smallest and most meaningful unit of change.  
-> They tell *why* the code exists, not just *what* was changed.
+> Commits are the smallest meaningful unit of change.
+> They tell *why* the code exists, not just *what* changed.
 
-## Message Convention
+We follow **[Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)**.
+Any commit not following this convention will be rejected.
 
-We follow the **[Conventional Commits 1.0.0](https://www.conventionalcommits.org/en/v1.0.0/)** specification to keep
-messages consistent and automatable.
-
-### Syntax
+## Format
 
 ```
-<type>(optional scope): <short summary> [#task]
+<type>(<scope>): <summary> [#task]
 
 [optional body]
 ```
@@ -35,78 +33,65 @@ messages consistent and automatable.
 ```
 feat(account): add invoice merge wizard [#123456]
 
-This introduces a new wizard allowing users to merge multiple draft invoices.
+Allows users to merge multiple draft invoices into a single one.
 ```
 
-A commit does not have uppercase, no dot (.) at the end, and no trailing whitespace. Plus, the task identifier should
-be written between brackets and preceded by a hash (#).  
-Any commit not following this convention will be rejected.
+**Rules**
 
-The only exception is when you use acronyms or code names, which should be written in uppercase. For example:
-
-```
-chore(submodules) fix submodules URLs
-
-feat: add new UI for the project dashboard [#123456]
-```
+- Lowercase only, except acronyms and code names (`UI`, `DKIM`, `API`).
+- No trailing period, no trailing whitespace.
+- First line under **72 characters**.
+- Task reference between brackets, preceded by a hash: `[#123456]`.
+  Required for `feat` and `fix`. Not used for `chore`: maintenance has no task, and a release
+  can bundle several features. For other types, add it when a task exists.
 
 ## Types
 
-The main types you should use are listed below. As developer, you'll mostly use the following: `feat`, `fix`, `release`.
+As a developer, you'll mostly use `feat`, `fix` and `chore`.
 
-| Type         | Meaning                                             | Example                                                         |
-|--------------|-----------------------------------------------------|-----------------------------------------------------------------|
-| **feat**     | New feature                                         | `feat(mail): support DKIM signature [#12345]`                   |
-| **fix**      | Bug fix                                             | `fix(project): avoid crash on archived tasks [#12345]`          |
-| **release**  | Prepare for a new release                           | `release: v1.2.0 [#12345]`                                      |
-| **style**    | Code style, formatting, missing commas, etc.        | `style(account): reformat import wizard [#12345]`               |
-| **revert**   | Revert a previous commit                            | `revert: fix(account): wrong domain in partner search [#12345]` |
-| **test**     | Add or update tests                                 | `test(project): add regression test for task stages [#12345]`   |
-| **refactor** | Internal code change without changing behavior      | `refactor(base): simplify partner search domain [#12345]`       |
-| **docs**     | Documentation change                                | `docs: add deployment workflow diagram [#12345]`                |
-| **chore**    | Maintenance or tooling                              | `chore(ci): upgrade pre-commit hooks [#12345]`                  |
-| **ci**       | CI/CD config or scripts                             | `ci(github): parallelize test workflow [#12345]`                |
-| **perf**     | Performance improvement                             | `perf(account): optimize reconciliation lookup [#12345]`        |
-| **build**    | Changes to build system, dependencies, Docker, etc. | `build(docker): bump Python base image [#12345]`                |
+| Type         | Use for                                                     | Example                                                         |
+| ------------ | ----------------------------------------------------------- | --------------------------------------------------------------- |
+| **feat**     | New feature or performance improvement                      | `feat(account): optimize reconciliation lookup [#12345]`        |
+| **fix**      | Bug fix                                                     | `fix(project): avoid crash on archived tasks [#12345]`          |
+| **chore**    | Releases, formatting, style, maintenance, any change with no functional impact | `chore: release v1.2.0`                      |
+| **refactor** | Internal code change without behavior change                | `refactor(base): simplify partner search domain`                |
+| **test**     | Add or update tests                                         | `test(project): add regression test for task stages`            |
+| **docs**     | Documentation only                                          | `docs: add deployment workflow diagram`                         |
+| **ci**       | CI/CD, build system, dependencies, Docker                   | `ci(docker): bump Python base image`                            |
+| **revert**   | Revert a previous commit                                    | `revert: fix(account): wrong domain in partner search [#12345]` |
+
+### Releases
+
+A release (version bump, changelog, release notes) is a `chore` commit, without task reference
+since it can contain several features:
+
+```
+chore: release vX.Y.Z
+```
+
+### Formatting and other non-functional changes
+
+Formatting, code style, linting fixes, submodule URLs and similar changes are also `chore`:
+
+```
+chore(account): reformat import wizard
+chore: update pre-commit hooks
+chore(submodules): fix submodule URLs
+```
 
 ## Scopes
 
-The **scope** indicates which part of the system is affected — it's **optional** but highly recommended as it is useful when:
+The scope is **optional** but recommended. On Odoo projects, use the module technical name
+(`account`, `project`, `mail`, `mrp`, `helpdesk`, `crm`) or the technical area (`ci`, `docker`, `infra`, `tests`).
 
-- The project is large or modular (ex: Odoo addons, CI, Docker, infra).
-- You want to filter commits by area.
+If you don't know which scope to use, leave it out.
 
-> **Note**: In case you don't know what scope to use, prefer **not** to use one.
-
-**Typical scopes**
-
-```
-account, project, mail, mrp, helpdesk, crm, ci, infra, docker, tests, docs
-```
-
-## Content Rules
+## Content
 
 - One logical change per commit (**atomic commits**).
-- Keep the first line under **72 characters**.
-- Explain *why* when the reason isn’t obvious.
-- Highlight important technical details when it is needed.
-- Avoid vague messages like “update”, “fix issue”, “stuff”.
-- Reference the related task if applicable:
-  ```
-  feat: add mail alias sync [#12345]
-  ```
-- Before merging, **squash or rebase** to keep a clean linear history.
+- Avoid vague messages: "update", "fix issue", "minor change", "final".
+- Use the body to explain *why* when it isn't obvious, and to highlight technical details useful to other developers.
+- Before merging, **squash or rebase** to keep a linear history.
 
-## Tips
-
-- Keep the summary short and clear.
-- Use the body to describe context or motivation if needed.
-- Use the body to highlight technical details that could help other developers.
-- Avoid meaningless messages (“update”, “minor change”, “final”).
-- Consistency is more valuable than perfection.
-
-## Why It Matters
-
-Readable history = faster reviews, clearer changelogs,  
-and easier troubleshooting.  
-Every commit is a breadcrumb for future developers — leave them useful ones.
+Consistency is more valuable than perfection: readable history means faster reviews,
+clearer changelogs and easier troubleshooting.

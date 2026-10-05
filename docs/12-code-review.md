@@ -48,7 +48,7 @@ any.
 ## Roles
 
 | Role                              | Responsibility                                                                            |
-|-----------------------------------|-------------------------------------------------------------------------------------------|
+| --------------------------------- | ----------------------------------------------------------------------------------------- |
 | **Developer (author)**            | Opens the PR, provides clear context, responds to feedback, merges to main when validated |
 | **Reviewer**                      | Checks code quality, style, performance, and maintainability                              |
 | **Technical Referent (optional)** | Has a global vision of the project and can give its opinion if necessary                  |

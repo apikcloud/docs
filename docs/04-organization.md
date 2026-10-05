@@ -73,7 +73,7 @@ The following files are **mandatory** in every project. They come from the templ
 |------|--------|-------|-------------|
 | `requirements.txt` | Python pip dependencies | Developer | Keep minimal; pin via constraints when needed |
 | `packages.txt` | System packages (APT) required at build/runtime | DevOps/Developer | Add only when strictly necessary |
-| `odoo_version.txt` | Odoo **major** version (`16.0`, `17.0`, `18.0`, …) used by tooling/CI | Technical Referent | Update only when planning a major upgrade |
+| `odoo_version.txt` | Base Odoo **Docker image** (e.g. `apik/odoo:18.0-<release-date>-<enterprise>`), from which the Odoo major version is read; used by tooling/CI | Technical Referent | Update only when planning a major upgrade |
 | `README.md` | Project purpose, environments, quickstart, links to docs | Developer | Keep concise and current |
 | `CHANGELOG.md` | Human‑written release notes (Keep a Changelog) | Developer / Technical Referent | Update on every release |
 | `MIGRATIONS.md` | Documented migration steps per release (if any) | Developer / Technical Referent | Update before each release with the necessary instructions |

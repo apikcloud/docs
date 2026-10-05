@@ -33,7 +33,7 @@ Reviewer:
 
 For **Apik Cloud** and **on‑premise** deployments, we ship a **self‑contained Docker image** per project:
 
-- The **base Odoo image** is selected by `odoo_version.txt` (major version, e.g. `18.0`).
+- The **base Odoo image** is selected by `odoo_version.txt` (Docker image, e.g. `apik/odoo:18.0-<release-date>-<enterprise>`; the Odoo major version is `18.0`).
 - CI builds the **client image** by layering project code and third‑party modules on top of the selected base.
 - The resulting image is **tagged by version** and promoted from staging → preproduction → production.
 - We keep build logs and image digests for **traceability and rollback**.

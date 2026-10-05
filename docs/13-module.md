@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 13-module
 Project: apikcloud/docs
-Last update: 2026-03-04
+Last update: 2026-10-05
 Status: Draft
 Reviewer:
 -->
@@ -22,7 +22,15 @@ Reviewer:
 ### Rules
 
 - **Addon names**: `apik_` prefix for all Apik-specific addons (e.g., `apik_brand`, `apik_filter`)
-- **File headers**: All files include copyright header: `# Copyright 2026 apik (https://apik.cloud).`
+- **File headers**: Every file starts with the Apik copyright header (in the file type's comment syntax), followed by
+  a blank line:
+  ```python
+  # Copyright <year> apik (https://apik.cloud).
+  # License LGPL-3.0 or later (https://www.gnu.org/licenses/lgpl).
+
+  ```
+- **Formatting and linting**: Use the formatters and linters defined in the project's pre-commit config
+  (e.g. `ruff`, `prettier`, `pylint-odoo`).
 
 ## 2. Structure Pattern
 
@@ -94,7 +102,8 @@ Follow this pattern for `__manifest__.py` in all Apik addons:
 
 - The `name` field must be unique across all addons.
 - The `summary` field should provide a concise description of the module's functionality.
-- The `version` field must follow the semantic versioning format (MAJOR.MINOR.PATCH).
+- The `version` field must follow the format `<odoo major version>.<module MAJOR>.<MINOR>.<PATCH>`
+  (e.g. `18.0.1.0.0`); the module part follows semantic versioning.
 - The `category` field should accurately reflect the module's purpose and functionality.
 - The `author` field must be set to "Apik".
 - The `maintainers` field must include the GitHub usernames of all maintainers.
@@ -128,7 +137,7 @@ It complements the pages on **Methods** and **Fields**.
 ### 1. Model Types (and when to use them)
 
 | Type           | Base Class              | Purpose                                   | Typical Use                                                                           |
-|----------------|-------------------------|-------------------------------------------|---------------------------------------------------------------------------------------|
+| -------------- | ----------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------- |
 | **Persistent** | `models.Model`          | Stored business data                      | Partners, orders, invoices                                                            |
 | **Transient**  | `models.TransientModel` | Ephemeral wizards; auto‑cleaned           | Assistants, import/export dialogs                                                     |
 | **Abstract**   | `models.AbstractModel`  | Share behavior via inheritance (no table) | Mixins, reusable behaviors, e.g. `mail.thread`, `mail.activity.mixin`, `portal.mixin` |
@@ -242,7 +251,9 @@ Keep a **consistent block order** inside every model class:
 2. **Defaults**: default values for fields
 3. **Fields**: alphabetical order
 4. **SQL constraints**: `_sql_constraints`
-5. **Methods**: all methods, see **XX-Methods** for details
+5. **Methods**: all methods, see **Methods** for details
+
+Separate method groups with the section banner comments shown below.
 
 **Example skeleton**
 
@@ -301,7 +312,7 @@ class ResContract(models.Model):
     # -------------------
     # Constraints
     @api.constrains("date_start", "date_end")
-    def _check_dates(self):
+    def _constrains_date_end(self):
         for record in self:
             if record.date_end and record.date_end < record.date_start:
                 raise ValidationError("End date must be after start date.")
@@ -367,6 +378,7 @@ class ResContract(models.Model):
 - Define `ir.model.access.csv` for create/read/write/unlink rules per role.
 - Use **record rules** for domain‑based access; keep them **as simple as possible**.
 - Never filter security entirely in Python — **enforce in ACLs and rules**.
+- Every new model gets its ACLs in `ir.model.access.csv`.
 
 ---
 
@@ -383,6 +395,8 @@ class ResContract(models.Model):
 - Prefetch relations and use `read_group` for aggregates.
 - Index frequently searched fields (`index=True`).
 - Avoid large `@api.depends` lists; depend only on what’s necessary.
+- Never call `search` inside a loop: search once with a domain covering all records, then iterate.
+- Prefer the ORM over raw SQL; if SQL is unavoidable, parameterize it and document why.
 
 ---
 
@@ -414,7 +428,7 @@ It complements the pages on **Models** and **Methods**.
 ### 5.1. Field Types (quick map)
 
 | Category            | Types                                                                               | Notes                                                       |
-|---------------------|-------------------------------------------------------------------------------------|-------------------------------------------------------------|
+| ------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------- |
 | **Basic**           | `Char`, `Text`, `Html`, `Boolean`, `Integer`, `Float`, `Date`, `Datetime`, `Binary` | Prefer `Char(index=True)` for searchable short strings      |
 | **Money & Numbers** | `Monetary`, `Float`, `Integer`                                                      | `Monetary` requires `currency_field`                        |
 | **Relational**      | `Many2one`, `One2many`, `Many2many`                                                 | Always set `comodel_name`; define `ondelete` for `Many2one` |
@@ -426,9 +440,12 @@ It complements the pages on **Models** and **Methods**.
 ### 5.2. Naming & Labels
 
 - **Technical name**: `snake_case`, short, descriptive (`amount_total`, `partner_ref`).
+- **Relational suffixes**: `Many2one` fields always end with `_id`; `One2many` and `Many2many` fields always end
+  with `_ids`.
 - **String/label**: concise, user‑facing, **translated** (`string="Amount Total"`).
 - **Help**: add `help="..."` for non‑obvious fields; short and actionable.
-- **Copy**: set `copy=False` for fields that should not duplicate on record copy (e.g., states, numbers).
+- **Copy**: set `copy=False` for fields that should not duplicate on record copy (e.g., sequences, references,
+  states).
 
 **Example**
 
@@ -445,6 +462,14 @@ amount_total = fields.Monetary(
 ### 5.3. Attribute order
 
 Depending on the field type, all attributes are not always relevant.
+
+Each attribute is always written on its own line, even when there is only one:
+
+```python
+active = fields.Boolean(
+    default=True,
+)
+```
 
 Two rules are mandatory:
 
@@ -669,6 +694,7 @@ amount_total = fields.Monetary(
 - Always provide `currency_field` for `Monetary`, only if the currency field is not named `currency_id`.
 - Use **named precisions** (`digits="Product Price"`) where business rules require it.
 - Avoid storing both **unit price** and **total** without justification; derive when possible.
+- Compare amounts and floats with `float_is_zero` / `float_compare` and the currency rounding, never with `==`.
 
 ---
 
@@ -676,7 +702,7 @@ amount_total = fields.Monetary(
 
 - `default=...` for safe defaults (functions allowed).
 - `readonly=True` for values users must not edit; pair with `states={...}` if needed.
-- `copy=False` for identifiers/sequences or transient state.
+- `copy=False` for identifiers/sequences, references, states or transient state.
 - `tracking=True` on important business fields; use sparingly to avoid log noise.
 
 ---
@@ -863,12 +889,12 @@ def _compute_due_date(self):
 Odoo provides several decorators to clarify method scope.
 
 | Decorator                 | Usage                         | Example                         |
-|---------------------------|-------------------------------|---------------------------------|
+| ------------------------- | ----------------------------- | ------------------------------- |
 | `@api.model`              | No recordset required         | setup helpers, `create_from_ui` |
 | `@api.model_create_multi` | Accepts multiple vals at once | `create`                        |
 | `@api.depends`            | Compute fields dependencies   | `_compute_total`                |
 | `@api.onchange`           | Frontend automatic update     | `_onchange_partner_id`          |
-| `@api.constrains`         | Validation constraints        | `_check_amount_positive`        |
+| `@api.constrains`         | Validation constraints        | `_constrains_amount`            |
 | `@api.autovacuum`         | Periodic cleanup tasks        | `_gc_old_records`               |
 
 **Rule of thumb:** use the decorator that best represents the logical **scope**, not the easiest to code with.
@@ -879,18 +905,19 @@ Odoo provides several decorators to clarify method scope.
 
 #### Prefixes by Purpose
 
-| Prefix       | Meaning                              | Example                                |
-|--------------|--------------------------------------|----------------------------------------|
-| `action_`    | Triggered by user or button          | `action_validate`, `action_send_email` |
-| `_compute_`  | Field computation                    | `_compute_amount_total`                |
-| `_onchange_` | Frontend automatic update            | `_onchange_partner_id`                 |
-| `_inverse_`  | Inverse of computed field            | `_inverse_amount_total`                |
-| `_check_`    | Internal validation                  | `_check_dates_coherence`               |
-| `_prepare_`  | Returns a dict or data structure     | `_prepare_invoice_vals`                |
-| `_get_`      | Fetches or resolves something        | `_get_partner_data`                    |
-| `_set_`      | Assigns something                    | `_set_state_draft`                     |
-| `_run_`      | Executed by scheduler or batch       | `_run_invoice_auto_post`               |
-| `_sync_`     | Synchronization with external system | `_sync_customer_data`                  |
+| Prefix                | Meaning                                        | Example                                |
+| --------------------- | ---------------------------------------------- | -------------------------------------- |
+| `action_`             | Triggered by user or button                    | `action_validate`, `action_send_email` |
+| `_compute_`           | Field computation                              | `_compute_amount_total`                |
+| `_onchange_`          | Frontend automatic update                      | `_onchange_partner_id`                 |
+| `_inverse_`           | Inverse of computed field                      | `_inverse_amount_total`                |
+| `_constrains_<field>` | `@api.constrains` methods                      | `_constrains_date_end`                 |
+| `_check_`             | Other internal validation helpers              | `_check_dates_coherence`               |
+| `_prepare_`           | Returns a dict or data structure, never writes | `_prepare_invoice_vals`                |
+| `_get_`               | Fetches or resolves something                  | `_get_partner_data`                    |
+| `_set_`               | Assigns something                              | `_set_state_draft`                     |
+| `_sync_`              | Synchronization with external system           | `_sync_customer_data`                  |
+| `_run_`               | Executed by scheduler or batch                 | `_run_invoice_auto_post`               |
 
 #### Naming Rules
 
@@ -898,6 +925,8 @@ Odoo provides several decorators to clarify method scope.
 - Avoid abbreviations unless common (`qty`, `uom`).
 - Use **verbs first**, then objects (`_compute_total`, not `_total_compute`).
 - Keep names under **40 characters**.
+- Loops over `self` always use `record` as variable name, in compute methods and in all other methods
+  (`for record in self:`).
 
 ---
 
@@ -964,16 +993,15 @@ class SaleOrder(models.Model):
     def _sync_related_invoice(self): ...
 
     # 10) Cron tasks
-    def cron_sync_invoices(self): ...
+    def _run_sync_invoices(self): ...
 ```
 
 ---
 
 ### 6.4. Documentation and Typing
 
-- Always include **docstrings** for public and override methods.
+- Always include a **docstring** on every method, explaining what it does and why it is done that way.
 - Use **type hints** when readability benefits (optional, but encouraged).
-- Private helpers may skip docstring if self-explanatory.
 
 **Example**
 
@@ -1031,8 +1059,8 @@ Security content.
 
 ## Dependencies (optional)
 
-| Source                      | Modules     | Version | 
-|-----------------------------|-------------|---------|
+| Source                      | Modules     | Version |
+| --------------------------- | ----------- | ------- |
 | https://github.com/ORG/REPO | module_name | 19.0    |
 
 ## Disclaimer (optional)
@@ -1098,12 +1126,12 @@ Access Rights: Ensure the FTP/SFTP user account has restricted permissions only 
 
 ## Dependencies (optional)
   
-| Source                                       | Modules                                                              | Version |    
-|----------------------------------------------|----------------------------------------------------------------------|---------|   
-| https://github.com/Noviat/account_ebics      | account_ebics, account_ebics_batch                                   | 17.0    |  
-| https://github.com/OCA/account-reconcile     | account_statement_base                                               | 17.0    |  
-| https://github.com/OCA/bank-payment          | account_payment_mode, account_payment_order, account_payment_partner | 17.0    |  
-| https://github.com/OCA/bank-statement-import | account_statement_import_base, account_statement_import_file         | 17.0    |  
+| Source                                       | Modules                                                              | Version |
+| -------------------------------------------- | -------------------------------------------------------------------- | ------- |
+| https://github.com/Noviat/account_ebics      | account_ebics, account_ebics_batch                                   | 17.0    |
+| https://github.com/OCA/account-reconcile     | account_statement_base                                               | 17.0    |
+| https://github.com/OCA/bank-payment          | account_payment_mode, account_payment_order, account_payment_partner | 17.0    |
+| https://github.com/OCA/bank-statement-import | account_statement_import_base, account_statement_import_file         | 17.0    |
   
 ## Disclaimer
 
@@ -1188,6 +1216,29 @@ See also: [Security](https://www.odoo.com/documentation/19.0/developer/reference
 
 ## XX. Views
 
+### Rules
+
+- Never copy a full view: always inherit it.
+- Always use `xpath` to locate elements in inherited views.
+- By default, add `options="{'no_create': True}"` on `Many2one`, `Many2many` and `One2many` fields (unless stated
+  otherwise).
+- Data records that must not be overwritten on module update go in `<odoo noupdate="1">`.
+
+**Example**
+
+```xml
+<record id="view_partner_form_inherit" model="ir.ui.view">
+    <field name="name">res.partner.form.inherit</field>
+    <field name="model">res.partner</field>
+    <field name="inherit_id" ref="base.view_partner_form"/>
+    <field name="arch" type="xml">
+        <xpath expr="//field[@name='category_id']" position="after">
+            <field name="industry_id" options="{'no_create': True}"/>
+        </xpath>
+    </field>
+</record>
+```
+
 *Content to be written: structure, view names, widgets, usability.*
 
 ## XX. Migrations Scripts
@@ -1200,7 +1251,7 @@ Hooks are special functions automatically called by Odoo during a module’s lif
 They allow executing **custom logic before or after installation/uninstallation**, or at **server load time**.
 
 | Hook name                        | Arguments       | Execution moment                                   | Purpose / Typical use case                                                                                                                                           | Remarks                                                         |
-|----------------------------------|-----------------|----------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------|
+| -------------------------------- | --------------- | -------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------- |
 | **`pre_init_hook`**              | `cr` *(cursor)* | **Before module installation**                     | Prepare database structures or fix legacy data **before models are created**.<br>Example: rename SQL columns, remove obsolete constraints, create missing sequences. | Runs with no ORM, only SQL. Keep it short and idempotent.       |
 | **`post_init_hook`**             | `cr, registry`  | **Right after installation**                       | Finalize setup once the ORM and registry are ready.<br>Example: populate computed fields, initialize demo data, register external integrations.                      | Use only for first-time setup — **not for migrations**.         |
 | **`uninstall_hook`**             | `cr, registry`  | **After uninstallation**                           | Cleanup operations related to this module.<br>Example: delete orphaned records, unregister webhooks, remove temp data.                                               | Should not alter data from other modules.                       |

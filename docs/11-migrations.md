@@ -43,7 +43,7 @@ but documents the *functional and technical steps* required to ensure a safe tra
 
 ## When to Document a Migration
 
-A `MIGRATION.md` entry is required when:
+A `MIGRATIONS.md` entry is required when:
 - the **data model** changes (fields, constraints, model rename),
 - a **manual SQL or server action** is needed,
 - a **module rename, merge, or removal** occurs,
@@ -127,17 +127,17 @@ The migration is considered complete when:
 
 ## Roles
 
-| Role | Responsibility |
-|------|----------------|
-| **Developer** | Writes and tests migration steps locally |
-| **Technical Referent** | Reviews and approves the migration procedure |
+| Role                     | Responsibility                                          |
+| ------------------------ | ------------------------------------------------------- |
+| **Developer**            | Writes and tests migration steps locally                |
+| **Technical Referent**   | Reviews and approves the migration procedure            |
 | **Project Manager (CP)** | Validates functional readiness and client communication |
-| **Hosting Team** | Executes migrations on staging and production |
+| **Hosting Team**         | Executes migrations on staging and production           |
 
 
 ## Location and Versioning
 
-- The file `MIGRATION.md` lives at the project root.  
+- The file `MIGRATIONS.md` lives at the project root.  
 - Each release with a migration must include its own section.
 - Never rewrite or delete a past migration — add a new one instead.
 - The changelog links to this file when migration steps are required.
@@ -145,7 +145,7 @@ The migration is considered complete when:
 Example in `CHANGELOG.md`:
 ```markdown
 ### Migration Notes
-See detailed steps in [MIGRATION.md](./11-migrations.md) for v1.5.0.
+See detailed steps in [MIGRATIONS.md](./11-migrations.md) for v1.5.0.
 ```
 
 

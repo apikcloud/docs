@@ -33,7 +33,7 @@ secure_records = self.sudo().browse(safe_ids)
 **Why:**  
 `sudo()` bypasses ACLs/record rules; restrict it to minimal scope.
 
-## 2. Constraints: use `_check_*` or SQL constraints over `onchange` for data integrity
+## 2. Constraints: use `_constrains_*` or SQL constraints over `onchange` for data integrity
 
 **Don't**
 
