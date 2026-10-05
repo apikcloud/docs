@@ -62,7 +62,7 @@ Exclude (unless critical):
 ## Structure per Release
 
 ```markdown
-## [vX.Y.Z] — YYYY-MM-DD
+## [vX.Y.Z] - YYYY-MM-DD
 
 ### Added
 - …
@@ -81,9 +81,10 @@ Exclude (unless critical):
 ```
 
 Optional:
-- **Known Issues**: short list + workarounds.
+- **Known Issues**: short list + workarounds, as the last section of the release.
 
-> **Note**: Once the CHANGELOG has one entry the template part of the file should be removed.
+> **Note**: The empty `## [Unreleased]` section of the template is removed at the first release.
+> It is not recreated after a release: it is added again with the first entry of the next release.
 
 ## Writing Rules
 
@@ -138,7 +139,7 @@ Optional:
   description of the addon to ensure its use is clear.
 - Flag **data model changes** (fields, constraints, scripts).
 - Note **access rights**, **server parameters**, or **env variables** changes.
-- Summarize **migration steps**; detailed procedures go in `MIGRATIONS.md`.
+- Write **migration steps** in Migration Notes; commands go in `migrate.sh` (see [Migrations](./11-migrations.md)).
 
 
 
@@ -154,7 +155,7 @@ and adheres to Apik’s internal [Changelog Guidelines](https://github.com/apikc
 
 The goal: provide a clear, user-focused history of what has changed, improved, or been fixed.
 
-## [v1.5.0] — 2025-10-12
+## [v1.5.0] - 2025-10-12
 
 ### Added
 

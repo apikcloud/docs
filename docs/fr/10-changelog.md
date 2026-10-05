@@ -55,7 +55,7 @@ Exclure (sauf si critique) :
 ## Structure par version
 
 ```markdown
-## [vX.Y.Z] — YYYY-MM-DD
+## [vX.Y.Z] - YYYY-MM-DD
 
 ### Added
 - …
@@ -142,7 +142,7 @@ and adheres to Apik’s internal [Changelog Guidelines](https://github.com/apikc
 
 The goal: provide a clear, user-focused history of what has changed, improved, or been fixed.
 
-## [v1.5.0] — 2025-10-12
+## [v1.5.0] - 2025-10-12
 
 ### Added
 

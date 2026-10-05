@@ -31,12 +31,13 @@ Tous les modules suivent la structure standard d'Odoo avec les conventions spéc
 addon_name/
 ├── __init__.py           # Import models, controllers, wizards
 ├── __manifest__.py       # Standard Odoo manifest with Apik metadata
+├── README.md             # Module documentation (generic modules, see § 7)
 ├── controllers/          # HTTP controllers (website addons)
 ├── i18n/                 # Translation files
 ├── models/               # Business logic models
 ├── security/             # ir.model.access.csv, security groups
 └── static/               # Assets: JS, CSS, images
-    └── description/      # Icon and readme for the module
+    └── description/      # Icon of the module
     └── src/js/           # JavaScript modules using @odoo-module
     └── src/scss/         # Stylesheets
 ├── views/                # XML view definitions
@@ -711,7 +712,7 @@ amount_total = fields.Monetary(
 
 - Renommer un champ perturbe les API stables ; privilégiez la **création d’un nouveau champ et la migration** plutôt que le renommage.
 - Lors de la dépréciation, conservez l'ancien champ en lecture seule pour une version donnée et fournissez un script de données.
-- Documentez toutes les modifications dans `MIGRATIONS.md` et référencez-les dans `CHANGELOG.md` .
+- Documentez toutes les modifications dans les Migration Notes du `CHANGELOG.md` et ajoutez les commandes à `migrate.sh`.
 
 ---
 

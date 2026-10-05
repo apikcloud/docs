@@ -84,7 +84,7 @@ All inclusions/exclusions must be documented in:
 
 Example:
 ```
-## [v1.5.1] — Partial release
+## [v1.5.1] - 2025-10-20
 - Excluded: Partner Import Wizard (pending client validation)
 - Included: Subscription price fix, Sale Order Template permissions
 ```
@@ -96,16 +96,20 @@ Example:
 1. Ensure the `main` branch is up to date and tests pass.
 2. Review the `CHANGELOG.md`:
    - Each merged feature has an entry.
-   - Migration notes are linked if needed.
-3. Validate `MIGRATIONS.md` and command scripts if applicable.
+   - Migration Notes are complete if needed.
+3. Validate the `migrate.sh` commands if applicable (see [Migrations](./11-migrations.md)).
 4. Confirm with the Project Manager which tickets are to be included.
 
 ### Step 2 — Tag
-From the local repo (Technical Referent or release manager):
+From the local repo (Technical Referent or release manager).
+The release files (`CHANGELOG.md`, release notes, `migrate.sh`) are committed directly on `main`
+(`chore: release vX.Y.Z`, see [Commits](./09-commits.md)), then tagged:
 
 ```bash
 git checkout main
 git pull
+git commit -m "chore: release v1.5.0"
+git push origin main
 git tag -a v1.5.0 -m "Release v1.5.0 — October 2025"
 git push origin v1.5.0
 ```
@@ -143,7 +147,7 @@ If a release causes a regression:
 - Redeploy the corresponding Docker image or container version.
 - Document the issue and resolution in the next changelog.
 
-Rollback safety depends on consistent use of backups and `MIGRATIONS.md` documentation.
+Rollback safety depends on consistent use of backups and migration documentation (Migration Notes and `migrate.sh`).
 
 
 ## Tagging Rules
@@ -158,6 +162,7 @@ Guidelines:
 - Increment **minor** for functional additions.
 - Increment **patch** for fixes or partial deliveries.
 - Increment **major** after coordinated agreement across teams.
+- The first release of a project is `v0.1.0`.
 
 
 ## Responsibilities
@@ -175,7 +180,7 @@ Guidelines:
 
 - [ ] All features merged and reviewed.
 - [ ] Tests pass on staging.
-- [ ] `CHANGELOG.md` and `MIGRATIONS.md` are complete.
+- [ ] `CHANGELOG.md` (including Migration Notes) and `migrate.sh` are complete.
 - [ ] Scope of release confirmed with Project Manager.
 - [ ] Tag created and pushed (`vX.Y.Z`).
 - [ ] Preproduction validated.

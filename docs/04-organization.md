@@ -76,7 +76,6 @@ The following files are **mandatory** in every project. They come from the templ
 | `odoo_version.txt` | Base Odoo **Docker image** (e.g. `apik/odoo:18.0-<release-date>-<enterprise>`), from which the Odoo major version is read; used by tooling/CI | Technical Referent | Update only when planning a major upgrade |
 | `README.md` | Project purpose, environments, quickstart, links to docs | Developer | Keep concise and current |
 | `CHANGELOG.md` | Human‑written release notes (Keep a Changelog) | Developer / Technical Referent | Update on every release |
-| `MIGRATIONS.md` | Documented migration steps per release (if any) | Developer / Technical Referent | Update before each release with the necessary instructions |
 | `.pre-commit-config.yaml` | Pre‑commit hooks (lint/format/security) | Quality Team | Inherit from template; extend per project if needed |
 | `.ruff.toml` / `.flake8` / `.pylintrc` | Static analysis configuration | Quality Team | Don’t relax rules without approval |
 | `.gitmodules` | Catalog of third‑party submodules | Developer | Keep aligned with `.third-party/` |

@@ -40,12 +40,13 @@ All addons follow standard Odoo structure with Apik-specific conventions:
 addon_name/
 ├── __init__.py           # Import models, controllers, wizards
 ├── __manifest__.py       # Standard Odoo manifest with Apik metadata
+├── README.md             # Module documentation (generic modules, see § 7)
 ├── controllers/          # HTTP controllers (website addons)
 ├── i18n/                 # Translation files
 ├── models/               # Business logic models
 ├── security/             # ir.model.access.csv, security groups
 └── static/               # Assets: JS, CSS, images
-    └── description/      # Icon and readme for the module
+    └── description/      # Icon of the module
     └── src/js/           # JavaScript modules using @odoo-module
     └── src/scss/         # Stylesheets
 ├── views/                # XML view definitions
@@ -734,7 +735,7 @@ amount_total = fields.Monetary(
 
 - Renaming a field breaks stable APIs; prefer **new field + migration** over renames.
 - When deprecating, keep the old field read‑only for a version and provide a data script.
-- Document all changes in `MIGRATIONS.md` and reference them in the `CHANGELOG.md`.
+- Document all changes in the `CHANGELOG.md` Migration Notes and add the commands to `migrate.sh` (see [Migrations](./11-migrations.md)).
 
 ---
 

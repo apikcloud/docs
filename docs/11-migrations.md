@@ -5,7 +5,7 @@ https://creativecommons.org/licenses/by-nc-nd/4.0/
 
 File: 11-migrations
 Project: apikcloud/docs
-Last update: 2025-12-08
+Last update: 2026-10-05
 Status: Draft
 Reviewer: 
 -->
@@ -35,7 +35,7 @@ but documents the *functional and technical steps* required to ensure a safe tra
 
 - **One migration = one documented process.**
 - **Reproducibility first:** every step must be executable on preproduction before production.
-- **No hidden logic:** if it’s not written here, it doesn’t exist.
+- **No hidden logic:** if it’s not in the changelog or in `migrate.sh`, it doesn’t exist.
 - **Automation when possible**, documentation always.
 - **Rollback ready:** any destructive action must include a rollback or safety note.
 
@@ -43,7 +43,7 @@ but documents the *functional and technical steps* required to ensure a safe tra
 
 ## When to Document a Migration
 
-A `MIGRATIONS.md` entry is required when:
+A migration must be documented when:
 - the **data model** changes (fields, constraints, model rename),
 - a **manual SQL or server action** is needed,
 - a **module rename, merge, or removal** occurs,
@@ -51,45 +51,49 @@ A `MIGRATIONS.md` entry is required when:
 - **environment variables** or **server parameters** change,
 - or **functional testing** is required before reactivation.
 
+A migration is documented in two places:
 
-## Structure of a Migration Entry
+| Where | What |
+| --- | --- |
+| `CHANGELOG.md` — **Migration Notes** of the release | What changes, why, and the manual or functional steps (see [Changelog](./10-changelog.md)) |
+| `migrate.sh` (project root) | The commands to run, in order, including manual SQL |
 
-Each migration is grouped by target version:
+
+## Migration Notes (CHANGELOG)
+
+Developers draft Migration Notes under `## [Unreleased]` during development, like any other changelog entry.
+They follow the changelog [writing rules](./10-changelog.md): one line per item, short and explicit.
+
+Write in Migration Notes:
+- what changes and why (e.g. field renamed, module removed, new server parameter),
+- manual steps that cannot be scripted (configuration, server action to run, data to check),
+- functional tests required before reactivation,
+- rollback or safety notes for destructive actions.
+
+Example:
 
 ```markdown
-## [vX.Y.Z] — YYYY-MM-DD
-
-### Summary
-Short overview of what the migration does and why it exists.
-
-### Pre-migration Checklist
-- [ ] Backup verified
-- [ ] Preproduction updated and validated
-- [ ] Rollback plan defined
-- [ ] Required modules available
-- [ ] Communication with PM scheduled
-
-### Steps
-1. Stop cron jobs on the instance.
-2. Upgrade affected modules in order:
-   - account
-   - stock
-   - sale
-   - custom_module
-   
-3. Run manual SQL commands:
-
-   UPDATE account_move SET state='draft' WHERE ...;
-   
-4. Clear caches and restart Odoo.
+### Migration Notes
+- Update `sale_custom` and `stock_custom` (commands in `migrate.sh`).
+- Set the new system parameter `sale_custom.max_discount` (default: 20) after the update.
+- Destructive: archived delivery methods are deleted; backup required before running `migrate.sh`.
 ```
 
-### Migration Command Script
 
-Each migration must include an executable `migrate.sh` script containing the list of commands to be used, most often the installation or update of modules.
+## Migration Command Script (`migrate.sh`)
+
+Each release with a migration must include an executable `migrate.sh` script at the project root,
+containing the list of commands to be used, most often the installation or update of modules.
 This script acts as the canonical reference for what has been executed in preproduction and production.
 
 These commands are intentionally **human-maintained**, not generated automatically.
+
+`migrate.sh` only contains the commands of the **next release**:
+- The commands of a release stay in the script after the release tag, so the tagged version is deployable.
+- The first developer who adds a command for the next release replaces the previous commands instead of appending:
+  if `migrate.sh` has not changed since the last release tag (`git diff <last tag> -- migrate.sh` is empty),
+  its commands belong to the previous release.
+- The commands of each release remain available in its tag.
 
 Example template:
 
@@ -106,16 +110,35 @@ Guidelines:
 - Each command should be **copy-paste ready** and executable in the deployment environment.
 - Use the `--stop-after-init` and `--no-http` flags to prevent server startup during upgrades.
 - Prefer one command per module for clarity and rollback tracking.
+- Manual SQL also goes in `migrate.sh`, as copy-paste ready commands, with a comment explaining why.
 - Validate the same command sequence in preproduction before applying it to production.
+
+
+## Migration Procedure
+
+Applies to every release that contains a migration.
+
+### Pre-migration Checklist
+- [ ] Backup verified
+- [ ] Preproduction updated and validated
+- [ ] Rollback plan defined
+- [ ] Required modules available
+- [ ] Communication with PM scheduled
+
+### Execution
+1. Stop cron jobs on the instance.
+2. Run `migrate.sh` (preproduction first, then production).
+3. Apply the manual steps listed in the Migration Notes.
+4. Clear caches and restart Odoo.
 
 ### Post-migration Actions
 - [ ] Rebuild mail index
 - [ ] Reassign activities
 - [ ] Revalidate scheduled actions
-- [ ] Test core features (list them)
+- [ ] Test core features (as listed in the Migration Notes)
 
 ### Rollback Procedure
-Explain how to restore from backup or undo a partial migration.
+Restore from backup or undo a partial migration, following the rollback notes of the Migration Notes.
 
 ### Validation
 The migration is considered complete when:
@@ -129,24 +152,10 @@ The migration is considered complete when:
 
 | Role                     | Responsibility                                          |
 | ------------------------ | ------------------------------------------------------- |
-| **Developer**            | Writes and tests migration steps locally                |
+| **Developer**            | Writes and tests migration steps and commands locally   |
 | **Technical Referent**   | Reviews and approves the migration procedure            |
 | **Project Manager (CP)** | Validates functional readiness and client communication |
 | **Hosting Team**         | Executes migrations on staging and production           |
-
-
-## Location and Versioning
-
-- The file `MIGRATIONS.md` lives at the project root.  
-- Each release with a migration must include its own section.
-- Never rewrite or delete a past migration — add a new one instead.
-- The changelog links to this file when migration steps are required.
-
-Example in `CHANGELOG.md`:
-```markdown
-### Migration Notes
-See detailed steps in [MIGRATIONS.md](./11-migrations.md) for v1.5.0.
-```
 
 
 ## Tips for Odoo Projects

@@ -184,7 +184,7 @@ amount_total = fields.Monetary(currency_field="currency_id", string="Total", dig
 
 - Renaming a field breaks stable APIs; prefer **new field + migration** over renames.  
 - When deprecating, keep the old field read‑only for a version and provide a data script.  
-- Document all changes in `MIGRATIONS.md` and reference them in the changelog.
+- Document all changes in the changelog Migration Notes and add the commands to `migrate.sh`.
 
 ---
 

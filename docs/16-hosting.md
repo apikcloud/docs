@@ -57,7 +57,7 @@ apik/odoo:18.0-<release-date>-<enterprise>
 ```
 
 - This value pins the **base image line** (e.g., `apik/odoo:18.0-20251015-enterprise`).
-- Major upgrades are handled like migrations: update `odoo_version.txt`, run validations, and follow `MIGRATIONS.md`.
+- Major upgrades are handled like migrations: update `odoo_version.txt`, run validations, and follow the [migrations guide](./11-migrations.md) (Migration Notes + `migrate.sh`).
 - Security updates to the base image are published regularly; projects **inherit** them on rebuild.
 
 
@@ -86,7 +86,7 @@ Methodology adjustments (details in the dedicated Odoo.sh page):
 - **No image artifact**: validation relies on Odoo.sh pipelines and environments.
 - **Submodules & symlinks**: supported, but must be resolvable at build time; keep the `/.third-party` + symlink pattern.
 - **Trunk‑based adaptation**: shorter‑lived branches, explicit promotion (dev → staging → production) using the platform’s tools.
-- **Release notes & migrations**: still mandatory (`CHANGELOG.md`, `MIGRATIONS.md`), but deployment is triggered on the platform.
+- **Release notes & migrations**: still mandatory (`CHANGELOG.md` with Migration Notes, `migrate.sh`), but deployment is triggered on the platform.
 
 > The engineering principles remain the same (review, changelog, migrations). Only the **delivery mechanism** differs.
 
@@ -109,4 +109,4 @@ Methodology adjustments (details in the dedicated Odoo.sh page):
 - **One artifact per release** (Cloud/On‑Premise): the Docker image is the unit of delivery.
 - **`odoo_version.txt` is the source of truth** for the base image line.
 - **Trunk‑based workflow applies everywhere**; on Odoo.sh it is **lightly adapted** but still requires review, changelog, and release discipline.
-- **Documentation is mandatory**: `CHANGELOG.md`, `MIGRATIONS.md`, and release approval by the **Technical Referent**.
+- **Documentation is mandatory**: `CHANGELOG.md` (with Migration Notes), `migrate.sh`, and release approval by the **Technical Referent**.

@@ -41,7 +41,7 @@ This layered responsibility ensures that no single actor controls the full deliv
 Each project must maintain:
 - a **README.md** for listing addons and project documentation,
 - a **CHANGELOG.md** for release documentation,  
-- a **MIGRATIONS.md** for upgrade procedures,  
+- a **migrate.sh** for upgrade commands (steps documented in the CHANGELOG Migration Notes),  
 - and compliance with Apik’s review and release policies.
 
 Together, these ensure that:
