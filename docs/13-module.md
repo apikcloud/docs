@@ -42,6 +42,7 @@ addon_name/
 ├── __manifest__.py       # Standard Odoo manifest with Apik metadata
 ├── README.md             # Module documentation (generic modules, see § 7)
 ├── controllers/          # HTTP controllers (website addons)
+├── data/                 # Data records, crons, server actions...
 ├── i18n/                 # Translation files
 ├── models/               # Business logic models
 ├── security/             # ir.model.access.csv, security groups
@@ -1428,9 +1429,51 @@ class AComponent extends Component {
 
 ## XX. Security and Access Control
 
-*Content to be written: groups, access files, rules, exceptions.*
+### X.1. Structure
 
-See also: [Security](https://www.odoo.com/documentation/19.0/developer/reference/backend/security.html)
+**<=V19**
+
+```
+security/
+    └── ir.model.access.csv     # Accesses
+    └── ir_rule.xml             # Rules
+    └── res_groups.xml          # Groups
+```
+
+Groups should come first in the manifest, followed by accesses, and finally the rules.
+
+**V20**
+
+```
+security/
+    └── res_groups.xml          # Groups
+    └── ir.access.csv           # Accesses
+```
+
+Groups should come first in the manifest.
+
+### X.2. Rules
+
+#### Accesses
+
+- Every new model, except for abstracts, should have at least one access.
+- Prefer read-only permission by default, grant the create / update / delete permissions to the users that genuinely
+  need it.
+- Avoid granting deletion right by default.
+- Avoid granting access to all internal users, unless they genuinely need it.
+- Be careful when granting rights to non-internal users, they can exercise those rights even if the records are not
+  displayed on the portal or website.
+
+#### Rules
+
+- Do not rely on rules alone, a model should always have an access too.
+- Do not use `Command.set([ref('module.group')])` or `(6, 0, [ref('module.group')])` to define groups.
+- Rules should be defined with `noupdate`.
+
+#### Groups
+
+- Do not use `Command.set([ref('module.group')])` or `(6, 0, [ref('module.group')])` to define implied groups.
+- Groups should be defined with `noupdate`.
 
 ## XX. Translations
 
@@ -1442,13 +1485,53 @@ See also: [Security](https://www.odoo.com/documentation/19.0/developer/reference
 
 ## XX. Views
 
+### Naming Conventions
+
+| Type                                                   | ID format                                | Example                         |
+|--------------------------------------------------------|------------------------------------------|---------------------------------|
+| New template                                           | Must be clear about the feature          | `portal_my_tasks`               |
+| Inherited view or template                             | Same ID as the original view or template | `view_partner_form`             |
+| New view                                               | `view_<my_model>_<type>`                 | `view_cash_register_sheet_list` |
+| New view for a specific feature (add a sale report...) | `view_<my_model>_<type>_<feature>`       | `view_sale_order_rental_status` |
+
+If several views with the same ID are to be inherited within the same module, append the module names to the new IDs.
+The name should be the same as the ID, with dots instead of underscores, followed by `.inherit`.
+
+**Example**
+
+```XML
+
+<odoo>
+    <record id="view_partner_form" model="ir.ui.view">
+        <field name="name">view.partner.form.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- xpath -->
+        </field>
+    </record>
+
+
+    <record id="view_partner_form_repair" model="ir.ui.view">
+        <field name="name">view.partner.form.repair.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="repair.view_partner_form"/>
+        <field name="arch" type="xml">
+            <!-- xpath -->
+        </field>
+    </record>
+</odoo>
+```
+
 ### Rules
 
+- One file per model for views, and one file per feature for templates (`shop_templates.xml`, `cart_templates.xml`,
+  `hr_templates.xml`...)
 - Never copy a full view: always inherit it.
 - Always use `xpath` to locate elements in inherited views.
 - By default, add `options="{'no_create': True}"` on `Many2one`, `Many2many` and `One2many` fields (unless stated
   otherwise).
-- Data records that must not be overwritten on module update go in `<odoo noupdate="1">`.
+- Define groups on fields, and not on the views themselves.
 
 **Example**
 
@@ -1465,6 +1548,9 @@ See also: [Security](https://www.odoo.com/documentation/19.0/developer/reference
     </field>
 </record>
 ```
+
+- Data records that must not be overwritten on module update go in `<odoo noupdate="1">`.
+- No catch-all file for data records: they should be split in different files, one per model.
 
 *Content to be written: structure, view names, widgets, usability.*
 
